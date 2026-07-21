@@ -1,66 +1,78 @@
-# HireMind AI
+# HireMind AI — Current Task
 
 ## Current Phase
 
 Frontend Development
 
----
-
 ## Current Module
 
-RBAC & Team Management
-
----
-
-## Goal
-
-Build a premium enterprise identity and access management experience.
-
----
+Billing & Subscription
 
 ## Status
 
-🟡 In Progress
+IN PROGRESS
 
----
+## Goal
 
-## Documents
+Build a premium enterprise SaaS billing, subscription, plan, usage, AI-credit, and invoice experience.
+
+## Primary Documents
 
 - AI_CONTEXT.md
-- docs/features/RBAC.md
+- docs/features/Billing.md
 
-Reference only if required
+## Supporting References
+
+Use only when clarification is necessary:
 
 - DesignSystem.md
 - FrontendArchitecture.md
 - UIUXSpecification.md
 
----
+Do not load every large documentation file unnecessarily.
 
-## Rules
+## Completed Frontend
+
+- Landing Page
+- Frontend Foundation
+- Dashboard
+- Candidate Portal
+- Jobs
+- Resume Intelligence
+- Voice Interview
+- GitHub Analyzer
+- Recruiter Portal
+- Notifications
+- Calendar Integration
+- Settings
+- Authentication & Onboarding
+- Organization Management
+- RBAC & Team Management
+
+## Implementation Rules
 
 - Frontend only
-- Static data
 - No backend
-- No APIs
-- Premium enterprise UI
+- No payment integration
+- No Stripe
+- No API calls
+- Use fictional local data
+- Reuse existing components before creating new ones
+- Maintain existing visual language
+- Premium enterprise SaaS quality
 - Responsive
-- Dark Mode
-- Accessibility
+- Dark mode
+- Accessible
 
----
+## Quality Gate
 
-## Success Criteria
-
-- Premium RBAC interface
-- Beautiful permission matrix
-- Responsive
 - Zero TypeScript errors
 - Zero ESLint errors
 - Production build passes
-
----
+- No broken existing modules
+- No unnecessary dependencies
+- No duplicated components
 
 ## Next Module
 
-Billing & Subscription
+Audit Logs
