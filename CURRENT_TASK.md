@@ -8,13 +8,13 @@ Frontend Development
 
 ## Current Module
 
-Organization Management
+RBAC & Team Management
 
 ---
 
 ## Goal
 
-Build a premium enterprise organization management experience.
+Build a premium enterprise identity and access management experience.
 
 ---
 
@@ -27,7 +27,7 @@ Build a premium enterprise organization management experience.
 ## Documents
 
 - AI_CONTEXT.md
-- docs/features/OrganizationManagement.md
+- docs/features/RBAC.md
 
 Reference only if required
 
@@ -52,10 +52,9 @@ Reference only if required
 
 ## Success Criteria
 
-- Premium admin workspace
-- Beautiful organization management UI
+- Premium RBAC interface
+- Beautiful permission matrix
 - Responsive
-- Reusable components
 - Zero TypeScript errors
 - Zero ESLint errors
 - Production build passes
@@ -64,4 +63,4 @@ Reference only if required
 
 ## Next Module
 
-RBAC & Team Management
+Billing & Subscription
