@@ -1,32 +1,23 @@
 import { PageContainer } from "@/components/shared/PageContainer";
 import { PageHeader } from "@/components/shared/PageHeader";
-import { EmptyState } from "@/components/shared/EmptyState";
-import { Button } from "@/components/ui/button";
-import { Settings, Plus } from "lucide-react";
+import { SettingsLayout } from "./_components/SettingsLayout";
+
+export const metadata = {
+  title: "Settings - HireMind AI",
+  description: "Manage your HireMind AI settings and preferences.",
+};
 
 export default function SettingsPage() {
   return (
     <PageContainer>
-      <PageHeader 
-        title="Settings" 
-        description="Manage your account and team preferences"
-        primaryAction={
-          <Button>
-            <Plus className="mr-2 h-4 w-4" />
-            New Settings
-          </Button>
-        }
+      <PageHeader
+        title="Settings"
+        description="Manage your account, organization, and AI preferences."
       />
-      <EmptyState 
-        title="No settings found"
-        description="Get started by creating a new settings."
-        icon={Settings}
-        action={
-          <Button variant="outline">
-            Create Settings
-          </Button>
-        }
-      />
+      
+      <div className="mt-8">
+        <SettingsLayout />
+      </div>
     </PageContainer>
   );
 }
