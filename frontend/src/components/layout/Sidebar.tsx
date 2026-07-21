@@ -19,6 +19,7 @@ import {
   Home,
   Inbox,
   CalendarDays,
+  ShieldAlert,
 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -61,7 +62,10 @@ const navigation = [
   },
   {
     title: "Administration",
-    items: [{ title: "Settings", href: "/settings", icon: Settings }],
+    items: [
+      { title: "Settings", href: "/settings", icon: Settings },
+      { title: "Audit Logs", href: "/audit-logs", icon: ShieldAlert },
+    ],
   },
 ];
 
