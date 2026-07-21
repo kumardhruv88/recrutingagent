@@ -8,13 +8,13 @@ Frontend Development
 
 ## Current Module
 
-Audit Logs & Activity Monitoring
+Webhooks & Developer Integrations
 
 ---
 
 ## Goal
 
-Build a premium enterprise audit logging experience for administrators.
+Build a premium developer portal for integrations, API keys, and webhook management.
 
 ---
 
@@ -27,34 +27,32 @@ Build a premium enterprise audit logging experience for administrators.
 ## Documents
 
 - AI_CONTEXT.md
-- docs/features/AuditLogs.md
+- docs/features/WebhooksIntegrations.md
 
-Reference only if required
-
-- DesignSystem.md
-- FrontendArchitecture.md
-- UIUXSpecification.md
+Reference other design documents only if needed.
 
 ---
 
 ## Rules
 
 - Frontend only
-- Static data
+- Static fictional data
 - No backend
 - No APIs
-- Premium enterprise UI
+- Premium developer UX
 - Responsive
-- Dark Mode
+- Dark mode
 - Accessibility
 
 ---
 
 ## Success Criteria
 
-- Beautiful enterprise audit dashboard
-- Powerful filtering UI
-- Reusable components
+- Developer dashboard
+- Integrations marketplace
+- API key management
+- Webhook management
+- Delivery logs
 - Zero TypeScript errors
 - Zero ESLint errors
 - Production build passes
@@ -63,4 +61,4 @@ Reference only if required
 
 ## Next Module
 
-Webhooks & Developer Integrations
+Frontend Production Readiness Review
