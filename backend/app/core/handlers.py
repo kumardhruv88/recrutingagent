@@ -2,6 +2,7 @@ import structlog
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
+from fastapi.encoders import jsonable_encoder
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -31,7 +32,7 @@ def register_exception_handlers(app: FastAPI) -> None:
         request: Request, exc: RequestValidationError
     ) -> JSONResponse:
         logger.warning("Validation error", errors=exc.errors())
-        details = {"errors": exc.errors()}
+        details = {"errors": jsonable_encoder(exc.errors())}
         response_model = error_response(message="Validation failed", details=details)
         return JSONResponse(status_code=422, content=response_model.model_dump())
 

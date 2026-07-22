@@ -8,23 +8,23 @@ HireMind AI
 
 # Current Phase
 
-Phase 6 — Candidate Management
+Phase 7 — Job Management
 
 ---
 
 # Current Module
 
-Candidate Management
+Job Management
 
 ---
 
 # Goal
 
-Implement a production-ready Candidate Management module for HireMind AI.
+Implement a production-ready Job Management module.
 
-This module manages candidate profiles, contact information, resume metadata, lifecycle status, and recruiter interactions.
+This module manages job creation, updates, publishing, archiving, searching, filtering, and lifecycle management.
 
-The module must fully integrate with Authentication, Organization Management, RBAC, and the existing Database Architecture.
+Authentication, Organizations, RBAC, and Candidate Management are already complete.
 
 ---
 
@@ -32,16 +32,15 @@ The module must fully integrate with Authentication, Organization Management, RB
 
 Implement ONLY:
 
-- Candidate Repository
-- Candidate Service
-- Candidate CRUD APIs
-- Candidate Search
-- Candidate Filtering
-- Candidate Pagination
-- Candidate Status Management
-- Candidate Profile APIs
-- Candidate Validation
-- Candidate Tests
+- Job Repository
+- Job Service
+- Job CRUD APIs
+- Job Search
+- Job Filtering
+- Job Pagination
+- Job Status Management
+- Job Validation
+- Job Tests
 
 ---
 
@@ -49,27 +48,25 @@ Implement ONLY:
 
 Do NOT implement:
 
-- Resume Parsing
-- Resume Intelligence
-- AI Scoring
-- ATS Matching
-- GitHub Analysis
-- Jobs
 - Applications
-- Interviews
+- Resume Intelligence
+- AI Matching
+- Candidate Ranking
+- Interview Scheduling
 - Email Automation
-- Calendar
+- Calendar Integration
 - Workflow Engine
-- AI Copilot
+- Notifications
 
 ---
 
 # Deliverables
 
-- Candidate Repository
-- Candidate Service
-- Candidate CRUD APIs
-- Search & Filtering
+- Job Repository
+- Job Service
+- Job CRUD APIs
+- Search
+- Filtering
 - Pagination
 - Validation
 - Tests
@@ -79,13 +76,15 @@ Do NOT implement:
 
 # Acceptance Criteria
 
-✓ Candidate CRUD works
+✓ CRUD works
 
 ✓ Search works
 
 ✓ Filtering works
 
 ✓ Pagination works
+
+✓ Status transitions work
 
 ✓ RBAC enforced
 
@@ -103,4 +102,4 @@ Do NOT implement:
 
 # Next Module
 
-07_Jobs.md
+08_Applications.md
