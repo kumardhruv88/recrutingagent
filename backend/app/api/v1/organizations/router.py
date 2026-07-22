@@ -8,8 +8,9 @@ from app.dependencies.auth import (
     get_current_user,
     get_current_organization,
     require_active_membership,
+    require_permission,
+    require_role,
 )
-from app.models.auth import User, Organization
 from app.schemas.organization import (
     OrganizationCreate,
     OrganizationUpdate,
@@ -19,6 +20,8 @@ from app.schemas.organization import (
     SwitchOrganizationRequest,
 )
 from app.services.organization import OrganizationService
+from app.models.auth import Organization, User
+from app.models.enums import Permission, Role
 
 router = APIRouter()
 org_service = OrganizationService()
@@ -66,9 +69,7 @@ async def get_organization(
 async def update_organization(
     org_id: UUID,
     data: OrganizationUpdate,
-    user: User = Depends(
-        require_active_membership
-    ),  # Replace with role dependency later
+    user: User = Depends(require_permission(Permission.ORGANIZATION_UPDATE)),
     db: AsyncSession = Depends(get_db_session),
 ) -> Any:
     org = await org_service.org_repo.get_by_id(db, org_id)
@@ -80,16 +81,13 @@ async def update_organization(
 @router.delete("/{org_id}", status_code=204, response_class=Response)
 async def delete_organization(
     org_id: UUID,
-    user: User = Depends(
-        require_active_membership
-    ),  # Replace with role dependency later
+    user: User = Depends(require_permission(Permission.ORGANIZATION_DELETE)),
     db: AsyncSession = Depends(get_db_session),
 ) -> None:
     org = await org_service.org_repo.get_by_id(db, org_id)
     if not org:
         raise HTTPException(status_code=404, detail="Organization not found")
     await org_service.delete_organization(db, org)
-    return Response(status_code=204)
 
 
 @router.post("/switch")
@@ -122,7 +120,7 @@ async def switch_organization(
 async def invite_member(
     data: InvitationCreate,
     org: Organization = Depends(get_current_organization),
-    user: User = Depends(require_active_membership),
+    user: User = Depends(require_role([Role.OWNER, Role.ADMIN])),
     db: AsyncSession = Depends(get_db_session),
 ) -> Any:
     return await org_service.invite_member(db, org, user, data)
@@ -141,7 +139,7 @@ async def list_invitations(
 async def revoke_invitation(
     inv_id: UUID,
     org: Organization = Depends(get_current_organization),
-    user: User = Depends(require_active_membership),
+    user: User = Depends(require_role([Role.OWNER, Role.ADMIN])),
     db: AsyncSession = Depends(get_db_session),
 ) -> None:
     invitation = await org_service.inv_repo.get_by_id(db, inv_id)
@@ -149,4 +147,3 @@ async def revoke_invitation(
         raise HTTPException(status_code=404, detail="Invitation not found")
 
     await org_service.revoke_invitation(db, org, invitation)
-    return Response(status_code=204)

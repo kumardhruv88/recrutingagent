@@ -8,25 +8,23 @@ HireMind AI
 
 # Current Phase
 
-Phase 4 — Organization Management
+Phase 5 — Role Based Access Control (RBAC)
 
 ---
 
 # Current Module
 
-Organization Management
+Role Based Access Control
 
 ---
 
 # Goal
 
-Implement production-ready organization management for HireMind AI.
+Implement a production-ready Role Based Access Control (RBAC) system for HireMind AI.
 
-This module manages organizations, organization settings, invitations, organization switching, and active organization context.
+This module establishes permissions, role enforcement, authorization policies, and reusable authorization dependencies for all future business modules.
 
-Authentication and database models already exist.
-
-Do NOT implement RBAC or business modules.
+Authentication and Organization Management are already complete.
 
 ---
 
@@ -34,15 +32,15 @@ Do NOT implement RBAC or business modules.
 
 Implement ONLY:
 
-- Organization Service
-- Organization Repository
-- Organization APIs
-- Active Organization
-- Organization Switching
-- Organization Settings
-- Organization Invitations
-- Organization Validation
-- Organization Tests
+- Role Management
+- Permission Management
+- Authorization Service
+- Authorization Dependencies
+- Permission Enforcement
+- Role Assignment
+- Permission Policies
+- Authorization Middleware (if required)
+- RBAC Tests
 
 ---
 
@@ -50,40 +48,40 @@ Implement ONLY:
 
 Do NOT implement:
 
-- RBAC
 - Candidates
 - Jobs
 - Applications
 - Resume Intelligence
-- AI
-- Email
+- AI Services
+- Email Automation
 - Calendar
 - Notifications
-- Workflow
+- Workflow Engine
 
 ---
 
 # Deliverables
 
-- Organization Repository
-- Organization Service
-- Organization APIs
-- Organization Switching
-- Organization Invitations
-- Tests
+- Role Enum
+- Permission Enum
+- Authorization Service
+- Permission Checker
+- Authorization Dependencies
+- Permission Decorators
+- RBAC Tests
 - Documentation
 
 ---
 
 # Acceptance Criteria
 
-✓ Organization CRUD works
+✓ Roles resolve correctly
 
-✓ Organization switching works
+✓ Permissions resolve correctly
 
-✓ Invitations work
+✓ Unauthorized requests return 403
 
-✓ Active organization resolves
+✓ Permission dependencies work
 
 ✓ Tests pass
 
@@ -97,4 +95,4 @@ Do NOT implement:
 
 # Next Module
 
-05_RBAC.md
+06_Candidates.md

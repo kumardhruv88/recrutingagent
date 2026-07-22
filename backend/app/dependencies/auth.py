@@ -1,10 +1,12 @@
-from typing import Optional
+from typing import Optional, List, Callable, Any
 from fastapi import Depends, Request, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.session import async_session_factory
 from app.dependencies.database import get_db_session
 from app.models.auth import User, Organization, Membership
+from app.models.enums import Role, Permission
+from app.services.authorization import authorization_service
 from app.repositories.auth import (
     UserRepository,
     OrganizationRepository,
@@ -66,3 +68,63 @@ async def require_active_membership(
         )
 
     return membership
+
+
+def require_role(allowed_roles: List[Role]) -> Callable[..., Any]:
+    """Dependency factory that requires a user to have one of the allowed roles."""
+
+    async def _require_role(
+        user: User = Depends(require_authenticated_user),
+        organization: Organization = Depends(get_current_organization),
+        db: AsyncSession = Depends(get_db_session),
+    ) -> User:
+        if not organization:
+            raise HTTPException(status_code=400, detail="Organization context required")
+
+        await authorization_service.require_roles(db, user, organization, allowed_roles)
+        return user
+
+    return _require_role
+
+
+def require_permission(permission: Permission) -> Callable[..., Any]:
+    """Dependency factory that requires a specific permission."""
+
+    async def _require_permission(
+        user: User = Depends(require_authenticated_user),
+        organization: Organization = Depends(get_current_organization),
+        db: AsyncSession = Depends(get_db_session),
+    ) -> User:
+        if not organization:
+            raise HTTPException(status_code=400, detail="Organization context required")
+
+        await authorization_service.require_permissions(
+            db, user, organization, [permission], require_all=True
+        )
+        return user
+
+    return _require_permission
+
+
+def require_any_permission(permissions: List[Permission]) -> Callable[..., Any]:
+    """Dependency factory that requires at least one of the specified permissions."""
+
+    async def _require_any_permission(
+        user: User = Depends(require_authenticated_user),
+        organization: Organization = Depends(get_current_organization),
+        db: AsyncSession = Depends(get_db_session),
+    ) -> User:
+        if not organization:
+            raise HTTPException(status_code=400, detail="Organization context required")
+
+        await authorization_service.require_permissions(
+            db, user, organization, permissions, require_all=False
+        )
+        return user
+
+    return _require_any_permission
+
+
+def require_owner() -> Callable[..., Any]:
+    """Dependency factory that strictly requires the OWNER role."""
+    return require_role([Role.OWNER])

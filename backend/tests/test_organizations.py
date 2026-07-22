@@ -21,10 +21,16 @@ from app.dependencies.database import get_db_session
 @pytest.fixture
 def override_dependencies(monkeypatch: Any) -> Any:
     from datetime import datetime
+
     test_user = User(id=uuid4(), clerk_user_id="user_123")
     test_org = Organization(
-        id=uuid4(), clerk_organization_id="org_123", name="Test Org", slug="test-org",
-        is_active=True, created_at=datetime.now(UTC), updated_at=datetime.now(UTC)
+        id=uuid4(),
+        clerk_organization_id="org_123",
+        name="Test Org",
+        slug="test-org",
+        is_active=True,
+        created_at=datetime.now(UTC),
+        updated_at=datetime.now(UTC),
     )
 
     async def mock_get_current_user() -> Any:
@@ -35,7 +41,7 @@ def override_dependencies(monkeypatch: Any) -> Any:
 
     async def mock_require_active_membership() -> Any:
         return test_user
-        
+
     async def mock_get_db_session() -> Any:
         # Yield a mock session
         yield AsyncMock()
@@ -44,7 +50,7 @@ def override_dependencies(monkeypatch: Any) -> Any:
     app.dependency_overrides[get_current_organization] = mock_get_current_org
     app.dependency_overrides[require_active_membership] = mock_require_active_membership
     app.dependency_overrides[get_db_session] = mock_get_db_session
-    
+
     yield
     app.dependency_overrides.clear()
 
@@ -62,7 +68,7 @@ async def test_create_organization_mocked(
         slug="test",
         is_active=True,
         created_at=datetime.now(UTC),
-        updated_at=datetime.now(UTC)
+        updated_at=datetime.now(UTC),
     )
     monkeypatch.setattr(OrganizationService, "create_organization", mock_create)
 
@@ -93,7 +99,7 @@ def test_switch_organization_validation(
             slug="test-org",
             is_active=True,
             created_at=datetime.now(UTC),
-            updated_at=datetime.now(UTC)
+            updated_at=datetime.now(UTC),
         )
 
     async def mock_get_membership(*args: Any, **kwargs: Any) -> Any:

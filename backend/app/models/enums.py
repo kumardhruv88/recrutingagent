@@ -2,31 +2,49 @@ from enum import Enum
 
 
 class Role(str, Enum):
-    """
-    Placeholder for organizational roles.
-    Will be expanded in the RBAC module.
-    """
-
-    OWNER = "OWNER"
-    ADMIN = "ADMIN"
-    MEMBER = "MEMBER"
+    OWNER = "owner"
+    ADMIN = "admin"
+    RECRUITER = "recruiter"
+    HIRING_MANAGER = "hiring_manager"
+    INTERVIEWER = "interviewer"
+    VIEWER = "viewer"
+    MEMBER = "member"  # Legacy or default fallback
 
 
 class Permission(str, Enum):
-    """
-    Placeholder for granular permissions.
-    Will be expanded in the RBAC module.
-    """
+    ORGANIZATION_READ = "organization.read"
+    ORGANIZATION_UPDATE = "organization.update"
+    ORGANIZATION_DELETE = "organization.delete"
 
-    MANAGE_USERS = "MANAGE_USERS"
-    VIEW_CANDIDATES = "VIEW_CANDIDATES"
+    CANDIDATE_READ = "candidate.read"
+    CANDIDATE_CREATE = "candidate.create"
+    CANDIDATE_UPDATE = "candidate.update"
+    CANDIDATE_DELETE = "candidate.delete"
+
+    JOB_READ = "job.read"
+    JOB_CREATE = "job.create"
+    JOB_UPDATE = "job.update"
+    JOB_DELETE = "job.delete"
+
+    APPLICATION_READ = "application.read"
+    APPLICATION_CREATE = "application.create"
+    APPLICATION_UPDATE = "application.update"
+    APPLICATION_DELETE = "application.delete"
+
+    INTERVIEW_READ = "interview.read"
+    INTERVIEW_CREATE = "interview.create"
+    INTERVIEW_UPDATE = "interview.update"
+    INTERVIEW_DELETE = "interview.delete"
+
+    FUTURE_AI_USE = "future.ai.use"
+    FUTURE_BILLING_MANAGE = "future.billing.manage"
 
 
 class InvitationStatus(str, Enum):
-    PENDING = "PENDING"
-    ACCEPTED = "ACCEPTED"
-    EXPIRED = "EXPIRED"
-    CANCELLED = "CANCELLED"
+    PENDING = "pending"
+    ACCEPTED = "accepted"
+    DECLINED = "declined"
+    REVOKED = "revoked"
 
 
 class CandidateStatus(str, Enum):
