@@ -9,6 +9,9 @@ class AITaskType(str, Enum):
     CANDIDATE_SUMMARY = "candidate_summary"
     INTERVIEW_QUESTIONS = "interview_questions"
     EMBEDDING_GENERATION = "embedding_generation"
+    JOB_SUMMARY = "job_summary"
+    CANDIDATE_COMPARISON = "candidate_comparison"
+    RECRUITER_QA = "recruiter_qa"
 
 
 class AIResponse(BaseModel):

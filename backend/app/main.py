@@ -25,6 +25,7 @@ from app.api.v1.emails.router import router as emails_router
 from app.api.v1.calendar.router import router as calendar_router
 from app.api.v1.workflows.router import router as workflows_router
 from app.api.v1.interviews.router import router as interviews_router
+from app.api.v1.copilot.router import router as copilot_router
 
 
 def register_middleware(app: FastAPI) -> None:
@@ -102,6 +103,11 @@ def register_routers(app: FastAPI) -> None:
         interviews_router,
         prefix=f"{settings.API_V1_STR}/interviews",
         tags=["Interviews"],
+    )
+    app.include_router(
+        copilot_router,
+        prefix=f"{settings.API_V1_STR}/copilot",
+        tags=["AI Copilot"],
     )
 
 

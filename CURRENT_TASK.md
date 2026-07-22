@@ -8,21 +8,21 @@ HireMind AI
 
 # Current Phase
 
-Phase 15 — Interview Automation
+Phase 16 — AI Copilot
 
 ---
 
 # Current Module
 
-Interview Automation
+AI Copilot
 
 ---
 
 # Goal
 
-Implement a production-ready Interview Automation module that manages the complete interview lifecycle.
+Implement a production-ready AI Copilot that assists recruiters throughout the hiring process.
 
-This module coordinates Applications, Calendar Automation, Email Automation, Workflow Engine, and AI Orchestrator to automate interview scheduling and management.
+The AI Copilot should orchestrate existing AI infrastructure and business services to provide intelligent assistance without directly implementing LLM providers.
 
 ---
 
@@ -30,13 +30,15 @@ This module coordinates Applications, Calendar Automation, Email Automation, Wor
 
 Implement ONLY:
 
-- Interview Scheduling
-- Interview Lifecycle Management
-- Interview Service
-- Interview APIs
-- Interview Feedback
-- Interview Status Management
-- Candidate & Interviewer Assignment
+- AI Copilot Service
+- Copilot APIs
+- Candidate Summary
+- Job Summary
+- Resume Summary
+- GitHub Summary
+- Candidate Comparison
+- Recruiter Q&A
+- Prompt Templates
 - Tests
 
 ---
@@ -45,22 +47,23 @@ Implement ONLY:
 
 Do NOT implement:
 
-- AI Copilot
 - RAG
-- Live Interview Assistant
-- Speech-to-Text
-- Interview Summaries
+- Knowledge Base Search
+- Live Chat Memory
+- Background Workers
 - Notifications
+- Voice Assistant
 
 ---
 
 # Deliverables
 
-- Interview Service
-- Interview APIs
-- Interview Scheduling
-- Feedback Management
-- Status Management
+- AI Copilot Service
+- Copilot APIs
+- Prompt Templates
+- Summary Generation
+- Candidate Comparison
+- Recruiter Q&A
 - Tests
 - Documentation
 
@@ -68,15 +71,15 @@ Do NOT implement:
 
 # Acceptance Criteria
 
-✓ Interview scheduling works
+✓ Candidate summaries work
 
-✓ Calendar integration works
+✓ Resume summaries work
 
-✓ Email integration works
+✓ GitHub summaries work
 
-✓ Workflow integration works
+✓ Candidate comparison works
 
-✓ Feedback works
+✓ Recruiter Q&A works
 
 ✓ Tests pass
 
@@ -90,4 +93,4 @@ Do NOT implement:
 
 # Next Module
 
-16_AICopilot.md
+17_RAGArchitecture.md
