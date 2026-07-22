@@ -27,6 +27,7 @@ from app.api.v1.workflows.router import router as workflows_router
 from app.api.v1.interviews.router import router as interviews_router
 from app.api.v1.copilot.router import router as copilot_router
 from app.api.v1.rag.router import router as rag_router
+from app.api.v1.workers.router import router as workers_router
 
 
 def register_middleware(app: FastAPI) -> None:
@@ -114,6 +115,11 @@ def register_routers(app: FastAPI) -> None:
         rag_router,
         prefix=f"{settings.API_V1_STR}/rag",
         tags=["RAG Architecture"],
+    )
+    app.include_router(
+        workers_router,
+        prefix=f"{settings.API_V1_STR}/workers",
+        tags=["Background Workers"],
     )
 
 

@@ -1,25 +1,192 @@
 # Background Workers
 
-## Purpose
-*Describe the primary goal and reason for this module.*
+> Version: 1.0
 
-## Responsibilities
-*List the core responsibilities of this module.*
+---
 
-## Scope
-*Define what is included and excluded from this module.*
+# 1. Objective
 
-## Dependencies
-*List internal and external dependencies required.*
+Implement a centralized Background Worker infrastructure.
 
-## Folder Structure
-*Document the directory layout for this module.*
+All long-running tasks should execute asynchronously through this system instead of blocking HTTP requests.
 
-## Design Principles
-*Key design decisions and principles guiding this module.*
+---
 
-## Coding Standards
-*Specific coding rules applicable here.*
+# 2. Scope
 
-## Future Extensions
-*Potential future features or improvements.*
+Included
+
+- Job Queue
+- Worker
+- Task Registry
+- Retry Policy
+- Dead Letter Queue
+- Job Tracking
+
+Excluded
+
+- Notifications
+- Monitoring
+- Cron Scheduler
+
+---
+
+# 3. Architecture
+
+API Request
+
+↓
+
+Queue
+
+↓
+
+Worker
+
+↓
+
+Task Registry
+
+↓
+
+Task Handler
+
+↓
+
+Status Store
+
+---
+
+# 4. Task Registry
+
+Support registration of background tasks.
+
+Examples:
+
+- Resume Parsing
+
+- GitHub Sync
+
+- Email Sending
+
+- Embedding Generation
+
+- Workflow Execution
+
+---
+
+# 5. Worker
+
+Responsibilities:
+
+- Consume jobs
+- Execute tasks
+- Retry failures
+- Move failed jobs to DLQ
+- Update status
+
+---
+
+# 6. Retry Policy
+
+Support:
+
+- Max retries
+- Exponential backoff
+- Failure reason
+- Retry timestamp
+
+---
+
+# 7. Dead Letter Queue
+
+Persist:
+
+- Job ID
+- Task
+- Payload
+- Error
+- Retry Count
+- Failed Timestamp
+
+---
+
+# 8. APIs
+
+Implement:
+
+POST /workers/jobs
+
+GET /workers/jobs
+
+GET /workers/jobs/{id}
+
+POST /workers/jobs/{id}/retry
+
+---
+
+# 9. Validation
+
+Validate:
+
+- Registered task
+- Payload schema
+- Organization ownership
+
+---
+
+# 10. Security
+
+Enforce:
+
+- Authentication
+- Organization isolation
+- RBAC
+
+---
+
+# 11. Testing
+
+Test:
+
+- Queue
+- Retry
+- DLQ
+- Job tracking
+- RBAC
+
+---
+
+# 12. Acceptance Criteria
+
+✓ Queue works
+
+✓ Retry works
+
+✓ DLQ works
+
+✓ Tests pass
+
+---
+
+# 13. Deliverables
+
+Worker
+
+Queue
+
+Registry
+
+Retry
+
+DLQ
+
+Tests
+
+Documentation
+
+---
+
+# 14. Next Module
+
+19_Webhooks.md

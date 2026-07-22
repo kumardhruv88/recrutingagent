@@ -33,6 +33,7 @@ from app.models.email import EmailDeliveryLog
 from app.models.calendar import CalendarEvent
 from app.models.workflow import WorkflowExecution
 from app.models.rag import DocumentChunk
+from app.models.worker import BackgroundJob
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

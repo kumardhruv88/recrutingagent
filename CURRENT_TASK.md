@@ -8,21 +8,21 @@ HireMind AI
 
 # Current Phase
 
-Phase 17 — RAG Architecture
+Phase 18 — Background Workers
 
 ---
 
 # Current Module
 
-RAG Architecture
+Background Workers
 
 ---
 
 # Goal
 
-Implement a production-ready Retrieval-Augmented Generation (RAG) architecture that enables semantic search and contextual retrieval across recruitment data.
+Implement a production-ready Background Worker system that executes asynchronous jobs outside the request-response lifecycle.
 
-This module provides the retrieval infrastructure used by AI Copilot and future AI agents.
+The worker infrastructure will power AI processing, email delivery, GitHub sync, resume indexing, workflow execution, and future scheduled tasks.
 
 ---
 
@@ -30,13 +30,13 @@ This module provides the retrieval infrastructure used by AI Copilot and future 
 
 Implement ONLY:
 
-- Document Indexing
-- Document Chunking
-- Embedding Pipeline
-- Vector Search
-- Retrieval Service
-- Context Builder
-- RAG APIs
+- Job Queue
+- Worker Infrastructure
+- Task Registry
+- Retry Management
+- Dead Letter Queue
+- Job Status Tracking
+- Background Worker APIs
 - Tests
 
 ---
@@ -45,22 +45,21 @@ Implement ONLY:
 
 Do NOT implement:
 
-- Chat Memory
-- AI Agent Planning
-- Voice Assistant
-- Workflow Automation
-- Background Workers
 - Notifications
+- Monitoring
+- Scheduled Cron Jobs
+- AI Logic
+- Workflow Logic
 
 ---
 
 # Deliverables
 
-- Retrieval Service
-- Chunking Pipeline
-- Embedding Pipeline
-- Vector Search
-- Context Builder
+- Background Worker
+- Task Registry
+- Queue Infrastructure
+- Retry Policy
+- Dead Letter Queue
 - APIs
 - Tests
 - Documentation
@@ -69,13 +68,13 @@ Do NOT implement:
 
 # Acceptance Criteria
 
-✓ Chunking works
+✓ Queue works
 
-✓ Embeddings generated
+✓ Retry policy works
 
-✓ Vector search works
+✓ Dead letter queue works
 
-✓ Context assembly works
+✓ Job tracking works
 
 ✓ Tests pass
 
@@ -89,4 +88,4 @@ Do NOT implement:
 
 # Next Module
 
-18_BackgroundWorkers.md
+19_Webhooks.md
