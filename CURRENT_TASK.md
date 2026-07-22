@@ -8,21 +8,21 @@ HireMind AI
 
 # Current Phase
 
-Phase 16 — AI Copilot
+Phase 17 — RAG Architecture
 
 ---
 
 # Current Module
 
-AI Copilot
+RAG Architecture
 
 ---
 
 # Goal
 
-Implement a production-ready AI Copilot that assists recruiters throughout the hiring process.
+Implement a production-ready Retrieval-Augmented Generation (RAG) architecture that enables semantic search and contextual retrieval across recruitment data.
 
-The AI Copilot should orchestrate existing AI infrastructure and business services to provide intelligent assistance without directly implementing LLM providers.
+This module provides the retrieval infrastructure used by AI Copilot and future AI agents.
 
 ---
 
@@ -30,15 +30,13 @@ The AI Copilot should orchestrate existing AI infrastructure and business servic
 
 Implement ONLY:
 
-- AI Copilot Service
-- Copilot APIs
-- Candidate Summary
-- Job Summary
-- Resume Summary
-- GitHub Summary
-- Candidate Comparison
-- Recruiter Q&A
-- Prompt Templates
+- Document Indexing
+- Document Chunking
+- Embedding Pipeline
+- Vector Search
+- Retrieval Service
+- Context Builder
+- RAG APIs
 - Tests
 
 ---
@@ -47,23 +45,23 @@ Implement ONLY:
 
 Do NOT implement:
 
-- RAG
-- Knowledge Base Search
-- Live Chat Memory
+- Chat Memory
+- AI Agent Planning
+- Voice Assistant
+- Workflow Automation
 - Background Workers
 - Notifications
-- Voice Assistant
 
 ---
 
 # Deliverables
 
-- AI Copilot Service
-- Copilot APIs
-- Prompt Templates
-- Summary Generation
-- Candidate Comparison
-- Recruiter Q&A
+- Retrieval Service
+- Chunking Pipeline
+- Embedding Pipeline
+- Vector Search
+- Context Builder
+- APIs
 - Tests
 - Documentation
 
@@ -71,15 +69,13 @@ Do NOT implement:
 
 # Acceptance Criteria
 
-✓ Candidate summaries work
+✓ Chunking works
 
-✓ Resume summaries work
+✓ Embeddings generated
 
-✓ GitHub summaries work
+✓ Vector search works
 
-✓ Candidate comparison works
-
-✓ Recruiter Q&A works
+✓ Context assembly works
 
 ✓ Tests pass
 
@@ -93,4 +89,4 @@ Do NOT implement:
 
 # Next Module
 
-17_RAGArchitecture.md
+18_BackgroundWorkers.md

@@ -26,6 +26,7 @@ from app.api.v1.calendar.router import router as calendar_router
 from app.api.v1.workflows.router import router as workflows_router
 from app.api.v1.interviews.router import router as interviews_router
 from app.api.v1.copilot.router import router as copilot_router
+from app.api.v1.rag.router import router as rag_router
 
 
 def register_middleware(app: FastAPI) -> None:
@@ -108,6 +109,11 @@ def register_routers(app: FastAPI) -> None:
         copilot_router,
         prefix=f"{settings.API_V1_STR}/copilot",
         tags=["AI Copilot"],
+    )
+    app.include_router(
+        rag_router,
+        prefix=f"{settings.API_V1_STR}/rag",
+        tags=["RAG Architecture"],
     )
 
 
