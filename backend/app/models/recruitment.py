@@ -13,6 +13,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import JSONB
+from pgvector.sqlalchemy import Vector
 
 from app.database.base import Base
 from app.database.mixins import UUIDMixin, TimestampMixin
@@ -177,12 +178,38 @@ class Resume(UUIDMixin, TimestampMixin, Base):
         ForeignKey("candidates.id", ondelete="CASCADE"), index=True
     )
     file_name: Mapped[str] = mapped_column(String(255))
+    content_type: Mapped[str] = mapped_column(String(100), default="application/pdf")
     storage_path: Mapped[str] = mapped_column(String(1024))
     file_size: Mapped[int] = mapped_column(Integer)
+    version: Mapped[int] = mapped_column(Integer, default=1)
     uploaded_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     parsed: Mapped[bool] = mapped_column(Boolean, default=False)
 
+    from sqlalchemy.types import JSON
+
+    parsed_data: Mapped[Optional[Dict[str, Any]]] = mapped_column(JSON, nullable=True)
+    parser_metadata: Mapped[Optional[Dict[str, Any]]] = mapped_column(
+        JSON, nullable=True
+    )
+
     candidate: Mapped["Candidate"] = relationship("Candidate", back_populates="resumes")
+    embedding: Mapped[Optional["ResumeEmbedding"]] = relationship(
+        "ResumeEmbedding",
+        back_populates="resume",
+        uselist=False,
+        cascade="all, delete-orphan",
+    )
+
+
+class ResumeEmbedding(UUIDMixin, TimestampMixin, Base):
+    __tablename__ = "resume_embeddings"
+
+    resume_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("resumes.id", ondelete="CASCADE"), unique=True, index=True
+    )
+    embedding: Mapped[Any] = mapped_column(Vector(1536))
+
+    resume: Mapped["Resume"] = relationship("Resume", back_populates="embedding")
 
 
 class Skill(UUIDMixin, Base):

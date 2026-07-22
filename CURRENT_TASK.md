@@ -8,23 +8,21 @@ HireMind AI
 
 # Current Phase
 
-Phase 8 — Application Management
+Phase 9 — Resume Intelligence
 
 ---
 
 # Current Module
 
-Application Management
+Resume Intelligence
 
 ---
 
 # Goal
 
-Implement a production-ready Application Management module.
+Implement a production-ready Resume Intelligence module that ingests resumes, extracts structured information, stores embeddings, and prepares candidate profiles for downstream AI services.
 
-Applications connect Candidates and Jobs while managing the recruitment lifecycle.
-
-Authentication, Organizations, RBAC, Candidates, and Jobs are already complete.
+Authentication, Organizations, RBAC, Candidates, Jobs, and Applications are already complete.
 
 ---
 
@@ -32,15 +30,15 @@ Authentication, Organizations, RBAC, Candidates, and Jobs are already complete.
 
 Implement ONLY:
 
-- Application Repository
-- Application Service
-- Application CRUD APIs
-- Application Status Management
-- Candidate ↔ Job Linking
-- Stage Management
-- Application Timeline
-- Application Notes
-- Application Validation
+- Resume Upload API
+- File Storage Integration
+- Resume Parsing Pipeline
+- Structured Information Extraction
+- Resume Embeddings
+- Resume Versioning
+- Resume Repository
+- Resume Service
+- Resume APIs
 - Tests
 
 ---
@@ -49,27 +47,26 @@ Implement ONLY:
 
 Do NOT implement:
 
-- Resume Parsing
-- Resume Intelligence
 - ATS Scoring
-- AI Ranking
-- GitHub Analysis
-- Interview Scheduling
+- Candidate Ranking
+- AI Recommendations
+- Interview Copilot
 - Email Automation
 - Calendar Integration
 - Workflow Engine
+- GitHub Intelligence
 
 ---
 
 # Deliverables
 
-- Application Repository
-- Application Service
-- Application CRUD APIs
-- Stage Management
-- Timeline
-- Notes
-- Validation
+- Resume Upload
+- Resume Repository
+- Resume Service
+- Resume Parsing Pipeline
+- Structured Resume Model
+- Embedding Pipeline
+- Resume Versioning
 - Tests
 - Documentation
 
@@ -77,15 +74,15 @@ Do NOT implement:
 
 # Acceptance Criteria
 
-✓ CRUD works
+✓ Resume upload works
 
-✓ Candidate & Job linking works
+✓ Resume parsing works
 
-✓ Stage transitions work
+✓ Structured fields extracted
 
-✓ Timeline works
+✓ Embeddings generated
 
-✓ Notes work
+✓ Resume versions maintained
 
 ✓ RBAC enforced
 
@@ -103,4 +100,4 @@ Do NOT implement:
 
 # Next Module
 
-09_ResumeIntelligence.md
+10_GitHubIntelligence.md

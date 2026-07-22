@@ -19,6 +19,7 @@ from app.api.v1.organizations import router as org_router
 from app.api.v1.candidates import router as candidate_router
 from app.api.v1.jobs import router as job_router
 from app.api.v1.applications import router as application_router
+from app.api.v1.resumes import router as resume_router
 
 
 def register_middleware(app: FastAPI) -> None:
@@ -66,6 +67,11 @@ def register_routers(app: FastAPI) -> None:
         application_router.router,
         prefix=f"{settings.API_V1_STR}/applications",
         tags=["Applications"],
+    )
+    app.include_router(
+        resume_router.router,
+        prefix=f"{settings.API_V1_STR}/resumes",
+        tags=["Resumes"],
     )
 
 
