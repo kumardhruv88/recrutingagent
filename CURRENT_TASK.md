@@ -8,21 +8,21 @@ HireMind AI
 
 # Current Phase
 
-Phase 13 — Calendar Automation
+Phase 14 — Workflow Engine
 
 ---
 
 # Current Module
 
-Calendar Automation
+Workflow Engine
 
 ---
 
 # Goal
 
-Implement a production-ready Calendar Automation module that provides a centralized calendar scheduling infrastructure for HireMind AI.
+Implement a production-ready Workflow Engine that orchestrates business workflows across HireMind AI.
 
-This module should support provider abstraction, event creation, updates, cancellations, attendee management, and future workflow integration.
+The Workflow Engine coordinates existing services but does not replace their business logic.
 
 ---
 
@@ -30,12 +30,12 @@ This module should support provider abstraction, event creation, updates, cancel
 
 Implement ONLY:
 
-- Calendar Provider Interface
-- Calendar Service
-- Calendar Provider Registry
-- Event Management
-- Attendee Management
-- Calendar APIs
+- Workflow Engine
+- Workflow Definitions
+- Workflow Executor
+- Workflow State Management
+- Workflow Trigger Registry
+- Workflow APIs
 - Tests
 
 ---
@@ -45,9 +45,9 @@ Implement ONLY:
 Do NOT implement:
 
 - AI Scheduling
-- Interview Workflow
-- Email Invitations
-- Workflow Engine
+- Interview Logic
+- Email Provider Logic
+- Calendar Provider Logic
 - Notifications
 - Background Workers
 
@@ -55,11 +55,11 @@ Do NOT implement:
 
 # Deliverables
 
-- Calendar Provider Interface
-- Calendar Service
-- Provider Registry
-- Event Management
-- Calendar APIs
+- Workflow Engine
+- Workflow Registry
+- Workflow Executor
+- Workflow State Management
+- Workflow APIs
 - Tests
 - Documentation
 
@@ -67,15 +67,13 @@ Do NOT implement:
 
 # Acceptance Criteria
 
-✓ Provider abstraction works
+✓ Workflow execution works
 
-✓ Event creation works
+✓ Trigger registration works
 
-✓ Event updates work
+✓ State persistence works
 
-✓ Event cancellation works
-
-✓ Mock provider works
+✓ Execution history works
 
 ✓ Tests pass
 
@@ -89,4 +87,4 @@ Do NOT implement:
 
 # Next Module
 
-14_WorkflowEngine.md
+15_InterviewAutomation.md
