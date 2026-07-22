@@ -20,3 +20,57 @@ class Permission(str, Enum):
 
     MANAGE_USERS = "MANAGE_USERS"
     VIEW_CANDIDATES = "VIEW_CANDIDATES"
+
+
+class CandidateStatus(str, Enum):
+    NEW = "NEW"
+    SCREENING = "SCREENING"
+    INTERVIEWING = "INTERVIEWING"
+    OFFER = "OFFER"
+    HIRED = "HIRED"
+    REJECTED = "REJECTED"
+
+
+class JobStatus(str, Enum):
+    DRAFT = "DRAFT"
+    PUBLISHED = "PUBLISHED"
+    CLOSED = "CLOSED"
+    ARCHIVED = "ARCHIVED"
+
+
+class ApplicationStatus(str, Enum):
+    APPLIED = "APPLIED"
+    REVIEWING = "REVIEWING"
+    INTERVIEWING = "INTERVIEWING"
+    REJECTED = "REJECTED"
+    HIRED = "HIRED"
+
+
+class ApplicationSource(str, Enum):
+    DIRECT = "DIRECT"
+    REFERRAL = "REFERRAL"
+    LINKEDIN = "LINKEDIN"
+    INDEED = "INDEED"
+    AGENCY = "AGENCY"
+
+
+class InterviewType(str, Enum):
+    PHONE = "PHONE"
+    VIDEO = "VIDEO"
+    ONSITE = "ONSITE"
+    TECHNICAL = "TECHNICAL"
+
+
+class InterviewStatus(str, Enum):
+    SCHEDULED = "SCHEDULED"
+    COMPLETED = "COMPLETED"
+    CANCELLED = "CANCELLED"
+    NO_SHOW = "NO_SHOW"
+
+
+class EmploymentType(str, Enum):
+    FULL_TIME = "FULL_TIME"
+    PART_TIME = "PART_TIME"
+    CONTRACT = "CONTRACT"
+    FREELANCE = "FREELANCE"
+    INTERNSHIP = "INTERNSHIP"

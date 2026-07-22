@@ -13,7 +13,9 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
     and attaches the authenticated clerk_user_id to the context.
     """
 
-    async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
+    async def dispatch(
+        self, request: Request, call_next: RequestResponseEndpoint
+    ) -> Response:
         auth_header = request.headers.get("Authorization")
 
         request.state.user_id = None

@@ -18,6 +18,15 @@ from app.database.base import Base
 
 # Import all models here so Alembic can detect them
 from app.models.auth import User, Organization, Membership
+from app.models.recruitment import (
+    Candidate,
+    Job,
+    Application,
+    Interview,
+    Resume,
+    Skill,
+    CandidateSkill,
+)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

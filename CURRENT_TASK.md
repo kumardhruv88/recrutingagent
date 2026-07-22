@@ -8,21 +8,23 @@ HireMind AI
 
 # Current Phase
 
-Phase 2 — Authentication & Multi-Tenancy
+Phase 3 — Database Architecture
 
 ---
 
 # Current Module
 
-Authentication & Multi-Tenancy
+Database Architecture
 
 ---
 
 # Goal
 
-Build a secure, production-ready authentication and multi-tenant foundation for HireMind AI using Clerk.
+Design and implement the core database architecture for HireMind AI.
 
-This module establishes identity, organization management, tenant isolation, and reusable authentication dependencies that every future business module will use.
+This phase establishes all production-ready database models, relationships, constraints, indexes, and migrations that will support future business modules.
+
+Business APIs are NOT implemented in this phase.
 
 ---
 
@@ -30,25 +32,20 @@ This module establishes identity, organization management, tenant isolation, and
 
 Implement ONLY:
 
-- Clerk authentication integration
-- Clerk SDK configuration
-- JWT verification
-- User synchronization
-- Organization synchronization
-- Membership synchronization
-- Clerk webhook endpoints
-- Multi-tenant request context
-- Authentication middleware
-- Organization middleware
-- Current User dependency
-- Current Organization dependency
-- Protected route dependencies
-- Authentication database models
-- Organization database models
-- Membership database models
-- Role placeholders
-- Permission placeholders
-- Authentication tests
+- Candidate model
+- Job model
+- Application model
+- Interview model
+- Resume model
+- Skill model
+- CandidateSkill mapping
+- Audit fields
+- Relationships
+- Foreign keys
+- Indexes
+- Constraints
+- SQLAlchemy models
+- Alembic migrations
 
 ---
 
@@ -56,89 +53,58 @@ Implement ONLY:
 
 Do NOT implement:
 
-- Candidates
-- Jobs
-- Applications
-- Resume Intelligence
-- GitHub Intelligence
-- AI Agents
-- AI Orchestrator
-- Email Automation
-- Calendar Automation
+- CRUD APIs
+- Business services
+- Resume parsing
+- GitHub analysis
+- AI
+- Email
+- Calendar
 - Notifications
 - Workflow Engine
-- Interview Scheduling
-- RAG
-- AI Copilot
-- Analytics
-- Business APIs
+- Interview scheduling
+- Candidate scoring
 
-Authentication and Multi-Tenancy only.
-
----
-
-# Architecture Rules
-
-Follow all standards defined in:
-
-- AI_CONTEXT.md
-- docs/backend/00_EngineeringStandards.md
-
-Reuse the existing Backend Foundation.
-
-Do not duplicate infrastructure.
-
-Business logic must remain outside routers.
-
-Repositories should contain only database operations.
-
-Services should coordinate business logic.
-
-All database operations must remain asynchronous.
+Only database architecture.
 
 ---
 
 # Deliverables
 
-By the end of this phase the backend should include:
-
-- Clerk integration
-- JWT authentication
-- User model
-- Organization model
-- Membership model
-- Authentication middleware
-- Organization middleware
-- Tenant-aware request context
-- Authentication dependencies
-- Webhook synchronization
-- Protected routes
-- Authentication tests
-- Updated documentation
+- Production-ready SQLAlchemy models
+- Alembic migrations
+- Relationships
+- Constraints
+- Indexes
+- Documentation
+- Tests
 
 ---
 
 # Acceptance Criteria
 
-The module is complete only if:
+✓ Models compile
 
-- Clerk authentication works
-- JWT verification succeeds
-- Clerk webhooks synchronize users
-- Organizations synchronize correctly
-- Memberships synchronize correctly
-- Tenant context resolves automatically
-- Protected endpoints reject unauthorized requests
-- Ruff passes
-- Black passes
-- MyPy passes
-- PyTest passes
-- Documentation is updated
+✓ Relationships work
+
+✓ Alembic migration succeeds
+
+✓ Indexes created
+
+✓ Foreign keys validated
+
+✓ Ruff passes
+
+✓ Black passes
+
+✓ MyPy passes
+
+✓ PyTest passes
 
 ---
 
 # Next Module
 
-03_DatabaseArchitecture.md
+04_Organizations.md
 
-Do NOT begin the next module until Authentication & Multi-Tenancy is fully completed, tested, and verified.
+Do NOT proceed until Database Architecture is complete.
