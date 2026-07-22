@@ -11,6 +11,7 @@ from app.core.handlers import register_exception_handlers
 from app.middleware.request_context import RequestContextMiddleware
 from app.middleware.auth import AuthenticationMiddleware
 from app.middleware.tenant import TenantMiddleware
+from app.middleware.metrics import MetricsMiddleware
 from app.database.session import engine
 from app.api.v1 import health
 from app.api.v1.webhooks import clerk
@@ -30,11 +31,13 @@ from app.api.v1.rag.router import router as rag_router
 from app.api.v1.workers.router import router as workers_router
 from app.api.v1.webhooks.router import router as webhooks_router
 from app.api.v1.notifications.router import router as notifications_router
+from app.api.v1.observability.router import router as observability_router
 
 
 def register_middleware(app: FastAPI) -> None:
     settings = get_settings()
     app.add_middleware(RequestContextMiddleware)
+    app.add_middleware(MetricsMiddleware)
     app.add_middleware(AuthenticationMiddleware)
     app.add_middleware(TenantMiddleware)
     app.add_middleware(
@@ -132,6 +135,11 @@ def register_routers(app: FastAPI) -> None:
         notifications_router,
         prefix=f"{settings.API_V1_STR}/notifications",
         tags=["Notifications"],
+    )
+    app.include_router(
+        observability_router,
+        prefix=f"{settings.API_V1_STR}/observability",
+        tags=["Observability"],
     )
 
 
