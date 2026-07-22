@@ -42,7 +42,8 @@ READ_ONLY_PERMISSIONS = [
 ROLE_PERMISSIONS: Dict[Role, List[Permission]] = {
     Role.OWNER: list(Permission),  # All permissions
     Role.ADMIN: [
-        p for p in list(Permission) 
+        p
+        for p in list(Permission)
         if p not in (Permission.ORGANIZATION_DELETE, Permission.FUTURE_BILLING_MANAGE)
     ],
     Role.RECRUITER: [

@@ -8,23 +8,23 @@ HireMind AI
 
 # Current Phase
 
-Phase 5 — Role Based Access Control (RBAC)
+Phase 6 — Candidate Management
 
 ---
 
 # Current Module
 
-Role Based Access Control
+Candidate Management
 
 ---
 
 # Goal
 
-Implement a production-ready Role Based Access Control (RBAC) system for HireMind AI.
+Implement a production-ready Candidate Management module for HireMind AI.
 
-This module establishes permissions, role enforcement, authorization policies, and reusable authorization dependencies for all future business modules.
+This module manages candidate profiles, contact information, resume metadata, lifecycle status, and recruiter interactions.
 
-Authentication and Organization Management are already complete.
+The module must fully integrate with Authentication, Organization Management, RBAC, and the existing Database Architecture.
 
 ---
 
@@ -32,15 +32,16 @@ Authentication and Organization Management are already complete.
 
 Implement ONLY:
 
-- Role Management
-- Permission Management
-- Authorization Service
-- Authorization Dependencies
-- Permission Enforcement
-- Role Assignment
-- Permission Policies
-- Authorization Middleware (if required)
-- RBAC Tests
+- Candidate Repository
+- Candidate Service
+- Candidate CRUD APIs
+- Candidate Search
+- Candidate Filtering
+- Candidate Pagination
+- Candidate Status Management
+- Candidate Profile APIs
+- Candidate Validation
+- Candidate Tests
 
 ---
 
@@ -48,40 +49,47 @@ Implement ONLY:
 
 Do NOT implement:
 
-- Candidates
+- Resume Parsing
+- Resume Intelligence
+- AI Scoring
+- ATS Matching
+- GitHub Analysis
 - Jobs
 - Applications
-- Resume Intelligence
-- AI Services
+- Interviews
 - Email Automation
 - Calendar
-- Notifications
 - Workflow Engine
+- AI Copilot
 
 ---
 
 # Deliverables
 
-- Role Enum
-- Permission Enum
-- Authorization Service
-- Permission Checker
-- Authorization Dependencies
-- Permission Decorators
-- RBAC Tests
+- Candidate Repository
+- Candidate Service
+- Candidate CRUD APIs
+- Search & Filtering
+- Pagination
+- Validation
+- Tests
 - Documentation
 
 ---
 
 # Acceptance Criteria
 
-✓ Roles resolve correctly
+✓ Candidate CRUD works
 
-✓ Permissions resolve correctly
+✓ Search works
 
-✓ Unauthorized requests return 403
+✓ Filtering works
 
-✓ Permission dependencies work
+✓ Pagination works
+
+✓ RBAC enforced
+
+✓ Organization isolation enforced
 
 ✓ Tests pass
 
@@ -95,4 +103,4 @@ Do NOT implement:
 
 # Next Module
 
-06_Candidates.md
+07_Jobs.md

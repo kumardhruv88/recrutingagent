@@ -16,6 +16,7 @@ from app.api.v1 import health
 from app.api.v1.webhooks import clerk
 from app.api.v1.auth import me
 from app.api.v1.organizations import router as org_router
+from app.api.v1.candidates import router as candidate_router
 
 
 def register_middleware(app: FastAPI) -> None:
@@ -48,6 +49,11 @@ def register_routers(app: FastAPI) -> None:
         org_router.router,
         prefix=f"{settings.API_V1_STR}/organizations",
         tags=["Organizations"],
+    )
+    app.include_router(
+        candidate_router.router,
+        prefix=f"{settings.API_V1_STR}/candidates",
+        tags=["Candidates"],
     )
 
 

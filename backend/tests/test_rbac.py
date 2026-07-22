@@ -50,7 +50,11 @@ async def test_get_user_role_success(
         role=Role.ADMIN,
         is_active=True,
     )
-    monkeypatch.setattr(auth_service.mem_repo, "get_user_membership", AsyncMock(return_value=mock_membership))
+    monkeypatch.setattr(
+        auth_service.mem_repo,
+        "get_user_membership",
+        AsyncMock(return_value=mock_membership),
+    )
 
     role = await auth_service.get_user_role(mock_db, test_user.id, test_org.id)
     assert role == Role.ADMIN
@@ -72,7 +76,11 @@ async def test_get_user_role_not_active(
         role=Role.ADMIN,
         is_active=False,
     )
-    monkeypatch.setattr(auth_service.mem_repo, "get_user_membership", AsyncMock(return_value=mock_membership))
+    monkeypatch.setattr(
+        auth_service.mem_repo,
+        "get_user_membership",
+        AsyncMock(return_value=mock_membership),
+    )
 
     with pytest.raises(HTTPException) as exc:
         await auth_service.get_user_role(mock_db, test_user.id, test_org.id)
@@ -95,7 +103,11 @@ async def test_require_permissions_success(
         role=Role.RECRUITER,
         is_active=True,
     )
-    monkeypatch.setattr(auth_service.mem_repo, "get_user_membership", AsyncMock(return_value=mock_membership))
+    monkeypatch.setattr(
+        auth_service.mem_repo,
+        "get_user_membership",
+        AsyncMock(return_value=mock_membership),
+    )
 
     # Recruiter has CANDIDATE_CREATE, should not raise Exception
     await auth_service.require_permissions(
@@ -118,7 +130,11 @@ async def test_require_permissions_fail(
         role=Role.VIEWER,
         is_active=True,
     )
-    monkeypatch.setattr(auth_service.mem_repo, "get_user_membership", AsyncMock(return_value=mock_membership))
+    monkeypatch.setattr(
+        auth_service.mem_repo,
+        "get_user_membership",
+        AsyncMock(return_value=mock_membership),
+    )
 
     # Viewer does not have CANDIDATE_CREATE
     with pytest.raises(HTTPException) as exc:
@@ -144,7 +160,11 @@ async def test_require_roles_success(
         role=Role.OWNER,
         is_active=True,
     )
-    monkeypatch.setattr(auth_service.mem_repo, "get_user_membership", AsyncMock(return_value=mock_membership))
+    monkeypatch.setattr(
+        auth_service.mem_repo,
+        "get_user_membership",
+        AsyncMock(return_value=mock_membership),
+    )
 
     # Owner should be allowed
     await auth_service.require_roles(
