@@ -8,21 +8,21 @@ HireMind AI
 
 # Current Phase
 
-Phase 11 — AI Orchestrator
+Phase 12 — Email Automation
 
 ---
 
 # Current Module
 
-AI Orchestrator
+Email Automation
 
 ---
 
 # Goal
 
-Implement a production-ready AI Orchestrator that coordinates AI providers, tools, prompts, and execution pipelines across the HireMind AI platform.
+Implement a production-ready Email Automation module that provides a centralized email delivery infrastructure for HireMind AI.
 
-This module acts as the single entry point for all future AI features.
+This module should support reusable templates, provider abstraction, delivery tracking, and future workflow integration.
 
 ---
 
@@ -30,14 +30,12 @@ This module acts as the single entry point for all future AI features.
 
 Implement ONLY:
 
-- AI Orchestrator
-- AI Provider Abstraction
-- Prompt Management
-- AI Task Routing
-- AI Execution Pipeline
-- AI Response Models
-- Provider Registry
-- AI Error Handling
+- Email Provider Interface
+- Email Service
+- Email Template Registry
+- Email Queue Interface
+- Email Delivery Tracking
+- Email APIs
 - Tests
 
 ---
@@ -46,25 +44,23 @@ Implement ONLY:
 
 Do NOT implement:
 
-- Chat Assistant
-- Resume ATS Scoring
-- Candidate Ranking
-- Email Automation
-- Calendar Automation
-- Interview Copilot
-- RAG
+- AI Email Generation
 - Workflow Engine
+- Interview Invitations
+- Calendar Invitations
 - Notifications
+- Scheduled Campaigns
+- Background Workers
 
 ---
 
 # Deliverables
 
-- AI Orchestrator
-- AI Provider Interface
-- Prompt Registry
-- Task Router
-- Response Models
+- Email Provider Interface
+- Email Service
+- Template Registry
+- Delivery Tracking
+- Email APIs
 - Tests
 - Documentation
 
@@ -74,13 +70,13 @@ Do NOT implement:
 
 ✓ Provider abstraction works
 
-✓ Task routing works
+✓ Template rendering works
 
-✓ Prompt loading works
+✓ Email sending works
+
+✓ Delivery tracking works
 
 ✓ Mock provider works
-
-✓ Error handling works
 
 ✓ Tests pass
 
@@ -94,4 +90,4 @@ Do NOT implement:
 
 # Next Module
 
-12_EmailAutomation.md
+13_CalendarAutomation.md

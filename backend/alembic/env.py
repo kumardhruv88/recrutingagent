@@ -26,7 +26,10 @@ from app.models.recruitment import (
     Resume,
     Skill,
     CandidateSkill,
+    GithubProfile,
+    GithubRepository,
 )
+from app.models.email import EmailDeliveryLog
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

@@ -20,7 +20,8 @@ from app.api.v1.candidates import router as candidate_router
 from app.api.v1.jobs import router as job_router
 from app.api.v1.applications import router as application_router
 from app.api.v1.resumes import router as resume_router
-from app.api.v1.github import router as github_router
+from app.api.v1.github.router import router as github_router
+from app.api.v1.emails.router import router as emails_router
 
 
 def register_middleware(app: FastAPI) -> None:
@@ -75,9 +76,14 @@ def register_routers(app: FastAPI) -> None:
         tags=["Resumes"],
     )
     app.include_router(
-        github_router.router,
+        github_router,
         prefix=f"{settings.API_V1_STR}/github",
         tags=["GitHub"],
+    )
+    app.include_router(
+        emails_router,
+        prefix=f"{settings.API_V1_STR}/emails",
+        tags=["Emails"],
     )
 
 
