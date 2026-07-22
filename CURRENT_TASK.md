@@ -8,23 +8,23 @@ HireMind AI
 
 # Current Phase
 
-Phase 7 — Job Management
+Phase 8 — Application Management
 
 ---
 
 # Current Module
 
-Job Management
+Application Management
 
 ---
 
 # Goal
 
-Implement a production-ready Job Management module.
+Implement a production-ready Application Management module.
 
-This module manages job creation, updates, publishing, archiving, searching, filtering, and lifecycle management.
+Applications connect Candidates and Jobs while managing the recruitment lifecycle.
 
-Authentication, Organizations, RBAC, and Candidate Management are already complete.
+Authentication, Organizations, RBAC, Candidates, and Jobs are already complete.
 
 ---
 
@@ -32,15 +32,16 @@ Authentication, Organizations, RBAC, and Candidate Management are already comple
 
 Implement ONLY:
 
-- Job Repository
-- Job Service
-- Job CRUD APIs
-- Job Search
-- Job Filtering
-- Job Pagination
-- Job Status Management
-- Job Validation
-- Job Tests
+- Application Repository
+- Application Service
+- Application CRUD APIs
+- Application Status Management
+- Candidate ↔ Job Linking
+- Stage Management
+- Application Timeline
+- Application Notes
+- Application Validation
+- Tests
 
 ---
 
@@ -48,26 +49,26 @@ Implement ONLY:
 
 Do NOT implement:
 
-- Applications
+- Resume Parsing
 - Resume Intelligence
-- AI Matching
-- Candidate Ranking
+- ATS Scoring
+- AI Ranking
+- GitHub Analysis
 - Interview Scheduling
 - Email Automation
 - Calendar Integration
 - Workflow Engine
-- Notifications
 
 ---
 
 # Deliverables
 
-- Job Repository
-- Job Service
-- Job CRUD APIs
-- Search
-- Filtering
-- Pagination
+- Application Repository
+- Application Service
+- Application CRUD APIs
+- Stage Management
+- Timeline
+- Notes
 - Validation
 - Tests
 - Documentation
@@ -78,13 +79,13 @@ Do NOT implement:
 
 ✓ CRUD works
 
-✓ Search works
+✓ Candidate & Job linking works
 
-✓ Filtering works
+✓ Stage transitions work
 
-✓ Pagination works
+✓ Timeline works
 
-✓ Status transitions work
+✓ Notes work
 
 ✓ RBAC enforced
 
@@ -102,4 +103,4 @@ Do NOT implement:
 
 # Next Module
 
-08_Applications.md
+09_ResumeIntelligence.md

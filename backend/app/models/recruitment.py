@@ -1,5 +1,5 @@
 import uuid
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from datetime import datetime
 from sqlalchemy import (
     String,
@@ -12,6 +12,7 @@ from sqlalchemy import (
     DateTime,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.dialects.postgresql import JSONB
 
 from app.database.base import Base
 from app.database.mixins import UUIDMixin, TimestampMixin
@@ -134,6 +135,14 @@ class Application(UUIDMixin, TimestampMixin, Base):
     interviews: Mapped[List["Interview"]] = relationship(
         "Interview", back_populates="application", cascade="all, delete-orphan"
     )
+    notes: Mapped[List["ApplicationNote"]] = relationship(
+        "ApplicationNote", back_populates="application", cascade="all, delete-orphan"
+    )
+    timeline_events: Mapped[List["ApplicationTimelineEvent"]] = relationship(
+        "ApplicationTimelineEvent",
+        back_populates="application",
+        cascade="all, delete-orphan",
+    )
 
 
 class Interview(UUIDMixin, TimestampMixin, Base):
@@ -202,3 +211,37 @@ class CandidateSkill(Base):
 
     candidate: Mapped["Candidate"] = relationship("Candidate", back_populates="skills")
     skill: Mapped["Skill"] = relationship("Skill", back_populates="candidate_skills")
+
+
+class ApplicationNote(UUIDMixin, TimestampMixin, Base):
+    __tablename__ = "application_notes"
+
+    application_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("applications.id", ondelete="CASCADE"), index=True
+    )
+    author_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL"), nullable=True
+    )
+    content: Mapped[str] = mapped_column(Text)
+
+    application: Mapped["Application"] = relationship(
+        "Application", back_populates="notes"
+    )
+    author: Mapped["User"] = relationship("User")
+
+
+class ApplicationTimelineEvent(UUIDMixin, TimestampMixin, Base):
+    __tablename__ = "application_timeline_events"
+
+    application_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("applications.id", ondelete="CASCADE"), index=True
+    )
+    event_type: Mapped[str] = mapped_column(String(100), index=True)
+    # Using JSON type for broad compatibility (SQLite/Postgres), wait actually JSON is supported in SQLAlchemy via sqlalchemy.types.JSON
+    from sqlalchemy.types import JSON
+
+    event_data: Mapped[Optional[Dict[str, Any]]] = mapped_column(JSON, nullable=True)
+
+    application: Mapped["Application"] = relationship(
+        "Application", back_populates="timeline_events"
+    )

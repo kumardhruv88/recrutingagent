@@ -18,6 +18,7 @@ from app.api.v1.auth import me
 from app.api.v1.organizations import router as org_router
 from app.api.v1.candidates import router as candidate_router
 from app.api.v1.jobs import router as job_router
+from app.api.v1.applications import router as application_router
 
 
 def register_middleware(app: FastAPI) -> None:
@@ -60,6 +61,11 @@ def register_routers(app: FastAPI) -> None:
         job_router.router,
         prefix=f"{settings.API_V1_STR}/jobs",
         tags=["Jobs"],
+    )
+    app.include_router(
+        application_router.router,
+        prefix=f"{settings.API_V1_STR}/applications",
+        tags=["Applications"],
     )
 
 
