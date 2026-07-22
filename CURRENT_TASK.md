@@ -8,21 +8,21 @@ HireMind AI
 
 # Current Phase
 
-Phase 10 — GitHub Intelligence
+Phase 11 — AI Orchestrator
 
 ---
 
 # Current Module
 
-GitHub Intelligence
+AI Orchestrator
 
 ---
 
 # Goal
 
-Implement a production-ready GitHub Intelligence module that fetches, validates, and stores public GitHub profile and repository information for candidates.
+Implement a production-ready AI Orchestrator that coordinates AI providers, tools, prompts, and execution pipelines across the HireMind AI platform.
 
-Authentication, Organizations, RBAC, Candidates, Jobs, Applications, and Resume Intelligence are already complete.
+This module acts as the single entry point for all future AI features.
 
 ---
 
@@ -30,13 +30,14 @@ Authentication, Organizations, RBAC, Candidates, Jobs, Applications, and Resume 
 
 Implement ONLY:
 
-- GitHub Profile Integration
-- GitHub Repository Sync
-- GitHub Statistics Collection
-- GitHub Repository Metadata
-- GitHub Sync Service
-- GitHub Repository
-- GitHub APIs
+- AI Orchestrator
+- AI Provider Abstraction
+- Prompt Management
+- AI Task Routing
+- AI Execution Pipeline
+- AI Response Models
+- Provider Registry
+- AI Error Handling
 - Tests
 
 ---
@@ -45,25 +46,25 @@ Implement ONLY:
 
 Do NOT implement:
 
-- AI Candidate Scoring
-- Resume Matching
-- ATS Ranking
-- AI Recommendations
-- Interview Copilot
+- Chat Assistant
+- Resume ATS Scoring
+- Candidate Ranking
 - Email Automation
-- Calendar Integration
+- Calendar Automation
+- Interview Copilot
+- RAG
 - Workflow Engine
+- Notifications
 
 ---
 
 # Deliverables
 
-- GitHub Repository
-- GitHub Service
-- GitHub Sync Pipeline
-- GitHub APIs
-- Repository Metadata
-- Statistics Collection
+- AI Orchestrator
+- AI Provider Interface
+- Prompt Registry
+- Task Router
+- Response Models
 - Tests
 - Documentation
 
@@ -71,17 +72,15 @@ Do NOT implement:
 
 # Acceptance Criteria
 
-✓ GitHub profile sync works
+✓ Provider abstraction works
 
-✓ Repository sync works
+✓ Task routing works
 
-✓ Statistics collected
+✓ Prompt loading works
 
-✓ Metadata stored
+✓ Mock provider works
 
-✓ RBAC enforced
-
-✓ Organization isolation enforced
+✓ Error handling works
 
 ✓ Tests pass
 
@@ -95,4 +94,4 @@ Do NOT implement:
 
 # Next Module
 
-11_AIOrchestrator.md
+12_EmailAutomation.md
