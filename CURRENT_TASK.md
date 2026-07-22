@@ -8,21 +8,21 @@ HireMind AI
 
 # Current Phase
 
-Phase 12 — Email Automation
+Phase 13 — Calendar Automation
 
 ---
 
 # Current Module
 
-Email Automation
+Calendar Automation
 
 ---
 
 # Goal
 
-Implement a production-ready Email Automation module that provides a centralized email delivery infrastructure for HireMind AI.
+Implement a production-ready Calendar Automation module that provides a centralized calendar scheduling infrastructure for HireMind AI.
 
-This module should support reusable templates, provider abstraction, delivery tracking, and future workflow integration.
+This module should support provider abstraction, event creation, updates, cancellations, attendee management, and future workflow integration.
 
 ---
 
@@ -30,12 +30,12 @@ This module should support reusable templates, provider abstraction, delivery tr
 
 Implement ONLY:
 
-- Email Provider Interface
-- Email Service
-- Email Template Registry
-- Email Queue Interface
-- Email Delivery Tracking
-- Email APIs
+- Calendar Provider Interface
+- Calendar Service
+- Calendar Provider Registry
+- Event Management
+- Attendee Management
+- Calendar APIs
 - Tests
 
 ---
@@ -44,23 +44,22 @@ Implement ONLY:
 
 Do NOT implement:
 
-- AI Email Generation
+- AI Scheduling
+- Interview Workflow
+- Email Invitations
 - Workflow Engine
-- Interview Invitations
-- Calendar Invitations
 - Notifications
-- Scheduled Campaigns
 - Background Workers
 
 ---
 
 # Deliverables
 
-- Email Provider Interface
-- Email Service
-- Template Registry
-- Delivery Tracking
-- Email APIs
+- Calendar Provider Interface
+- Calendar Service
+- Provider Registry
+- Event Management
+- Calendar APIs
 - Tests
 - Documentation
 
@@ -70,11 +69,11 @@ Do NOT implement:
 
 ✓ Provider abstraction works
 
-✓ Template rendering works
+✓ Event creation works
 
-✓ Email sending works
+✓ Event updates work
 
-✓ Delivery tracking works
+✓ Event cancellation works
 
 ✓ Mock provider works
 
@@ -90,4 +89,4 @@ Do NOT implement:
 
 # Next Module
 
-13_CalendarAutomation.md
+14_WorkflowEngine.md

@@ -30,6 +30,7 @@ from app.models.recruitment import (
     GithubRepository,
 )
 from app.models.email import EmailDeliveryLog
+from app.models.calendar import CalendarEvent
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
