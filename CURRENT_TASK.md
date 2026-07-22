@@ -8,21 +8,21 @@ HireMind AI
 
 # Current Phase
 
-Phase 14 — Workflow Engine
+Phase 15 — Interview Automation
 
 ---
 
 # Current Module
 
-Workflow Engine
+Interview Automation
 
 ---
 
 # Goal
 
-Implement a production-ready Workflow Engine that orchestrates business workflows across HireMind AI.
+Implement a production-ready Interview Automation module that manages the complete interview lifecycle.
 
-The Workflow Engine coordinates existing services but does not replace their business logic.
+This module coordinates Applications, Calendar Automation, Email Automation, Workflow Engine, and AI Orchestrator to automate interview scheduling and management.
 
 ---
 
@@ -30,12 +30,13 @@ The Workflow Engine coordinates existing services but does not replace their bus
 
 Implement ONLY:
 
-- Workflow Engine
-- Workflow Definitions
-- Workflow Executor
-- Workflow State Management
-- Workflow Trigger Registry
-- Workflow APIs
+- Interview Scheduling
+- Interview Lifecycle Management
+- Interview Service
+- Interview APIs
+- Interview Feedback
+- Interview Status Management
+- Candidate & Interviewer Assignment
 - Tests
 
 ---
@@ -44,22 +45,22 @@ Implement ONLY:
 
 Do NOT implement:
 
-- AI Scheduling
-- Interview Logic
-- Email Provider Logic
-- Calendar Provider Logic
+- AI Copilot
+- RAG
+- Live Interview Assistant
+- Speech-to-Text
+- Interview Summaries
 - Notifications
-- Background Workers
 
 ---
 
 # Deliverables
 
-- Workflow Engine
-- Workflow Registry
-- Workflow Executor
-- Workflow State Management
-- Workflow APIs
+- Interview Service
+- Interview APIs
+- Interview Scheduling
+- Feedback Management
+- Status Management
 - Tests
 - Documentation
 
@@ -67,13 +68,15 @@ Do NOT implement:
 
 # Acceptance Criteria
 
-✓ Workflow execution works
+✓ Interview scheduling works
 
-✓ Trigger registration works
+✓ Calendar integration works
 
-✓ State persistence works
+✓ Email integration works
 
-✓ Execution history works
+✓ Workflow integration works
+
+✓ Feedback works
 
 ✓ Tests pass
 
@@ -87,4 +90,4 @@ Do NOT implement:
 
 # Next Module
 
-15_InterviewAutomation.md
+16_AICopilot.md

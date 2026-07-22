@@ -24,6 +24,7 @@ from app.api.v1.github.router import router as github_router
 from app.api.v1.emails.router import router as emails_router
 from app.api.v1.calendar.router import router as calendar_router
 from app.api.v1.workflows.router import router as workflows_router
+from app.api.v1.interviews.router import router as interviews_router
 
 
 def register_middleware(app: FastAPI) -> None:
@@ -96,6 +97,11 @@ def register_routers(app: FastAPI) -> None:
         workflows_router,
         prefix=f"{settings.API_V1_STR}/workflows",
         tags=["Workflows"],
+    )
+    app.include_router(
+        interviews_router,
+        prefix=f"{settings.API_V1_STR}/interviews",
+        tags=["Interviews"],
     )
 
 
