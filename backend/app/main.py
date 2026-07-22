@@ -15,7 +15,7 @@ from app.database.session import engine
 from app.api.v1 import health
 from app.api.v1.webhooks import clerk
 from app.api.v1.auth import me
-from app.api.v1.organizations import current as current_org
+from app.api.v1.organizations import router as org_router
 
 
 def register_middleware(app: FastAPI) -> None:
@@ -45,7 +45,7 @@ def register_routers(app: FastAPI) -> None:
     )
     app.include_router(me.router, prefix=f"{settings.API_V1_STR}/auth", tags=["Auth"])
     app.include_router(
-        current_org.router,
+        org_router.router,
         prefix=f"{settings.API_V1_STR}/organizations",
         tags=["Organizations"],
     )

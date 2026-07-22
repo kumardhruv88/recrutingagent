@@ -22,6 +22,13 @@ class Permission(str, Enum):
     VIEW_CANDIDATES = "VIEW_CANDIDATES"
 
 
+class InvitationStatus(str, Enum):
+    PENDING = "PENDING"
+    ACCEPTED = "ACCEPTED"
+    EXPIRED = "EXPIRED"
+    CANCELLED = "CANCELLED"
+
+
 class CandidateStatus(str, Enum):
     NEW = "NEW"
     SCREENING = "SCREENING"

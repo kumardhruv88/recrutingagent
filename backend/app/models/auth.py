@@ -6,7 +6,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.base import Base
 from app.database.mixins import UUIDMixin, TimestampMixin
-from app.models.enums import Role
+from app.models.enums import Role, InvitationStatus
 
 
 class User(UUIDMixin, TimestampMixin, Base):
@@ -62,3 +62,25 @@ class Membership(UUIDMixin, Base):
     organization: Mapped["Organization"] = relationship(
         "Organization", back_populates="memberships"
     )
+
+
+class Invitation(UUIDMixin, TimestampMixin, Base):
+    __tablename__ = "invitations"
+
+    organization_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("organizations.id", ondelete="CASCADE"), index=True
+    )
+    clerk_invitation_id: Mapped[str] = mapped_column(
+        String(255), unique=True, index=True
+    )
+    email: Mapped[str] = mapped_column(String(255), index=True)
+    role: Mapped[Role] = mapped_column(
+        SAEnum(Role, name="role_enum", native_enum=False), default=Role.MEMBER
+    )
+    status: Mapped[InvitationStatus] = mapped_column(
+        SAEnum(InvitationStatus, name="invitationstatus_enum", native_enum=False),
+        default=InvitationStatus.PENDING,
+    )
+
+    # Relationships
+    organization: Mapped["Organization"] = relationship("Organization")

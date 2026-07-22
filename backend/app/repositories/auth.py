@@ -2,9 +2,10 @@ import uuid
 from typing import Optional, Any
 from sqlalchemy import select, or_
 from sqlalchemy.ext.asyncio import AsyncSession
+from typing import Sequence
 
 from app.repositories.base import BaseRepository
-from app.models.auth import User, Organization, Membership
+from app.models.auth import User, Organization, Membership, Invitation
 
 
 class UserRepository(BaseRepository[User]):
@@ -42,6 +43,15 @@ class OrganizationRepository(BaseRepository[Organization]):
         result = await db.execute(stmt)
         return result.scalars().first()
 
+    async def list_for_user(
+        self, db: AsyncSession, user_id: Any
+    ) -> Sequence[Organization]:
+        stmt = (
+            select(Organization).join(Membership).where(Membership.user_id == user_id)
+        )
+        result = await db.execute(stmt)
+        return result.scalars().all()
+
 
 class MembershipRepository(BaseRepository[Membership]):
     async def get_user_membership(
@@ -52,3 +62,19 @@ class MembershipRepository(BaseRepository[Membership]):
         )
         result = await db.execute(stmt)
         return result.scalars().first()
+
+
+class InvitationRepository(BaseRepository[Invitation]):
+    async def get_by_clerk_id(
+        self, db: AsyncSession, clerk_id: str
+    ) -> Optional[Invitation]:
+        stmt = select(Invitation).where(Invitation.clerk_invitation_id == clerk_id)
+        result = await db.execute(stmt)
+        return result.scalars().first()
+
+    async def list_for_organization(
+        self, db: AsyncSession, org_id: Any
+    ) -> Sequence[Invitation]:
+        stmt = select(Invitation).where(Invitation.organization_id == org_id)
+        result = await db.execute(stmt)
+        return result.scalars().all()

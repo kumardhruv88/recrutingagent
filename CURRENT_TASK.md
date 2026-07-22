@@ -8,23 +8,25 @@ HireMind AI
 
 # Current Phase
 
-Phase 3 — Database Architecture
+Phase 4 — Organization Management
 
 ---
 
 # Current Module
 
-Database Architecture
+Organization Management
 
 ---
 
 # Goal
 
-Design and implement the core database architecture for HireMind AI.
+Implement production-ready organization management for HireMind AI.
 
-This phase establishes all production-ready database models, relationships, constraints, indexes, and migrations that will support future business modules.
+This module manages organizations, organization settings, invitations, organization switching, and active organization context.
 
-Business APIs are NOT implemented in this phase.
+Authentication and database models already exist.
+
+Do NOT implement RBAC or business modules.
 
 ---
 
@@ -32,20 +34,15 @@ Business APIs are NOT implemented in this phase.
 
 Implement ONLY:
 
-- Candidate model
-- Job model
-- Application model
-- Interview model
-- Resume model
-- Skill model
-- CandidateSkill mapping
-- Audit fields
-- Relationships
-- Foreign keys
-- Indexes
-- Constraints
-- SQLAlchemy models
-- Alembic migrations
+- Organization Service
+- Organization Repository
+- Organization APIs
+- Active Organization
+- Organization Switching
+- Organization Settings
+- Organization Invitations
+- Organization Validation
+- Organization Tests
 
 ---
 
@@ -53,45 +50,42 @@ Implement ONLY:
 
 Do NOT implement:
 
-- CRUD APIs
-- Business services
-- Resume parsing
-- GitHub analysis
+- RBAC
+- Candidates
+- Jobs
+- Applications
+- Resume Intelligence
 - AI
 - Email
 - Calendar
 - Notifications
-- Workflow Engine
-- Interview scheduling
-- Candidate scoring
-
-Only database architecture.
+- Workflow
 
 ---
 
 # Deliverables
 
-- Production-ready SQLAlchemy models
-- Alembic migrations
-- Relationships
-- Constraints
-- Indexes
-- Documentation
+- Organization Repository
+- Organization Service
+- Organization APIs
+- Organization Switching
+- Organization Invitations
 - Tests
+- Documentation
 
 ---
 
 # Acceptance Criteria
 
-✓ Models compile
+✓ Organization CRUD works
 
-✓ Relationships work
+✓ Organization switching works
 
-✓ Alembic migration succeeds
+✓ Invitations work
 
-✓ Indexes created
+✓ Active organization resolves
 
-✓ Foreign keys validated
+✓ Tests pass
 
 ✓ Ruff passes
 
@@ -99,12 +93,8 @@ Only database architecture.
 
 ✓ MyPy passes
 
-✓ PyTest passes
-
 ---
 
 # Next Module
 
-04_Organizations.md
-
-Do NOT proceed until Database Architecture is complete.
+05_RBAC.md
