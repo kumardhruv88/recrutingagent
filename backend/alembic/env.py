@@ -35,6 +35,7 @@ from app.models.workflow import WorkflowExecution
 from app.models.rag import DocumentChunk
 from app.models.worker import BackgroundJob
 from app.models.webhook import WebhookEvent
+from app.models.notification import NotificationLog
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

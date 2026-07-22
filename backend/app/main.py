@@ -29,6 +29,7 @@ from app.api.v1.copilot.router import router as copilot_router
 from app.api.v1.rag.router import router as rag_router
 from app.api.v1.workers.router import router as workers_router
 from app.api.v1.webhooks.router import router as webhooks_router
+from app.api.v1.notifications.router import router as notifications_router
 
 
 def register_middleware(app: FastAPI) -> None:
@@ -126,6 +127,11 @@ def register_routers(app: FastAPI) -> None:
         webhooks_router,
         prefix=f"{settings.API_V1_STR}/webhooks",
         tags=["Webhooks"],
+    )
+    app.include_router(
+        notifications_router,
+        prefix=f"{settings.API_V1_STR}/notifications",
+        tags=["Notifications"],
     )
 
 

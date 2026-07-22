@@ -8,57 +8,59 @@ HireMind AI
 
 # Current Phase
 
-Phase 19 — Webhooks
+Phase 21 — Observability
 
 ---
 
 # Current Module
 
-Webhook Infrastructure
+Observability
 
 ---
 
 # Goal
 
-Implement a production-ready Webhook Infrastructure module that securely receives, validates, processes, and dispatches webhook events from external services.
+Implement lightweight production observability using only free technologies.
 
-This module serves as the centralized webhook gateway for the platform.
+Provide structured logging, request tracing, health endpoints, error handling, audit logging, and deployment diagnostics suitable for Hugging Face Spaces and Vercel.
 
 ---
 
 # Scope
 
-Implement ONLY:
+Implement ONLY
 
-- Webhook Registry
-- Webhook Signature Validation
-- Webhook Event Dispatcher
-- Webhook Event Storage
-- Webhook Retry Support
-- Webhook APIs
+- Structured Logging
+- Request Correlation IDs
+- Health Endpoints
+- Readiness Checks
+- Audit Logging
+- Global Exception Monitoring
+- Request Metrics
+- Observability APIs
 - Tests
 
 ---
 
 # Do NOT Implement
 
-Do NOT implement:
-
-- Provider Business Logic
-- Notification Logic
-- Workflow Logic
-- AI Logic
+- Prometheus
+- Grafana
+- OpenTelemetry Collector
+- Jaeger
+- Docker Monitoring
+- Kubernetes Monitoring
+- Cloud Vendor Monitoring
 
 ---
 
 # Deliverables
 
-- Webhook Registry
-- Signature Validators
-- Event Dispatcher
-- Event Persistence
-- Retry Support
-- APIs
+- Logging Middleware
+- Correlation ID Middleware
+- Health APIs
+- Audit Logs
+- Metrics Middleware
 - Tests
 - Documentation
 
@@ -66,24 +68,22 @@ Do NOT implement:
 
 # Acceptance Criteria
 
-✓ Signature validation works
+✓ Structured logs
 
-✓ Event dispatch works
+✓ Correlation IDs
 
-✓ Event persistence works
+✓ Health endpoint
 
-✓ Retry support works
+✓ Readiness endpoint
+
+✓ Audit logs
+
+✓ Request metrics
 
 ✓ Tests pass
-
-✓ Ruff passes
-
-✓ Black passes
-
-✓ MyPy passes
 
 ---
 
 # Next Module
 
-20_Notifications.md
+22_TestingStrategy.md
