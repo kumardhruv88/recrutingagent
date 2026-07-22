@@ -535,6 +535,7 @@ Next Recommended Phase
 
 =========================================================
 IMPORTANT
+
 =========================================================
 
 If you encounter dependency conflicts,
@@ -554,3 +555,66 @@ Do not ask for confirmation during implementation.
 Work until the entire foundation is complete.
 
 At the end, ensure the project is in a production-ready state for Phase 1 (Authentication & Organization Management).
+
+---
+
+# Backend Engineering Standards
+
+The backend is a production-grade modular monolith.
+
+Every backend module must follow:
+
+- Clean Architecture
+- SOLID Principles
+- Repository Pattern
+- Service Layer
+- Dependency Injection
+- Async SQLAlchemy
+- Pydantic v2
+- FastAPI Best Practices
+
+Never duplicate logic.
+
+Never place business logic inside routers.
+
+Routers only validate requests and delegate to services.
+
+Repositories communicate with the database.
+
+Services contain business logic.
+
+Models remain persistence models.
+
+Schemas remain API contracts.
+
+Always prefer composition over inheritance.
+
+Every module must be independently testable.
+
+Every service must be injectable.
+
+All APIs must return a standardized response model.
+
+All exceptions must inherit from the shared exception hierarchy.
+
+Logging must use structured logging.
+
+All database access must be asynchronous.
+
+Every feature must include
+
+- Repository
+- Service
+- Schema
+- Router
+- Tests
+
+No feature should bypass the service layer.
+
+No router should directly access the database.
+
+No repository should contain business logic.
+
+The backend must be designed for future AI agents, background workers, and workflow orchestration.
+
+High-impact AI actions must support Human-in-the-Loop approval before execution.
