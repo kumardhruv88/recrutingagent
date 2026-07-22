@@ -8,21 +8,21 @@ HireMind AI
 
 # Current Phase
 
-Phase 18 — Background Workers
+Phase 19 — Webhooks
 
 ---
 
 # Current Module
 
-Background Workers
+Webhook Infrastructure
 
 ---
 
 # Goal
 
-Implement a production-ready Background Worker system that executes asynchronous jobs outside the request-response lifecycle.
+Implement a production-ready Webhook Infrastructure module that securely receives, validates, processes, and dispatches webhook events from external services.
 
-The worker infrastructure will power AI processing, email delivery, GitHub sync, resume indexing, workflow execution, and future scheduled tasks.
+This module serves as the centralized webhook gateway for the platform.
 
 ---
 
@@ -30,13 +30,12 @@ The worker infrastructure will power AI processing, email delivery, GitHub sync,
 
 Implement ONLY:
 
-- Job Queue
-- Worker Infrastructure
-- Task Registry
-- Retry Management
-- Dead Letter Queue
-- Job Status Tracking
-- Background Worker APIs
+- Webhook Registry
+- Webhook Signature Validation
+- Webhook Event Dispatcher
+- Webhook Event Storage
+- Webhook Retry Support
+- Webhook APIs
 - Tests
 
 ---
@@ -45,21 +44,20 @@ Implement ONLY:
 
 Do NOT implement:
 
-- Notifications
-- Monitoring
-- Scheduled Cron Jobs
-- AI Logic
+- Provider Business Logic
+- Notification Logic
 - Workflow Logic
+- AI Logic
 
 ---
 
 # Deliverables
 
-- Background Worker
-- Task Registry
-- Queue Infrastructure
-- Retry Policy
-- Dead Letter Queue
+- Webhook Registry
+- Signature Validators
+- Event Dispatcher
+- Event Persistence
+- Retry Support
 - APIs
 - Tests
 - Documentation
@@ -68,13 +66,13 @@ Do NOT implement:
 
 # Acceptance Criteria
 
-✓ Queue works
+✓ Signature validation works
 
-✓ Retry policy works
+✓ Event dispatch works
 
-✓ Dead letter queue works
+✓ Event persistence works
 
-✓ Job tracking works
+✓ Retry support works
 
 ✓ Tests pass
 
@@ -88,4 +86,4 @@ Do NOT implement:
 
 # Next Module
 
-19_Webhooks.md
+20_Notifications.md
