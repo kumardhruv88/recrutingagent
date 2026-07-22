@@ -66,6 +66,12 @@ class Candidate(UUIDMixin, TimestampMixin, Base):
     skills: Mapped[List["CandidateSkill"]] = relationship(
         "CandidateSkill", back_populates="candidate", cascade="all, delete-orphan"
     )
+    github_profile: Mapped[Optional["GithubProfile"]] = relationship(
+        "GithubProfile",
+        back_populates="candidate",
+        uselist=False,
+        cascade="all, delete-orphan",
+    )
 
 
 class Job(UUIDMixin, TimestampMixin, Base):
@@ -271,4 +277,63 @@ class ApplicationTimelineEvent(UUIDMixin, TimestampMixin, Base):
 
     application: Mapped["Application"] = relationship(
         "Application", back_populates="timeline_events"
+    )
+
+
+class GithubProfile(UUIDMixin, TimestampMixin, Base):
+    __tablename__ = "github_profiles"
+
+    candidate_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("candidates.id", ondelete="CASCADE"), unique=True, index=True
+    )
+    username: Mapped[str] = mapped_column(String(100))
+    avatar_url: Mapped[Optional[str]] = mapped_column(String(1024), nullable=True)
+    bio: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    company: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    location: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    website: Mapped[Optional[str]] = mapped_column(String(1024), nullable=True)
+
+    followers: Mapped[int] = mapped_column(Integer, default=0)
+    following: Mapped[int] = mapped_column(Integer, default=0)
+    public_repos: Mapped[int] = mapped_column(Integer, default=0)
+    public_gists: Mapped[int] = mapped_column(Integer, default=0)
+    account_created_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime, nullable=True
+    )
+
+    language_stats: Mapped[Optional[Dict[str, Any]]] = mapped_column(
+        JSONB, nullable=True
+    )
+
+    candidate: Mapped["Candidate"] = relationship(
+        "Candidate", back_populates="github_profile"
+    )
+    repositories: Mapped[List["GithubRepository"]] = relationship(
+        "GithubRepository", back_populates="profile", cascade="all, delete-orphan"
+    )
+
+
+class GithubRepository(UUIDMixin, TimestampMixin, Base):
+    __tablename__ = "github_repositories"
+
+    profile_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("github_profiles.id", ondelete="CASCADE"), index=True
+    )
+    name: Mapped[str] = mapped_column(String(255))
+    description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    visibility: Mapped[str] = mapped_column(String(50))
+    primary_language: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    topics: Mapped[Optional[List[str]]] = mapped_column(JSONB, nullable=True)
+
+    stars: Mapped[int] = mapped_column(Integer, default=0)
+    forks: Mapped[int] = mapped_column(Integer, default=0)
+    watchers: Mapped[int] = mapped_column(Integer, default=0)
+    open_issues: Mapped[int] = mapped_column(Integer, default=0)
+    size: Mapped[int] = mapped_column(Integer, default=0)
+
+    default_branch: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    last_updated: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+
+    profile: Mapped["GithubProfile"] = relationship(
+        "GithubProfile", back_populates="repositories"
     )

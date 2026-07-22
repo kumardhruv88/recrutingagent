@@ -8,21 +8,21 @@ HireMind AI
 
 # Current Phase
 
-Phase 9 — Resume Intelligence
+Phase 10 — GitHub Intelligence
 
 ---
 
 # Current Module
 
-Resume Intelligence
+GitHub Intelligence
 
 ---
 
 # Goal
 
-Implement a production-ready Resume Intelligence module that ingests resumes, extracts structured information, stores embeddings, and prepares candidate profiles for downstream AI services.
+Implement a production-ready GitHub Intelligence module that fetches, validates, and stores public GitHub profile and repository information for candidates.
 
-Authentication, Organizations, RBAC, Candidates, Jobs, and Applications are already complete.
+Authentication, Organizations, RBAC, Candidates, Jobs, Applications, and Resume Intelligence are already complete.
 
 ---
 
@@ -30,15 +30,13 @@ Authentication, Organizations, RBAC, Candidates, Jobs, and Applications are alre
 
 Implement ONLY:
 
-- Resume Upload API
-- File Storage Integration
-- Resume Parsing Pipeline
-- Structured Information Extraction
-- Resume Embeddings
-- Resume Versioning
-- Resume Repository
-- Resume Service
-- Resume APIs
+- GitHub Profile Integration
+- GitHub Repository Sync
+- GitHub Statistics Collection
+- GitHub Repository Metadata
+- GitHub Sync Service
+- GitHub Repository
+- GitHub APIs
 - Tests
 
 ---
@@ -47,26 +45,25 @@ Implement ONLY:
 
 Do NOT implement:
 
-- ATS Scoring
-- Candidate Ranking
+- AI Candidate Scoring
+- Resume Matching
+- ATS Ranking
 - AI Recommendations
 - Interview Copilot
 - Email Automation
 - Calendar Integration
 - Workflow Engine
-- GitHub Intelligence
 
 ---
 
 # Deliverables
 
-- Resume Upload
-- Resume Repository
-- Resume Service
-- Resume Parsing Pipeline
-- Structured Resume Model
-- Embedding Pipeline
-- Resume Versioning
+- GitHub Repository
+- GitHub Service
+- GitHub Sync Pipeline
+- GitHub APIs
+- Repository Metadata
+- Statistics Collection
 - Tests
 - Documentation
 
@@ -74,15 +71,13 @@ Do NOT implement:
 
 # Acceptance Criteria
 
-✓ Resume upload works
+✓ GitHub profile sync works
 
-✓ Resume parsing works
+✓ Repository sync works
 
-✓ Structured fields extracted
+✓ Statistics collected
 
-✓ Embeddings generated
-
-✓ Resume versions maintained
+✓ Metadata stored
 
 ✓ RBAC enforced
 
@@ -100,4 +95,4 @@ Do NOT implement:
 
 # Next Module
 
-10_GitHubIntelligence.md
+11_AIOrchestrator.md
