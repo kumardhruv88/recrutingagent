@@ -1,6 +1,6 @@
 "use client";
 
-import { Candidate } from "@/data/candidates";
+import { Candidate } from "@/services/candidates";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -41,44 +41,42 @@ export function CandidateHeader({ candidate }: CandidateHeaderProps) {
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
           <Avatar className="h-20 w-20 border border-border shadow-sm">
-            <AvatarImage src={candidate.avatarUrl} alt={candidate.name} />
+            <AvatarImage src={candidate.resume_url || undefined} alt={`${candidate.first_name} ${candidate.last_name}`} />
             <AvatarFallback className="text-2xl font-bold bg-primary/10 text-primary">
-              {candidate.name.charAt(0)}
+              {candidate.first_name.charAt(0)}
             </AvatarFallback>
           </Avatar>
           
           <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-2xl font-bold tracking-tight text-foreground">{candidate.name}</h1>
+              <h1 className="text-2xl font-bold tracking-tight text-foreground">{candidate.first_name} {candidate.last_name}</h1>
               <Badge variant="outline" className={`${getStatusColor(candidate.status)}`}>
                 {candidate.status}
               </Badge>
-              <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-bold ${
-                candidate.aiScore >= 90 ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/50" :
-                candidate.aiScore >= 80 ? "text-blue-600 bg-blue-50 dark:bg-blue-950/50" :
-                "text-muted-foreground bg-secondary"
-              }`}>
-                AI: {candidate.aiScore}%
+              <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-bold text-muted-foreground bg-secondary`}>
+                AI: N/A
               </span>
             </div>
             
             <p className="text-lg text-muted-foreground font-medium">
-              {candidate.currentRole}
+              {candidate.current_title || "Unknown Role"}
             </p>
             
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground pt-1">
               <div className="flex items-center gap-1.5">
                 <MapPin className="h-4 w-4" />
-                {candidate.location}
+                {candidate.location || "Remote"}
               </div>
               <div className="flex items-center gap-1.5">
                 <Mail className="h-4 w-4" />
                 <a href={`mailto:${candidate.email}`} className="hover:underline hover:text-foreground transition-colors">{candidate.email}</a>
               </div>
-              <div className="flex items-center gap-1.5">
-                <Phone className="h-4 w-4" />
-                <a href={`tel:${candidate.phone}`} className="hover:underline hover:text-foreground transition-colors">{candidate.phone}</a>
-              </div>
+              {candidate.phone && (
+                <div className="flex items-center gap-1.5">
+                  <Phone className="h-4 w-4" />
+                  <a href={`tel:${candidate.phone}`} className="hover:underline hover:text-foreground transition-colors">{candidate.phone}</a>
+                </div>
+              )}
             </div>
           </div>
         </div>

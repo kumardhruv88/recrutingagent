@@ -1,6 +1,7 @@
 "use client";
 
-import { Candidate, mockAiAnalysis } from "@/data/candidates";
+import { mockAiAnalysis } from "@/data/candidates";
+import { Candidate } from "@/services/candidates";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BrainCircuit, CheckCircle2, AlertTriangle, Lightbulb, Target } from "lucide-react";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Job } from "@/data/jobs";
+import { Job } from "@/services/jobs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BrainCircuit, Briefcase, MapPin, Building2, Play, Pause, Archive, Settings, ArrowLeft } from "lucide-react";

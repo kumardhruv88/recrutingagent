@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { OrgSidebar } from "./_components/OrgSidebar";
 import { Building2 } from "lucide-react";
-import { mockOrganization } from "@/data/organization";
 
 export const metadata: Metadata = {
   title: "HireMind AI - Organization Management",
@@ -21,7 +20,7 @@ export default function OrganizationLayout({
             <div className="h-10 w-10 bg-primary/10 rounded-lg flex items-center justify-center">
               <Building2 className="h-5 w-5 text-primary" />
             </div>
-            {mockOrganization.name}
+            Organization Settings
           </h2>
           <p className="text-muted-foreground mt-1">
             Manage your organization settings, members, and usage.

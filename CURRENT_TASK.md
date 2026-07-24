@@ -14,27 +14,25 @@ Production Integration & Validation
 
 # Sprint
 
-Sprint 01
+Sprint 02
 
-Authentication & User Lifecycle Validation
+Real Backend Integration & End-to-End Data Validation
 
 ---
 
 # Goal
 
-Transform the current authentication system from a development-ready implementation into a production-ready authentication workflow.
+Replace every remaining mock, placeholder, fake response, and dummy dataset with real backend integrations.
 
-The authentication system already exists.
+Every frontend workflow must communicate with the production backend.
 
-Do NOT redesign it.
+Every CRUD operation must be verified.
 
-Do NOT rewrite it.
+Every API response must be validated.
 
-Validate every authentication flow using real backend integrations.
+Every loading, empty, and error state must be exercised.
 
-Replace mock behavior with production behavior where required.
-
-Every authentication workflow must be tested from the perspective of a real user.
+Assume the application is being prepared for beta users.
 
 ---
 
@@ -42,75 +40,79 @@ Every authentication workflow must be tested from the perspective of a real user
 
 Validate ONLY
 
-- Clerk Authentication
-- Sign Up
-- Login
-- Logout
-- Session Refresh
-- Forgot Password
-- Email Verification
-- Protected Routes
-- Middleware
-- Organization Creation
-- User Profile Creation
-- User Metadata
-- Session Persistence
-- RBAC
-- Unauthorized Access
-- Expired Sessions
-- Token Validation
+- API Integration
+- CRUD Operations
+- Loading States
+- Error Handling
+- Empty States
+- Pagination
+- Search
+- Filtering
+- File Uploads
+- Streaming APIs
+- Optimistic Updates
+- Cache Invalidation
+
+---
+
+# Core Modules
+
+- Dashboard
+- Jobs
+- Candidates
+- Applications
+- Interviews
+- Analytics
+- AI Copilot
+- Notifications
+- Organization
+- Settings
 
 ---
 
 # Do NOT
 
-Implement unrelated features.
-
 Do NOT redesign UI.
 
-Do NOT optimize styling.
+Do NOT create new features.
 
-Do NOT change APIs unless required to fix production issues.
+Do NOT rewrite architecture.
+
+Only integrate and validate existing functionality.
 
 ---
 
 # Deliverables
 
-Production-ready authentication.
+Production-ready frontend/backend integration.
 
-Verified user lifecycle.
+Verified CRUD.
 
-Verified RBAC.
+Verified API communication.
 
-Verified middleware.
-
-Verified protected routes.
+Verified loading/error behavior.
 
 ---
 
 # Acceptance Criteria
 
-✓ New user signup works
+✓ Every page loads real data
 
-✓ Existing login works
+✓ No dummy data remains
 
-✓ Logout works
+✓ CRUD operations verified
 
-✓ Refresh survives browser refresh
+✓ Loading states verified
 
-✓ Multiple tabs behave correctly
+✓ Empty states verified
 
-✓ Unauthorized routes blocked
+✓ Error states verified
 
-✓ Organization creation works
+✓ API failures handled
 
-✓ RBAC enforced
+✓ File uploads verified
 
-✓ Session persistence verified
-
-✓ Email verification works
-
-✓ Password reset works
+✓ Streaming endpoints verified
 
 ✓ TypeScript passes
 
@@ -122,4 +124,4 @@ Verified protected routes.
 
 # Next Sprint
 
-Real Backend Integration
+Recruiter Workflow Validation

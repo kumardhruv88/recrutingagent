@@ -1,6 +1,7 @@
 "use client";
 
-import { Job, mockJobActivityTimeline } from "@/data/jobs";
+import { mockJobActivityTimeline } from "@/data/jobs";
+import { Job } from "@/services/jobs";
 import { CheckCircle2, Clock, FileText, Calendar, MessageSquare, AlertCircle } from "lucide-react";
 
 interface JobActivityTabProps {

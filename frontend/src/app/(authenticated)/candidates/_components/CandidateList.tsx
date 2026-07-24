@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { mockCandidates } from "@/data/candidates";
+import { useQuery } from "@tanstack/react-query";
+import { candidateService } from "@/services/candidates";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -23,11 +24,18 @@ export function CandidateList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   
+  const { data: candidatesResponse, isLoading, isError } = useQuery({
+    queryKey: ["candidates"],
+    queryFn: () => candidateService.getCandidates()
+  });
+
+  const candidates = candidatesResponse?.items || [];
+
   // Filter candidates locally
-  const filteredCandidates = mockCandidates.filter(c => 
-    c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    c.appliedJob.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    c.skills.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()))
+  const filteredCandidates = candidates.filter(c => 
+    (c.first_name + " " + c.last_name).toLowerCase().includes(searchQuery.toLowerCase()) || 
+    (c.current_title || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (c.skills || []).some(s => s.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   const toggleSelectAll = () => {
@@ -135,31 +143,45 @@ export function CandidateList() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredCandidates.length > 0 ? filteredCandidates.map((candidate) => (
+                {isLoading ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="h-24 text-center text-muted-foreground">
+                      Loading candidates...
+                    </TableCell>
+                  </TableRow>
+                ) : isError ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="h-24 text-center text-destructive">
+                      Failed to load candidates.
+                    </TableCell>
+                  </TableRow>
+                ) : filteredCandidates.length > 0 ? filteredCandidates.map((candidate) => {
+                  const candidateName = `${candidate.first_name} ${candidate.last_name}`;
+                  return (
                   <TableRow key={candidate.id} className="hover:bg-muted/50 transition-colors border-border">
                     <TableCell className="text-center whitespace-nowrap">
                       <Checkbox
                         checked={selectedIds.has(candidate.id)}
                         onCheckedChange={() => toggleSelect(candidate.id)}
-                        aria-label={`Select ${candidate.name}`}
+                        aria-label={`Select ${candidateName}`}
                       />
                     </TableCell>
                     <TableCell className="whitespace-nowrap">
                       <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
-                          {candidate.name.charAt(0)}
+                          {candidate.first_name.charAt(0)}
                         </div>
                         <div>
                           <Link href={`/candidates/${candidate.id}`} className="font-medium hover:underline text-foreground">
-                            {candidate.name}
+                            {candidateName}
                           </Link>
                           <div className="text-xs text-muted-foreground">{candidate.email}</div>
                         </div>
                       </div>
                     </TableCell>
                     <TableCell className="whitespace-nowrap">
-                      <div className="font-medium text-foreground">{candidate.appliedJob}</div>
-                      <div className="text-xs text-muted-foreground">{candidate.experience}</div>
+                      <div className="font-medium text-foreground">{candidate.current_title || "Unknown Role"}</div>
+                      <div className="text-xs text-muted-foreground">{candidate.years_of_experience || 0} years experience</div>
                     </TableCell>
                     <TableCell className="whitespace-nowrap">
                       <Badge variant="outline" className={`${getStatusColor(candidate.status)}`}>
@@ -167,16 +189,12 @@ export function CandidateList() {
                       </Badge>
                     </TableCell>
                     <TableCell className="whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-bold ${
-                        candidate.aiScore >= 90 ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/50" :
-                        candidate.aiScore >= 80 ? "text-blue-600 bg-blue-50 dark:bg-blue-950/50" :
-                        "text-muted-foreground bg-secondary"
-                      }`}>
-                        {candidate.aiScore}%
+                      <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-bold text-muted-foreground bg-secondary`}>
+                        N/A
                       </span>
                     </TableCell>
                     <TableCell className="text-muted-foreground text-sm whitespace-nowrap">
-                      {candidate.lastUpdated}
+                      {new Date(candidate.created_at).toLocaleDateString()}
                     </TableCell>
                     <TableCell className="text-right whitespace-nowrap">
                       <DropdownMenu>
@@ -196,7 +214,7 @@ export function CandidateList() {
                       </DropdownMenu>
                     </TableCell>
                   </TableRow>
-                )) : (
+                )}) : (
                   <TableRow>
                     <TableCell colSpan={7} className="h-24 text-center text-muted-foreground">
                       No candidates found.
@@ -209,7 +227,17 @@ export function CandidateList() {
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {filteredCandidates.length > 0 ? filteredCandidates.map((candidate, index) => (
+          {isLoading ? (
+            <div className="col-span-full py-12 text-center text-muted-foreground bg-background rounded-xl border border-border shadow-sm">
+              Loading candidates...
+            </div>
+          ) : isError ? (
+            <div className="col-span-full py-12 text-center text-destructive bg-background rounded-xl border border-border shadow-sm">
+              Failed to load candidates.
+            </div>
+          ) : filteredCandidates.length > 0 ? filteredCandidates.map((candidate, index) => {
+            const candidateName = `${candidate.first_name} ${candidate.last_name}`;
+            return (
             <motion.div
               key={candidate.id}
               initial={{ opacity: 0, y: 10 }}
@@ -221,50 +249,46 @@ export function CandidateList() {
                   <div className="flex justify-between items-start mb-4 gap-2">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0">
-                        {candidate.name.charAt(0)}
+                        {candidate.first_name.charAt(0)}
                       </div>
                       <div>
                         <Link href={`/candidates/${candidate.id}`} className="font-semibold text-lg text-foreground hover:underline line-clamp-1">
-                          {candidate.name}
+                          {candidateName}
                         </Link>
-                        <div className="text-xs text-muted-foreground">{candidate.location}</div>
+                        <div className="text-xs text-muted-foreground">{candidate.location || "Remote"}</div>
                       </div>
                     </div>
                     <Checkbox
                       checked={selectedIds.has(candidate.id)}
                       onCheckedChange={() => toggleSelect(candidate.id)}
-                      aria-label={`Select ${candidate.name}`}
+                      aria-label={`Select ${candidateName}`}
                     />
                   </div>
                   
                   <div className="space-y-3">
                     <div>
-                      <div className="text-sm font-medium text-foreground">{candidate.appliedJob}</div>
-                      <div className="text-xs text-muted-foreground">{candidate.experience} experience</div>
+                      <div className="text-sm font-medium text-foreground">{candidate.current_title || "No Title"}</div>
+                      <div className="text-xs text-muted-foreground">{candidate.years_of_experience || 0} years experience</div>
                     </div>
                     
                     <div className="flex items-center justify-between">
                       <Badge variant="outline" className={`${getStatusColor(candidate.status)}`}>
                         {candidate.status}
                       </Badge>
-                      <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-bold ${
-                        candidate.aiScore >= 90 ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/50" :
-                        candidate.aiScore >= 80 ? "text-blue-600 bg-blue-50 dark:bg-blue-950/50" :
-                        "text-muted-foreground bg-secondary"
-                      }`}>
-                        AI: {candidate.aiScore}%
+                      <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-bold text-muted-foreground bg-secondary`}>
+                        AI: N/A
                       </span>
                     </div>
 
                     <div className="flex flex-wrap gap-1 pt-2">
-                      {candidate.skills.slice(0, 3).map(skill => (
+                      {(candidate.skills || []).slice(0, 3).map(skill => (
                         <Badge key={skill} variant="secondary" className="text-[10px] px-1.5 py-0 h-5 font-normal text-muted-foreground">
                           {skill}
                         </Badge>
                       ))}
-                      {candidate.skills.length > 3 && (
+                      {(candidate.skills || []).length > 3 && (
                         <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-5 font-normal text-muted-foreground">
-                          +{candidate.skills.length - 3}
+                          +{(candidate.skills || []).length - 3}
                         </Badge>
                       )}
                     </div>
@@ -272,7 +296,7 @@ export function CandidateList() {
                 </CardContent>
               </Card>
             </motion.div>
-          )) : (
+          )}) : (
             <div className="col-span-full py-12 text-center text-muted-foreground bg-background rounded-xl border border-border shadow-sm">
               No candidates found matching your criteria.
             </div>

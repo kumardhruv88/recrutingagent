@@ -1,6 +1,6 @@
 "use client";
 
-import { Job } from "@/data/jobs";
+import { Job } from "@/services/jobs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Briefcase, DollarSign, Clock, ListChecks, CheckCircle2, Zap } from "lucide-react";
@@ -32,14 +32,15 @@ export function JobOverviewTab({ job }: JobOverviewTabProps) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-3">
-              {job.requirements.map((req, i) => (
-                <li key={i} className="flex gap-3 text-muted-foreground">
-                  <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
-                  <span>{req}</span>
-                </li>
-              ))}
-            </ul>
+            {job.requirements && job.requirements.length > 0 ? (
+              <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground mt-2">
+                {job.requirements.map((req: string, i: number) => (
+                  <li key={i}>{req}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-muted-foreground mt-2">No specific requirements listed.</p>
+            )}
           </CardContent>
         </Card>
 
@@ -51,14 +52,15 @@ export function JobOverviewTab({ job }: JobOverviewTabProps) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-3">
-              {job.responsibilities.map((res, i) => (
-                <li key={i} className="flex gap-3 text-muted-foreground">
-                  <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0" />
-                  <span>{res}</span>
-                </li>
-              ))}
-            </ul>
+            {job.responsibilities && job.responsibilities.length > 0 ? (
+              <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground mt-2">
+                {job.responsibilities.map((resp: string, i: number) => (
+                  <li key={i}>{resp}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-muted-foreground mt-2">No specific responsibilities listed.</p>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -104,7 +106,9 @@ export function JobOverviewTab({ job }: JobOverviewTabProps) {
               </div>
               <div>
                 <p className="text-xs text-muted-foreground font-medium">Salary Range</p>
-                <p className="text-sm font-medium text-foreground">{job.salaryRange}</p>
+                <div className="text-sm text-muted-foreground">
+                  {job.salary_min && job.salary_max ? `${job.salary_currency || '$'}${job.salary_min.toLocaleString()} - ${job.salary_currency || '$'}${job.salary_max.toLocaleString()}` : "Not specified"}
+                </div>
               </div>
             </div>
           </CardContent>

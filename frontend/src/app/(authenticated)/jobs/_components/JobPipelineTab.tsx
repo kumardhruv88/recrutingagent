@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Job, mockPipelineData } from "@/data/jobs";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { applicationService, Application } from "@/services/applications";
+import { Job } from "@/services/jobs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MoreHorizontal, GripVertical, Search, Filter, Calendar, Mail, FileText, User, Briefcase, Star, Download, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,26 +17,55 @@ interface JobPipelineTabProps {
 }
 
 export function JobPipelineTab({}: JobPipelineTabProps) {
-  const [candidates, setCandidates] = useState(mockPipelineData.candidates);
+const PIPELINE_COLUMNS = [
+  { id: "Applied", title: "Applied" },
+  { id: "Screening", title: "Screening" },
+  { id: "Interview", title: "Interview" },
+  { id: "Assessment", title: "Assessment" },
+  { id: "Offer", title: "Offer" },
+  { id: "Hired", title: "Hired" }
+];
+
+  const queryClient = useQueryClient();
+
+  const { data: applicationsResponse, isLoading } = useQuery({
+    queryKey: ["applications", { job_id: job.id }],
+    queryFn: () => applicationService.getApplications()
+  });
+
+  const applications = (applicationsResponse?.items || []).filter(app => app.job_id === job.id);
+  
+  const updateStageMutation = useMutation({
+    mutationFn: ({ appId, newStage }: { appId: string, newStage: string }) => 
+      applicationService.updateApplicationStage(appId, newStage),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["applications", { job_id: job.id }] });
+    }
+  });
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(null);
   
   // Drag and drop state
-  const [draggedCandidateId, setDraggedCandidateId] = useState<string | null>(null);
+  const [draggedApplicationId, setDraggedApplicationId] = useState<string | null>(null);
   const [dragOverColumnId, setDragOverColumnId] = useState<string | null>(null);
 
-  const filteredCandidates = candidates.filter(c => 
-    c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    c.experience.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredApplications = applications.filter(app => {
+    const candidate = app.candidate;
+    if (!candidate) return false;
+    const name = `${candidate.first_name} ${candidate.last_name}`;
+    const exp = `${candidate.years_of_experience} years`;
+    return name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+           exp.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
-  const selectedCandidate = candidates.find(c => c.id === selectedCandidateId);
+  const selectedApplication = applications.find(a => a.candidate_id === selectedCandidateId);
+  const selectedCandidate = selectedApplication?.candidate;
 
   // Drag handlers
   const handleDragStart = (e: React.DragEvent, id: string) => {
-    setDraggedCandidateId(id);
+    setDraggedApplicationId(id);
     e.dataTransfer.effectAllowed = "move";
-    // For Firefox compatibility
     e.dataTransfer.setData("text/plain", id);
   };
 
@@ -55,18 +86,14 @@ export function JobPipelineTab({}: JobPipelineTabProps) {
     e.preventDefault();
     setDragOverColumnId(null);
     
-    if (draggedCandidateId) {
-      setCandidates(prev => 
-        prev.map(c => 
-          c.id === draggedCandidateId ? { ...c, stage: columnId } : c
-        )
-      );
+    if (draggedApplicationId) {
+      updateStageMutation.mutate({ appId: draggedApplicationId, newStage: columnId });
     }
-    setDraggedCandidateId(null);
+    setDraggedApplicationId(null);
   };
 
   const handleDragEnd = () => {
-    setDraggedCandidateId(null);
+    setDraggedApplicationId(null);
     setDragOverColumnId(null);
   };
 
@@ -97,8 +124,10 @@ export function JobPipelineTab({}: JobPipelineTabProps) {
 
       {/* Kanban Board */}
       <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 flex-1 custom-scrollbar">
-        {mockPipelineData.columns.map((column) => {
-          const columnCandidates = filteredCandidates.filter(c => c.stage === column.id);
+        {isLoading ? (
+          <div className="w-full flex items-center justify-center text-muted-foreground">Loading pipeline...</div>
+        ) : PIPELINE_COLUMNS.map((column) => {
+          const columnApplications = filteredApplications.filter(app => app.current_stage === column.id);
           const isDragOver = dragOverColumnId === column.id;
           
           return (
@@ -116,7 +145,7 @@ export function JobPipelineTab({}: JobPipelineTabProps) {
                 <div className="flex items-center gap-2">
                   <h3 className="font-semibold text-foreground">{column.title}</h3>
                   <Badge variant="secondary" className="bg-background/80 text-muted-foreground font-medium rounded-full px-2 py-0.5">
-                    {columnCandidates.length}
+                    {columnApplications.length}
                   </Badge>
                 </div>
                 <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-foreground">
@@ -127,8 +156,11 @@ export function JobPipelineTab({}: JobPipelineTabProps) {
               {/* Column Content */}
               <div className="p-4 flex-1 overflow-y-auto space-y-3 custom-scrollbar min-h-[150px]">
                 <AnimatePresence>
-                  {columnCandidates.map(candidate => {
-                    const isDragging = draggedCandidateId === candidate.id;
+                  {columnApplications.map(application => {
+                    const candidate = application.candidate;
+                    if (!candidate) return null;
+                    const isDragging = draggedApplicationId === application.id;
+                    const candidateName = `${candidate.first_name} ${candidate.last_name}`;
                     
                     return (
                       <motion.div
@@ -137,14 +169,14 @@ export function JobPipelineTab({}: JobPipelineTabProps) {
                         animate={{ opacity: isDragging ? 0.5 : 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        key={candidate.id}
+                        key={application.id}
                         draggable={true}
-                        onDragStart={(e: unknown) => handleDragStart(e as React.DragEvent, candidate.id)}
+                        onDragStart={(e: unknown) => handleDragStart(e as React.DragEvent, application.id)}
                         onDragEnd={handleDragEnd}
                         onClick={() => setSelectedCandidateId(candidate.id)}
                         className={`bg-card p-4 rounded-xl border shadow-sm hover:shadow-sm transition-all cursor-grab active:cursor-grabbing group ${
                           isDragging ? "border-primary/50 ring-1 ring-primary/20" : "border-border hover:border-border/80"
-                        }`}
+                        } ${updateStageMutation.isPending && updateStageMutation.variables?.appId === application.id ? 'opacity-50' : ''}`}
                       >
                         <div className="flex justify-between items-start mb-3">
                           <div className="flex items-center gap-3">
@@ -152,14 +184,14 @@ export function JobPipelineTab({}: JobPipelineTabProps) {
                               <GripVertical className="h-4 w-4" />
                             </div>
                             <Avatar className="h-9 w-9 border border-border shadow-sm">
-                              <AvatarImage src={candidate.avatar} alt={candidate.name} />
+                              <AvatarImage src={candidate.resume_url || undefined} alt={candidateName} />
                               <AvatarFallback className="bg-primary/10 text-primary font-medium text-xs">
-                                {candidate.name.split(" ").map(n => n[0]).join("")}
+                                {candidate.first_name.charAt(0)}
                               </AvatarFallback>
                             </Avatar>
                             <div>
-                              <h4 className="font-medium text-sm text-foreground group-hover:text-primary transition-colors">{candidate.name}</h4>
-                              <p className="text-xs text-muted-foreground mt-0.5">{candidate.experience}</p>
+                              <h4 className="font-medium text-sm text-foreground group-hover:text-primary transition-colors">{candidateName}</h4>
+                              <p className="text-xs text-muted-foreground mt-0.5">{candidate.years_of_experience || 0} years</p>
                             </div>
                           </div>
                         </div>
@@ -168,7 +200,7 @@ export function JobPipelineTab({}: JobPipelineTabProps) {
                           <div className="flex items-center gap-2">
                             <Badge variant="secondary" className="bg-primary/10 text-primary hover:bg-primary/20 border-transparent text-[11px] px-2 py-0 flex items-center gap-1">
                               <Sparkles className="h-3 w-3" />
-                              {candidate.aiScore} Score
+                              {application.ai_match_score || "N/A"} Score
                             </Badge>
                           </div>
                           <div className="flex items-center -space-x-2">
@@ -183,7 +215,7 @@ export function JobPipelineTab({}: JobPipelineTabProps) {
                 </AnimatePresence>
                   
                 {/* Empty State Drop Zone */}
-                {columnCandidates.length === 0 && (
+                {columnApplications.length === 0 && (
                   <motion.div 
                     initial={{ opacity: 0 }} 
                     animate={{ opacity: 1 }}
@@ -210,24 +242,24 @@ export function JobPipelineTab({}: JobPipelineTabProps) {
               <div className="p-6 border-b border-border bg-muted/20 relative">
                 <div className="flex items-start gap-4">
                   <Avatar className="h-16 w-16 border-2 border-border shadow-sm">
-                    <AvatarImage src={selectedCandidate.avatar} alt={selectedCandidate.name} />
+                    <AvatarImage src={selectedCandidate.resume_url || undefined} alt={`${selectedCandidate.first_name} ${selectedCandidate.last_name}`} />
                     <AvatarFallback className="bg-primary/10 text-primary text-xl font-medium">
-                      {selectedCandidate.name.split(" ").map(n => n[0]).join("")}
+                      {selectedCandidate.first_name.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
-                    <h2 className="text-xl font-bold text-foreground">{selectedCandidate.name}</h2>
+                    <h2 className="text-xl font-bold text-foreground">{selectedCandidate.first_name} {selectedCandidate.last_name}</h2>
                     <p className="text-muted-foreground text-sm flex items-center gap-1.5 mt-1">
                       <Briefcase className="h-3.5 w-3.5" />
-                      {selectedCandidate.experience}
+                      {selectedCandidate.years_of_experience || 0} years experience
                     </p>
                     <div className="flex gap-2 mt-3 flex-wrap">
                       <Badge variant="secondary" className="bg-primary/10 text-primary border-transparent">
                         <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-                        AI Score: {selectedCandidate.aiScore}
+                        AI Score: {selectedApplication?.ai_match_score || "N/A"}
                       </Badge>
                       <Badge variant="outline" className="border-border">
-                        Stage: {mockPipelineData.columns.find(c => c.id === selectedCandidate.stage)?.title}
+                        Stage: {selectedApplication?.current_stage}
                       </Badge>
                     </div>
                   </div>
@@ -243,20 +275,20 @@ export function JobPipelineTab({}: JobPipelineTabProps) {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1">
                       <p className="text-xs text-muted-foreground">Applied Date</p>
-                      <p className="text-sm font-medium">Oct 12, 2023</p>
+                      <p className="text-sm font-medium">{new Date(selectedApplication?.applied_at || "").toLocaleDateString()}</p>
                     </div>
                     <div className="space-y-1">
                       <p className="text-xs text-muted-foreground">Source</p>
-                      <p className="text-sm font-medium">LinkedIn</p>
+                      <p className="text-sm font-medium">Platform</p>
                     </div>
                     <div className="space-y-1">
                       <p className="text-xs text-muted-foreground">Phone</p>
-                      <p className="text-sm font-medium">+1 (555) 123-4567</p>
+                      <p className="text-sm font-medium">{selectedCandidate.phone || "N/A"}</p>
                     </div>
                     <div className="space-y-1">
                       <p className="text-xs text-muted-foreground">Email</p>
                       <p className="text-sm font-medium text-primary hover:underline cursor-pointer">
-                        contact@example.com
+                        {selectedCandidate.email}
                       </p>
                     </div>
                   </div>
@@ -265,10 +297,10 @@ export function JobPipelineTab({}: JobPipelineTabProps) {
                 <div className="space-y-4">
                   <h3 className="font-semibold text-sm text-foreground flex items-center gap-2">
                     <Star className="h-4 w-4 text-muted-foreground" />
-                    Skills Match
+                    Skills
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {["React", "TypeScript", "Node.js", "GraphQL"].map(skill => (
+                    {(selectedCandidate.skills || []).map(skill => (
                       <Badge key={skill} variant="outline" className="bg-muted/50 font-normal">
                         {skill}
                       </Badge>

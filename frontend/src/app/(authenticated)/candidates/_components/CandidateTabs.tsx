@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Candidate } from "@/data/candidates";
+import { Candidate } from "@/services/candidates";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { CandidateOverviewTab } from "./CandidateOverviewTab";

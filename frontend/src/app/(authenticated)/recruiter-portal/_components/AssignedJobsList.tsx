@@ -1,15 +1,15 @@
 "use client";
 
-import { AssignedJob } from "@/data/recruiter";
+import { Job } from "@/services/jobs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress, ProgressTrack, ProgressIndicator } from "@/components/ui/progress";
 import { motion } from "framer-motion";
-import { Briefcase, ArrowRight, Users, CalendarCheck } from "lucide-react";
+import { Briefcase, ArrowRight, Users } from "lucide-react";
+import Link from "next/link";
 
 interface AssignedJobsListProps {
-  jobs: AssignedJob[];
+  jobs: Job[];
 }
 
 export function AssignedJobsList({ jobs }: AssignedJobsListProps) {
@@ -43,41 +43,29 @@ export function AssignedJobsList({ jobs }: AssignedJobsListProps) {
           </Button>
         </CardHeader>
         <CardContent className="flex-1 flex flex-col gap-4">
-          {jobs.map((job) => (
-            <div key={job.id} className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/30 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors group cursor-pointer">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
-                <div>
-                  <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{job.title}</h4>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400">{job.department}</p>
+          {jobs.length === 0 ? (
+            <div className="text-center text-sm text-muted-foreground py-8">No assigned roles found.</div>
+          ) : jobs.map((job) => (
+            <Link key={job.id} href={`/jobs/${job.id}`}>
+              <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/30 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors group cursor-pointer h-full">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
+                  <div>
+                    <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{job.title}</h4>
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400">{job.department || "No Department"}</p>
+                  </div>
+                  <Badge variant="outline" className={getStatusColor(job.status)}>
+                    {job.status}
+                  </Badge>
                 </div>
-                <Badge variant="outline" className={getStatusColor(job.status)}>
-                  {job.status}
-                </Badge>
-              </div>
 
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-                  <Users className="h-4 w-4 text-zinc-400" />
-                  <span className="font-medium text-zinc-900 dark:text-zinc-100">{job.applications}</span> Apps
-                </div>
-                <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-                  <CalendarCheck className="h-4 w-4 text-zinc-400" />
-                  <span className="font-medium text-zinc-900 dark:text-zinc-100">{job.interviews}</span> Interviews
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
+                    <Users className="h-4 w-4 text-zinc-400" />
+                    <span className="font-medium text-zinc-900 dark:text-zinc-100">{job.applications_count || 0}</span> Apps
+                  </div>
                 </div>
               </div>
-
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs font-medium">
-                  <span className="text-zinc-500">Hiring Progress</span>
-                  <span className="text-zinc-900 dark:text-zinc-100">{job.progress}%</span>
-                </div>
-                <Progress value={job.progress} className="h-1.5">
-                  <ProgressTrack className="bg-zinc-200 dark:bg-zinc-800">
-                    <ProgressIndicator className="bg-blue-500" />
-                  </ProgressTrack>
-                </Progress>
-              </div>
-            </div>
+            </Link>
           ))}
           
           <Button variant="outline" className="w-full mt-auto sm:hidden">

@@ -1,6 +1,6 @@
 "use client";
 
-import { Candidate } from "@/data/candidates";
+import { Candidate } from "@/services/candidates";
 import { Button } from "@/components/ui/button";
 import { Download, Maximize2, ExternalLink, Minus, Plus, FileText } from "lucide-react";
 

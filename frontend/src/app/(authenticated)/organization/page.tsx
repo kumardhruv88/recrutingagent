@@ -1,13 +1,29 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { mockOrganization } from "@/data/organization";
+import { useQuery } from "@tanstack/react-query";
+import { organizationService } from "@/services/organizations";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Users, HardDrive, Zap, Building2, UsersRound } from "lucide-react";
 import Link from "next/link";
 
 export default function OrganizationOverviewPage() {
+  const { data: org, isLoading: orgLoading } = useQuery({
+    queryKey: ["currentOrganization"],
+    queryFn: () => organizationService.getCurrentOrganization()
+  });
+
+  const { data: members = [] } = useQuery({
+    queryKey: ["organizationMembers", org?.id],
+    queryFn: () => organizationService.getMembers(org!.id),
+    enabled: !!org?.id,
+  });
+
+  if (orgLoading) {
+    return <div className="py-8 text-center text-muted-foreground">Loading overview...</div>;
+  }
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
@@ -23,7 +39,7 @@ export default function OrganizationOverviewPage() {
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{mockOrganization.memberCount}</div>
+            <div className="text-2xl font-bold">{members.length || 0}</div>
             <p className="text-xs text-muted-foreground">
               +2 from last month
             </p>

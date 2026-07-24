@@ -1,19 +1,30 @@
-import { mockJobs } from "@/data/jobs";
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 import { JobHeader } from "./../_components/JobHeader";
 import { JobTabs } from "./../_components/JobTabs";
+import { jobService } from "@/services/jobs";
+import { use } from "react";
 
 interface JobPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function JobPage({ params }: JobPageProps) {
-  const { id } = await params;
+export default function JobPage({ params }: JobPageProps) {
+  const { id } = use(params);
   
-  const job = mockJobs.find((j) => j.id === id);
+  const { data: job, isLoading, isError } = useQuery({
+    queryKey: ["job", id],
+    queryFn: () => jobService.getJob(id)
+  });
 
-  if (!job) {
-    notFound();
+  if (isLoading) {
+    return <div className="p-8 text-center text-muted-foreground">Loading job details...</div>;
+  }
+
+  if (isError || !job) {
+    return <div className="p-8 text-center text-destructive">Failed to load job details.</div>;
   }
 
   return (

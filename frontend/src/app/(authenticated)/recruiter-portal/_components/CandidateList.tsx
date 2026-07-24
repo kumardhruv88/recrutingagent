@@ -1,12 +1,13 @@
 "use client";
 
-import { Candidate } from "@/data/recruiter";
+import { Candidate } from "@/services/candidates";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Users, ArrowRight, Sparkles, Clock } from "lucide-react";
+import Link from "next/link";
 
 interface CandidateListProps {
   candidates: Candidate[];
@@ -47,45 +48,46 @@ export function CandidateList({ candidates }: CandidateListProps) {
         </CardHeader>
         <CardContent className="flex-1">
           <div className="space-y-4">
-            {candidates.map((candidate) => (
-              <div 
-                key={candidate.id} 
-                className="flex items-center justify-between p-3 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors group cursor-pointer border border-transparent hover:border-zinc-200 dark:hover:border-zinc-800"
-              >
-                <div className="flex items-center gap-4">
-                  <Avatar className="h-10 w-10 border border-zinc-200 dark:border-zinc-800">
-                    <AvatarImage src={candidate.avatarUrl} alt={candidate.name} className="object-cover" />
-                    <AvatarFallback className="bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300">
-                      {candidate.name.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h4 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                      {candidate.name}
-                    </h4>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate max-w-[150px] sm:max-w-[200px]">
-                      {candidate.jobTitle}
-                    </p>
+            {candidates.length === 0 ? (
+              <div className="text-center text-sm text-muted-foreground py-8">No candidates found.</div>
+            ) : candidates.map((candidate) => {
+              const name = `${candidate.first_name} ${candidate.last_name}`;
+              return (
+              <Link key={candidate.id} href={`/candidates/${candidate.id}`}>
+                <div 
+                  className="flex items-center justify-between p-3 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors group cursor-pointer border border-transparent hover:border-zinc-200 dark:hover:border-zinc-800"
+                >
+                  <div className="flex items-center gap-4">
+                    <Avatar className="h-10 w-10 border border-zinc-200 dark:border-zinc-800">
+                      <AvatarImage src={candidate.resume_url || undefined} alt={name} className="object-cover" />
+                      <AvatarFallback className="bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300">
+                        {candidate.first_name.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <h4 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                        {name}
+                      </h4>
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate max-w-[150px] sm:max-w-[200px]">
+                        {candidate.current_title || "Unknown Role"}
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex items-center gap-6">
-                  <div className="hidden md:flex flex-col items-end">
-                    <div className="flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-                      <Sparkles className="h-3 w-3" />
-                      {candidate.aiMatch}% Match
+                  <div className="flex items-center gap-6">
+                    <div className="hidden md:flex flex-col items-end">
+                      <div className="flex items-center gap-1 text-[11px] text-zinc-400 mt-0.5">
+                        <Clock className="h-3 w-3" />
+                        {new Date(candidate.created_at).toLocaleDateString()}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1 text-[11px] text-zinc-400 mt-0.5">
-                      <Clock className="h-3 w-3" />
-                      {candidate.lastActivity}
-                    </div>
+                    <Badge variant="secondary" className={`shrink-0 ${getStageColor(candidate.status)} border-transparent`}>
+                      {candidate.status}
+                    </Badge>
                   </div>
-                  <Badge variant="secondary" className={`shrink-0 ${getStageColor(candidate.stage)} border-transparent`}>
-                    {candidate.stage}
-                  </Badge>
                 </div>
-              </div>
-            ))}
+              </Link>
+            )})}
           </div>
           <Button variant="outline" className="w-full mt-6 sm:hidden">
             View All Candidates

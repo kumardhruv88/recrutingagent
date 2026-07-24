@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { mockOrganization } from "@/data/organization";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { organizationService } from "@/services/organizations";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -11,18 +12,45 @@ import { UploadCloud, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 
 export default function OrganizationProfilePage() {
-  const [isSaving, setIsSaving] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  const queryClient = useQueryClient();
+  
+  const { data: org, isLoading } = useQuery({
+    queryKey: ["currentOrganization"],
+    queryFn: () => organizationService.getCurrentOrganization()
+  });
 
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSaving(true);
-    setTimeout(() => {
-      setIsSaving(false);
+  const updateMutation = useMutation({
+    mutationFn: (data: any) => organizationService.updateOrganization(org!.id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["currentOrganization"] });
       setIsSaved(true);
       setTimeout(() => setIsSaved(false), 3000);
-    }, 1000);
+    }
+  });
+
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!org) return;
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name") as string,
+      industry: formData.get("industry") as string,
+      website: formData.get("website") as string,
+    };
+
+    updateMutation.mutate(data);
   };
+
+  if (isLoading) {
+    return <div className="py-8 text-center text-muted-foreground">Loading organization settings...</div>;
+  }
+
+  if (!org) {
+    return <div className="py-8 text-center text-muted-foreground">Organization not found.</div>;
+  }
 
   return (
     <motion.div 
@@ -49,7 +77,7 @@ export default function OrganizationProfilePage() {
             <div className="flex items-center gap-6">
               <div className="h-24 w-24 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center text-muted-foreground hover:bg-muted/50 hover:border-primary/50 transition-colors cursor-pointer group relative overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={mockOrganization.logo} alt="Logo" className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-20 transition-opacity" />
+                <img src={org.logo_url || `https://ui-avatars.com/api/?name=${org.name}`} alt="Logo" className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-20 transition-opacity" />
                 <UploadCloud className="h-6 w-6 mb-1 group-hover:text-primary transition-colors relative z-10" />
                 <span className="text-[10px] uppercase font-medium relative z-10">Update</span>
               </div>
@@ -65,23 +93,23 @@ export default function OrganizationProfilePage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="orgName">Organization Name</Label>
-                <Input id="orgName" defaultValue={mockOrganization.name} />
+                <Label htmlFor="name">Organization Name</Label>
+                <Input id="name" name="name" defaultValue={org.name} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="industry">Industry</Label>
-                <Input id="industry" defaultValue={mockOrganization.industry} />
+                <Input id="industry" name="industry" defaultValue={org.industry || ""} />
               </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="website">Website URL</Label>
-              <Input id="website" type="url" defaultValue={mockOrganization.website} />
+              <Input id="website" name="website" type="url" defaultValue={org.website || ""} />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="address">Headquarters Address</Label>
-              <Input id="address" defaultValue={mockOrganization.address} />
+              <Input id="address" name="address" defaultValue="" placeholder="Address not available in schema yet" disabled />
             </div>
           </CardContent>
           <CardFooter className="flex justify-between border-t py-4">
@@ -93,8 +121,8 @@ export default function OrganizationProfilePage() {
                 </span>
               )}
             </div>
-            <Button type="submit" disabled={isSaving}>
-              {isSaving ? "Saving..." : "Save Changes"}
+            <Button type="submit" disabled={updateMutation.isPending}>
+              {updateMutation.isPending ? "Saving..." : "Save Changes"}
             </Button>
           </CardFooter>
         </Card>

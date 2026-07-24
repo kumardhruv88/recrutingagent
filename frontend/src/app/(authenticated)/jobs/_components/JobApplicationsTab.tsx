@@ -1,6 +1,8 @@
 "use client";
 
-import { Job, mockPipelineData } from "@/data/jobs";
+import { useQuery } from "@tanstack/react-query";
+import { applicationService } from "@/services/applications";
+import { Job } from "@/services/jobs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -14,9 +16,16 @@ interface JobApplicationsTabProps {
   job: Job;
 }
 
-export function JobApplicationsTab({}: JobApplicationsTabProps) {
+export function JobApplicationsTab({ job }: JobApplicationsTabProps) {
+  const { data: applicationsResponse, isLoading, isError } = useQuery({
+    queryKey: ["applications", { job_id: job.id }],
+    queryFn: () => applicationService.getApplications()
+  });
+
+  const applications = (applicationsResponse?.items || []).filter(app => app.job_id === job.id);
+
   const getStageBadge = (stage: string) => {
-    switch (stage) {
+    switch (stage.toLowerCase()) {
       case "applied": return <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 border-none">Applied</Badge>;
       case "screening": return <Badge className="bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400 border-none">Screening</Badge>;
       case "interview": return <Badge className="bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400 border-none">Interview</Badge>;
@@ -52,29 +61,44 @@ export function JobApplicationsTab({}: JobApplicationsTabProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {mockPipelineData.candidates.map((candidate) => (
-              <TableRow key={candidate.id} className="group cursor-pointer hover:bg-muted/50">
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
+                  Loading applications...
+                </TableCell>
+              </TableRow>
+            ) : isError ? (
+              <TableRow>
+                <TableCell colSpan={5} className="h-24 text-center text-destructive">
+                  Failed to load applications.
+                </TableCell>
+              </TableRow>
+            ) : applications.length > 0 ? applications.map((application) => {
+              const candidate = application.candidate;
+              const candidateName = candidate ? `${candidate.first_name} ${candidate.last_name}` : "Unknown Candidate";
+              return (
+              <TableRow key={application.id} className="group cursor-pointer hover:bg-muted/50">
                 <TableCell className="whitespace-nowrap">
                   <div className="flex items-center gap-3">
                     <Avatar className="h-9 w-9 border border-border">
-                      <AvatarImage src={candidate.avatar} alt={candidate.name} />
+                      <AvatarImage src={candidate?.resume_url || undefined} alt={candidateName} />
                       <AvatarFallback className="bg-muted text-muted-foreground">
-                        {candidate.name.split(" ").map(n => n[0]).join("")}
+                        {candidate?.first_name ? candidate.first_name.charAt(0) : "?"}
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-medium text-foreground">{candidate.name}</p>
-                      <p className="text-xs text-muted-foreground">{candidate.role}</p>
+                      <p className="font-medium text-foreground">{candidateName}</p>
+                      <p className="text-xs text-muted-foreground">{candidate?.current_title || "Unknown Role"}</p>
                     </div>
                   </div>
                 </TableCell>
-                <TableCell className="text-muted-foreground whitespace-nowrap">{candidate.experience}</TableCell>
+                <TableCell className="text-muted-foreground whitespace-nowrap">{candidate?.years_of_experience || 0} years</TableCell>
                 <TableCell className="whitespace-nowrap">
                   <div className="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 font-medium">
-                    {candidate.aiScore}%
+                    {application.ai_match_score || "N/A"}
                   </div>
                 </TableCell>
-                <TableCell className="whitespace-nowrap">{getStageBadge(candidate.stage)}</TableCell>
+                <TableCell className="whitespace-nowrap">{getStageBadge(application.current_stage)}</TableCell>
                 <TableCell className="text-right whitespace-nowrap">
                   <DropdownMenu>
                     <DropdownMenuTrigger render={
@@ -83,7 +107,7 @@ export function JobApplicationsTab({}: JobApplicationsTabProps) {
                       </Button>
                     } />
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem render={<Link href={`/candidates/${candidate.id}`}>View Profile</Link>} />
+                      <DropdownMenuItem render={<Link href={`/candidates/${application.candidate_id}`}>View Profile</Link>} />
                       <DropdownMenuItem>Move Stage</DropdownMenuItem>
                       <DropdownMenuItem>Schedule Interview</DropdownMenuItem>
                       <DropdownMenuItem className="text-destructive focus:text-destructive">Reject</DropdownMenuItem>
@@ -91,7 +115,13 @@ export function JobApplicationsTab({}: JobApplicationsTabProps) {
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
-            ))}
+            )}) : (
+              <TableRow>
+                <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
+                  No applications found for this job.
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </div>

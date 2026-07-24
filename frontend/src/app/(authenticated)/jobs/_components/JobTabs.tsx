@@ -1,6 +1,6 @@
 "use client";
 
-import { Job } from "@/data/jobs";
+import { Job } from "@/services/jobs";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";

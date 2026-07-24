@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Job, mockJobs } from "@/data/jobs";
+import { useQuery } from "@tanstack/react-query";
+import { jobService } from "@/services/jobs";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,20 +20,28 @@ export function JobsList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All Status");
 
-  const filteredJobs = mockJobs.filter((job) => {
+  const { data: jobsResponse, isLoading, isError } = useQuery({
+    queryKey: ["jobs"],
+    queryFn: () => jobService.getJobs()
+  });
+
+  const jobs = jobsResponse?.items || [];
+
+  const filteredJobs = jobs.filter((job) => {
     const matchesSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          job.department.toLowerCase().includes(searchQuery.toLowerCase());
+                          (job.department || "").toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter === "All Status" || job.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
-  const getStatusBadge = (status: Job["status"]) => {
+  const getStatusBadge = (status: string) => {
     switch (status) {
       case "Published": return <Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 hover:bg-emerald-100 border-none">Published</Badge>;
       case "Draft": return <Badge className="bg-muted text-foreground dark:text-muted-foreground hover:bg-muted border-none">Draft</Badge>;
       case "Internal": return <Badge className="bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400 hover:bg-purple-100 border-none">Internal</Badge>;
       case "Closed": return <Badge className="bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 hover:bg-red-100 border-none">Closed</Badge>;
       case "On Hold": return <Badge className="bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400 hover:bg-orange-100 border-none">On Hold</Badge>;
+      default: return <Badge className="bg-muted text-foreground dark:text-muted-foreground hover:bg-muted border-none">{status}</Badge>;
     }
   };
 
@@ -103,7 +112,19 @@ export function JobsList() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredJobs.length === 0 ? (
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={5} className="h-32 text-center text-muted-foreground">
+                    Loading jobs...
+                  </TableCell>
+                </TableRow>
+              ) : isError ? (
+                <TableRow>
+                  <TableCell colSpan={5} className="h-32 text-center text-destructive">
+                    Failed to load jobs.
+                  </TableCell>
+                </TableRow>
+              ) : filteredJobs.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className="h-32 text-center text-muted-foreground">
                     No jobs found matching your filters.
@@ -117,15 +138,15 @@ export function JobsList() {
                         <Link href={`/jobs/${job.id}`} className="font-medium text-foreground hover:underline">
                           {job.title}
                         </Link>
-                        <span className="text-sm text-muted-foreground">{job.department} • {job.type}</span>
+                        <span className="text-sm text-muted-foreground">{job.department || "No Dept"} • {job.employment_type || "N/A"}</span>
                       </div>
                     </TableCell>
                     <TableCell className="whitespace-nowrap">{getStatusBadge(job.status)}</TableCell>
-                    <TableCell className="text-muted-foreground whitespace-nowrap">{job.location}</TableCell>
+                    <TableCell className="text-muted-foreground whitespace-nowrap">{job.location || "Remote"}</TableCell>
                     <TableCell className="whitespace-nowrap">
                       <div className="flex items-center gap-1.5">
                         <Users className="h-4 w-4 text-muted-foreground" />
-                        <span className="font-medium text-foreground">{job.applicationsCount}</span>
+                        <span className="font-medium text-foreground">{job.applications_count || 0}</span>
                       </div>
                     </TableCell>
                     <TableCell className="text-right whitespace-nowrap">
@@ -151,7 +172,15 @@ export function JobsList() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredJobs.length === 0 ? (
+          {isLoading ? (
+            <div className="col-span-full h-32 flex items-center justify-center border border-dashed border-border rounded-xl text-muted-foreground">
+              Loading jobs...
+            </div>
+          ) : isError ? (
+            <div className="col-span-full h-32 flex items-center justify-center border border-dashed border-border rounded-xl text-destructive">
+              Failed to load jobs.
+            </div>
+          ) : filteredJobs.length === 0 ? (
             <div className="col-span-full h-32 flex items-center justify-center border border-dashed border-border rounded-xl text-muted-foreground">
               No jobs found matching your filters.
             </div>
@@ -189,22 +218,22 @@ export function JobsList() {
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mt-2 mb-6">
                         <div className="flex items-center text-sm text-muted-foreground">
                           <Briefcase className="mr-1.5 h-3.5 w-3.5" />
-                          {job.department}
+                          {job.department || "No Dept"}
                         </div>
                         <div className="flex items-center text-sm text-muted-foreground">
                           <MapPin className="mr-1.5 h-3.5 w-3.5" />
-                          {job.location}
+                          {job.location || "Remote"}
                         </div>
                       </div>
                       
                       <div className="mt-auto grid grid-cols-2 gap-4 pt-4 border-t border-border">
                         <div>
                           <p className="text-xs text-muted-foreground mb-1 flex items-center gap-1"><Users className="h-3 w-3" /> Applications</p>
-                          <p className="font-semibold text-foreground">{job.applicationsCount}</p>
+                          <p className="font-semibold text-foreground">{job.applications_count || 0}</p>
                         </div>
                         <div>
                           <p className="text-xs text-muted-foreground mb-1 flex items-center gap-1"><BrainCircuit className="h-3 w-3" /> AI Score</p>
-                          <p className="font-semibold text-primary">{job.aiScore}% Avg</p>
+                          <p className="font-semibold text-primary">N/A</p>
                         </div>
                       </div>
                     </CardContent>

@@ -1,48 +1,49 @@
 "use client";
 
-import { Job } from "@/data/jobs";
+import { Job } from "@/services/jobs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Calendar as CalendarIcon, Clock, Video, CheckCircle2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { interviewService } from "@/services/interviews";
+import { applicationService } from "@/services/applications";
 import { Badge } from "@/components/ui/badge";
 
 interface JobInterviewsTabProps {
   job: Job;
 }
 
-export function JobInterviewsTab({}: JobInterviewsTabProps) {
-  const upcomingInterviews = [
-    {
-      id: "int-1",
-      candidate: "Alex Turner",
-      role: "Senior Frontend Engineer",
-      type: "Technical Screening",
-      date: "Tomorrow, Oct 26",
-      time: "10:00 AM - 11:00 AM PST",
-      interviewer: "Jane Doe",
-      location: "Google Meet",
-      status: "Confirmed"
-    },
-    {
-      id: "int-2",
-      candidate: "Maria Garcia",
-      role: "Senior Frontend Engineer",
-      type: "System Design",
-      date: "Thursday, Oct 28",
-      time: "2:00 PM - 3:00 PM PST",
-      interviewer: "Sarah Connor",
-      location: "Zoom",
-      status: "Pending"
-    }
-  ];
+export function JobInterviewsTab({ job }: JobInterviewsTabProps) {
+  const { data: applicationsResponse } = useQuery({
+    queryKey: ["applications", { job_id: job.id }],
+    queryFn: () => applicationService.getApplications()
+  });
+
+  const { data: interviews = [], isLoading } = useQuery({
+    queryKey: ["interviews"],
+    queryFn: () => interviewService.getInterviews()
+  });
+
+  const jobApplications = applicationsResponse?.items?.filter(app => app.job_id === job.id) || [];
+  const appIds = new Set(jobApplications.map(app => app.id));
+  
+  const jobInterviews = interviews.filter(inv => appIds.has(inv.application_id));
+  
+  const upcomingInterviews = jobInterviews.filter(inv => inv.status !== "Completed" && inv.status !== "Cancelled");
+  const completedInterviews = jobInterviews.filter(inv => inv.status === "Completed");
 
   return (
     <div className="space-y-8">
       <div>
         <h3 className="text-lg font-medium text-foreground mb-4">Upcoming Interviews</h3>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {upcomingInterviews.map((interview) => (
+          {isLoading ? (
+            <div className="col-span-full py-8 text-center text-muted-foreground">Loading interviews...</div>
+          ) : upcomingInterviews.length > 0 ? upcomingInterviews.map((interview) => {
+            const app = jobApplications.find(a => a.id === interview.application_id);
+            const candidateName = app?.candidate ? `${app.candidate.first_name} ${app.candidate.last_name}` : "Unknown Candidate";
+            return (
             <Card key={interview.id} className="overflow-hidden border-border shadow-sm">
               <div className="h-2 bg-primary"></div>
               <CardContent className="p-6">
@@ -55,36 +56,42 @@ export function JobInterviewsTab({}: JobInterviewsTabProps) {
                   </Button>
                 </div>
                 
-                <h4 className="font-semibold text-foreground text-lg mb-1">{interview.type}</h4>
-                <p className="text-muted-foreground text-sm mb-4">with <span className="font-medium text-foreground">{interview.candidate}</span></p>
+                <h4 className="font-semibold text-foreground text-lg mb-1">{interview.interview_type}</h4>
+                <p className="text-muted-foreground text-sm mb-4">with <span className="font-medium text-foreground">{candidateName}</span></p>
                 
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center text-sm text-muted-foreground">
                     <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
-                    {interview.date}
+                    {new Date(interview.scheduled_at).toLocaleDateString()}
                   </div>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <Clock className="mr-2 h-4 w-4 text-muted-foreground" />
-                    {interview.time}
+                    {new Date(interview.scheduled_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} ({interview.duration_minutes}m)
                   </div>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <Video className="mr-2 h-4 w-4 text-muted-foreground" />
-                    {interview.location}
+                    {interview.meeting_url ? "Video Call" : "In Person"}
                   </div>
                 </div>
                 
                 <div className="flex items-center justify-between pt-4 border-t border-border">
                   <div className="flex items-center gap-2">
                     <Avatar className="h-6 w-6">
-                      <AvatarFallback className="text-[10px] bg-muted text-muted-foreground">{interview.interviewer.split(" ").map(n => n[0]).join("")}</AvatarFallback>
+                      <AvatarFallback className="text-[10px] bg-muted text-muted-foreground">{"?".toUpperCase()}</AvatarFallback>
                     </Avatar>
-                    <span className="text-xs text-muted-foreground">{interview.interviewer}</span>
+                    <span className="text-xs text-muted-foreground">Interviewer</span>
                   </div>
-                  <Button size="sm" variant="outline" className="h-8 text-xs">Join Call</Button>
+                  {interview.meeting_url && (
+                    <Button size="sm" variant="outline" className="h-8 text-xs" asChild>
+                      <a href={interview.meeting_url} target="_blank" rel="noopener noreferrer">Join Call</a>
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>
-          ))}
+          )}) : (
+            <div className="col-span-full py-8 text-center text-muted-foreground">No upcoming interviews.</div>
+          )}
           
           <Card className="border-dashed border-2 border-border shadow-none hover:bg-muted/50 transition-colors flex items-center justify-center cursor-pointer min-h-[280px]">
             <CardContent className="flex flex-col items-center justify-center p-6 text-center h-full">
@@ -98,45 +105,35 @@ export function JobInterviewsTab({}: JobInterviewsTabProps) {
         </div>
       </div>
       
-      <div>
-        <h3 className="text-lg font-medium text-foreground mb-4">Completed Interviews</h3>
-        <Card className="border-border shadow-sm">
-          <div className="p-4 border-b border-border flex items-center justify-between hover:bg-muted/50 transition-colors cursor-pointer">
-            <div className="flex items-center gap-4">
-              <div className="h-10 w-10 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0">
-                <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+      {completedInterviews.length > 0 && (
+        <div>
+          <h3 className="text-lg font-medium text-foreground mb-4">Completed Interviews</h3>
+          <Card className="border-border shadow-sm">
+            {completedInterviews.map(interview => {
+              const app = jobApplications.find(a => a.id === interview.application_id);
+              const candidateName = app?.candidate ? `${app.candidate.first_name} ${app.candidate.last_name}` : "Unknown Candidate";
+              return (
+              <div key={interview.id} className="p-4 border-b border-border flex items-center justify-between hover:bg-muted/50 transition-colors cursor-pointer last:border-b-0">
+                <div className="flex items-center gap-4">
+                  <div className="h-10 w-10 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-foreground">{candidateName}</h4>
+                    <p className="text-sm text-muted-foreground">{interview.interview_type} • {new Date(interview.scheduled_at).toLocaleDateString()}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="inline-flex items-center px-2 py-1 rounded bg-muted text-xs font-medium text-foreground mb-1">
+                    Score: {interview.score || "N/A"}/5
+                  </div>
+                  <p className="text-xs text-muted-foreground">Interviewer</p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-medium text-foreground">David Chen</h4>
-                <p className="text-sm text-muted-foreground">Culture Fit • Oct 22, 2023</p>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="inline-flex items-center px-2 py-1 rounded bg-muted text-xs font-medium text-foreground mb-1">
-                Score: 4.5/5
-              </div>
-              <p className="text-xs text-muted-foreground">Jane Doe</p>
-            </div>
-          </div>
-          <div className="p-4 border-b border-border flex items-center justify-between hover:bg-muted/50 transition-colors cursor-pointer">
-            <div className="flex items-center gap-4">
-              <div className="h-10 w-10 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0">
-                <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-              </div>
-              <div>
-                <h4 className="font-medium text-foreground">Emily Rodriguez</h4>
-                <p className="text-sm text-muted-foreground">Technical Screening • Oct 20, 2023</p>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="inline-flex items-center px-2 py-1 rounded bg-muted text-xs font-medium text-foreground mb-1">
-                Score: 4.8/5
-              </div>
-              <p className="text-xs text-muted-foreground">Jane Doe</p>
-            </div>
-          </div>
-        </Card>
-      </div>
+            )})}
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

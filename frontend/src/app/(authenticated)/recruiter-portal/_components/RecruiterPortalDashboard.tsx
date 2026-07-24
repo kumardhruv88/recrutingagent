@@ -2,14 +2,16 @@
 
 import {
   mockRecruiterProfile,
-  mockAssignedJobs,
-  mockCandidates,
   mockTasks,
-  mockInterviews,
   mockAIAssistantInsights,
   mockPerformanceMetrics,
   mockActivityFeed,
 } from "@/data/recruiter";
+
+import { useQuery } from "@tanstack/react-query";
+import { jobService } from "@/services/jobs";
+import { candidateService } from "@/services/candidates";
+import { interviewService } from "@/services/interviews";
 
 import { RecruiterSummary } from "./RecruiterSummary";
 import { QuickActionGrid } from "./QuickActionGrid";
@@ -22,6 +24,24 @@ import { PerformanceCards } from "./PerformanceCards";
 import { ActivityFeed } from "./ActivityFeed";
 
 export function RecruiterPortalDashboard() {
+  const { data: jobsResponse } = useQuery({
+    queryKey: ["jobs"],
+    queryFn: () => jobService.getJobs()
+  });
+
+  const { data: candidatesResponse } = useQuery({
+    queryKey: ["candidates"],
+    queryFn: () => candidateService.getCandidates()
+  });
+
+  const { data: interviews = [] } = useQuery({
+    queryKey: ["interviews"],
+    queryFn: () => interviewService.getInterviews()
+  });
+
+  const jobs = jobsResponse?.items || [];
+  const candidates = candidatesResponse?.items || [];
+
   return (
     <div className="space-y-6 pb-12 animate-in fade-in duration-500">
       {/* Top Section */}
@@ -33,8 +53,8 @@ export function RecruiterPortalDashboard() {
         
         {/* Left/Main Content Column (Spans 2 columns on Desktop) */}
         <div className="lg:col-span-2 space-y-6">
-          <AssignedJobsList jobs={mockAssignedJobs} />
-          <CandidateList candidates={mockCandidates} />
+          <AssignedJobsList jobs={jobs} />
+          <CandidateList candidates={candidates} />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <TaskChecklist initialTasks={mockTasks} />
@@ -48,7 +68,7 @@ export function RecruiterPortalDashboard() {
             <AIAssistantPanel insights={mockAIAssistantInsights} />
           </div>
           <div className="flex-1 min-h-[300px]">
-            <InterviewTimeline interviews={mockInterviews} />
+            <InterviewTimeline interviews={interviews} />
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Interview } from "@/data/recruiter";
+import { Interview } from "@/services/interviews";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { motion } from "framer-motion";
@@ -52,7 +52,14 @@ export function InterviewTimeline({ interviews }: InterviewTimelineProps) {
         </CardHeader>
         <CardContent className="flex-1">
           <div className="relative border-l-2 border-zinc-100 dark:border-zinc-800/80 ml-4 space-y-6">
-            {interviews.map((interview, index) => (
+            {interviews.length === 0 ? (
+              <div className="pl-6 text-sm text-muted-foreground py-4">No upcoming interviews today.</div>
+            ) : interviews.map((interview, index) => {
+              const candidate = interview.application?.candidate;
+              const job = interview.application?.job;
+              const candidateName = candidate ? `${candidate.first_name} ${candidate.last_name}` : "Candidate";
+              
+              return (
               <motion.div 
                 key={interview.id}
                 initial={{ opacity: 0, x: -10 }}
@@ -61,40 +68,40 @@ export function InterviewTimeline({ interviews }: InterviewTimelineProps) {
                 className="relative pl-6 sm:pl-8 group"
               >
                 {/* Timeline Dot */}
-                <div className={`absolute -left-[11px] top-1 w-5 h-5 rounded-full flex items-center justify-center border shadow-sm ${getTypeColor(interview.type)} transition-transform group-hover:scale-110 z-10`}>
+                <div className={`absolute -left-[11px] top-1 w-5 h-5 rounded-full flex items-center justify-center border shadow-sm ${getTypeColor(interview.interview_type)} transition-transform group-hover:scale-110 z-10`}>
                   <div className="w-1.5 h-1.5 rounded-full bg-current" />
                 </div>
                 
                 <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between p-3 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors border border-transparent hover:border-zinc-200 dark:hover:border-zinc-800 cursor-pointer -mt-2">
                   <div className="flex items-center gap-3">
                     <Avatar className="h-10 w-10 border border-zinc-200 dark:border-zinc-800">
-                      <AvatarImage src={interview.candidateAvatar} alt={interview.candidateName} className="object-cover" />
+                      <AvatarImage src={candidate?.resume_url || undefined} alt={candidateName} className="object-cover" />
                       <AvatarFallback className="bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300">
-                        {interview.candidateName.charAt(0)}
+                        {candidate?.first_name ? candidate.first_name.charAt(0) : "?"}
                       </AvatarFallback>
                     </Avatar>
                     <div>
                       <h4 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
-                        {interview.candidateName}
+                        {candidateName}
                       </h4>
                       <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                        {interview.role}
+                        {job?.title || "Unknown Role"}
                       </p>
                     </div>
                   </div>
                   
                   <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2 sm:gap-1">
                     <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded-md">
-                      {interview.time}
+                      {new Date(interview.scheduled_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
-                    <div className={`flex items-center gap-1.5 text-[11px] font-medium px-2 py-0.5 rounded-sm border ${getTypeColor(interview.type)}`}>
-                      {getTypeIcon(interview.type)}
-                      {interview.type}
+                    <div className={`flex items-center gap-1.5 text-[11px] font-medium px-2 py-0.5 rounded-sm border ${getTypeColor(interview.interview_type)}`}>
+                      {getTypeIcon(interview.interview_type)}
+                      {interview.interview_type}
                     </div>
                   </div>
                 </div>
               </motion.div>
-            ))}
+            )})}
           </div>
         </CardContent>
       </Card>

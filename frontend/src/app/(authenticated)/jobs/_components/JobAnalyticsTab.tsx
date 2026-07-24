@@ -1,6 +1,7 @@
 "use client";
 
-import { Job, mockAnalyticsData } from "@/data/jobs";
+import { mockAnalyticsData } from "@/data/jobs";
+import { Job } from "@/services/jobs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 

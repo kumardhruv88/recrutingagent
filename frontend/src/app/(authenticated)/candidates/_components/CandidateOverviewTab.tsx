@@ -1,6 +1,6 @@
 "use client";
 
-import { Candidate } from "@/data/candidates";
+import { Candidate } from "@/services/candidates";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Briefcase, GraduationCap, LinkIcon } from "lucide-react";
@@ -18,8 +18,8 @@ export function CandidateOverviewTab({ candidate }: CandidateOverviewTabProps) {
             <CardTitle className="text-lg">Executive Summary</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground leading-relaxed">
-              {candidate.summary}
+            <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
+              {candidate.notes || "No summary or notes provided for this candidate."}
             </p>
           </CardContent>
         </Card>
@@ -34,8 +34,8 @@ export function CandidateOverviewTab({ candidate }: CandidateOverviewTabProps) {
           <CardContent className="space-y-6">
             <div className="relative pl-6 border-l border-border pb-2">
               <div className="absolute w-3 h-3 bg-border rounded-full -left-[6.5px] top-1.5 ring-4 ring-background"></div>
-              <h4 className="font-semibold text-foreground">{candidate.currentRole}</h4>
-              <p className="text-sm text-muted-foreground mb-2">2021 - Present • {candidate.location}</p>
+              <h4 className="font-semibold text-foreground">{candidate.current_title || "Unknown Role"} {candidate.current_company ? `at ${candidate.current_company}` : ""}</h4>
+              <p className="text-sm text-muted-foreground mb-2">{candidate.location || "Remote"}</p>
               <p className="text-sm text-muted-foreground leading-relaxed">Led the development of multiple scalable microservices. Mentored junior developers and improved system performance by 40%.</p>
             </div>
             <div className="relative pl-6 border-l border-transparent">
@@ -56,8 +56,8 @@ export function CandidateOverviewTab({ candidate }: CandidateOverviewTabProps) {
           </CardHeader>
           <CardContent>
             <div className="space-y-1">
-              <h4 className="font-semibold text-foreground">{candidate.education}</h4>
-              <p className="text-sm text-muted-foreground">Graduated 2018</p>
+              <h4 className="font-semibold text-foreground">Degree Information</h4>
+              <p className="text-sm text-muted-foreground">Education details are extracted via resume parsing.</p>
             </div>
           </CardContent>
         </Card>
@@ -70,11 +70,13 @@ export function CandidateOverviewTab({ candidate }: CandidateOverviewTabProps) {
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {candidate.skills.map((skill) => (
+              {(candidate.skills || []).length > 0 ? candidate.skills!.map((skill) => (
                 <Badge key={skill} variant="secondary" className="px-2.5 py-1 font-normal text-muted-foreground">
                   {skill}
                 </Badge>
-              ))}
+              )) : (
+                <p className="text-sm text-muted-foreground">No skills listed.</p>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -84,20 +86,27 @@ export function CandidateOverviewTab({ candidate }: CandidateOverviewTabProps) {
             <CardTitle className="text-lg">Links</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <a href="#" className="flex items-center gap-2 text-sm text-primary hover:underline">
-              <LinkIcon className="h-4 w-4" />
-              linkedin.com/in/{candidate.name.toLowerCase().replace(' ', '')}
-            </a>
-            {candidate.githubUsername && (
-              <a href={`https://github.com/${candidate.githubUsername}`} className="flex items-center gap-2 text-sm text-primary hover:underline">
-                <LinkIcon className="h-4 w-4" />
-                github.com/{candidate.githubUsername}
+            {candidate.linkedin_url && (
+              <a href={candidate.linkedin_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-primary hover:underline line-clamp-1">
+                <LinkIcon className="h-4 w-4 shrink-0" />
+                {candidate.linkedin_url.replace(/^https?:\/\//, '')}
               </a>
             )}
-            <a href="#" className="flex items-center gap-2 text-sm text-primary hover:underline">
-              <LinkIcon className="h-4 w-4" />
-              Portfolio Website
-            </a>
+            {candidate.github_url && (
+              <a href={candidate.github_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-primary hover:underline line-clamp-1">
+                <LinkIcon className="h-4 w-4 shrink-0" />
+                {candidate.github_url.replace(/^https?:\/\//, '')}
+              </a>
+            )}
+            {candidate.portfolio_url && (
+              <a href={candidate.portfolio_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-primary hover:underline line-clamp-1">
+                <LinkIcon className="h-4 w-4 shrink-0" />
+                Portfolio Website
+              </a>
+            )}
+            {!candidate.linkedin_url && !candidate.github_url && !candidate.portfolio_url && (
+              <p className="text-sm text-muted-foreground">No links provided.</p>
+            )}
           </CardContent>
         </Card>
       </div>

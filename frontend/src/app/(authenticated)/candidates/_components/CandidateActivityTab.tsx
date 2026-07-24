@@ -1,6 +1,7 @@
 "use client";
 
-import { Candidate, mockActivityTimeline } from "@/data/candidates";
+import { mockActivityTimeline } from "@/data/candidates";
+import { Candidate } from "@/services/candidates";
 import { CheckCircle2, Clock, FileText, Calendar, MessageSquare, AlertCircle } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
