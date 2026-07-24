@@ -81,15 +81,15 @@ export function NotificationsDashboard() {
   const activeNotification = notifications.find(n => n.id === activeNotificationId) || null;
 
   return (
-    <div className="h-[calc(100vh-theme(spacing.14)-theme(spacing.8))] flex flex-col -mx-4 sm:-mx-8 -mb-8 overflow-hidden bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 pointer-events-auto relative">
+    <div className="h-[calc(100vh-theme(spacing.14)-theme(spacing.8))] flex flex-col -mx-4 sm:-mx-8 -mb-8 overflow-hidden bg-background border-t border-border pointer-events-auto relative">
       
       {/* Header Toolbar */}
-      <div className="h-14 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between px-4 sm:px-6 shrink-0 bg-zinc-50/50 dark:bg-zinc-950">
+      <div className="h-14 border-b border-border flex items-center justify-between px-4 sm:px-6 shrink-0 bg-muted/30">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-400">
+          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
             <Inbox className="w-4 h-4" />
           </div>
-          <h2 className="font-semibold text-zinc-900 dark:text-zinc-100 hidden sm:block">Inbox</h2>
+          <h2 className="font-semibold text-foreground hidden sm:block">Inbox</h2>
         </div>
 
         <div className="flex items-center gap-3 flex-1 justify-end max-w-2xl">
@@ -98,7 +98,7 @@ export function NotificationsDashboard() {
           </div>
           <NotificationFilters categories={selectedCategories} toggleCategory={toggleCategory} />
           <NotificationTabs activeTab={activeTab} setActiveTab={setActiveTab} unreadCount={unreadCount} />
-          <div className="w-px h-6 bg-zinc-200 dark:bg-zinc-800 mx-1 hidden sm:block" />
+          <div className="w-px h-6 bg-border mx-1 hidden sm:block" />
           <NotificationSettings />
         </div>
       </div>
@@ -107,8 +107,8 @@ export function NotificationsDashboard() {
       <div className="flex-1 flex overflow-hidden relative">
         
         {/* Left List Pane */}
-        <div className={`w-full md:w-[400px] lg:w-[450px] shrink-0 border-r border-zinc-200 dark:border-zinc-800 bg-zinc-50/30 dark:bg-zinc-950/30 flex flex-col ${showDetailOnMobile ? 'hidden md:flex' : 'flex'}`}>
-          <div className="sm:hidden p-3 border-b border-zinc-200 dark:border-zinc-800">
+        <div className={`w-full md:w-[400px] lg:w-[450px] shrink-0 border-r border-border bg-muted/10 flex flex-col ${showDetailOnMobile ? 'hidden md:flex' : 'flex'}`}>
+          <div className="sm:hidden p-3 border-b border-border">
             <NotificationSearch query={searchQuery} setQuery={setSearchQuery} />
           </div>
           <div className="flex-1 overflow-hidden relative">
@@ -129,10 +129,10 @@ export function NotificationsDashboard() {
         </div>
 
         {/* Right Detail Pane */}
-        <div className={`flex-1 bg-white dark:bg-zinc-950 relative ${showDetailOnMobile ? 'block' : 'hidden md:block'}`}>
+        <div className={`flex-1 bg-background relative ${showDetailOnMobile ? 'block' : 'hidden md:block'}`}>
           {showDetailOnMobile && (
-            <div className="md:hidden h-14 border-b border-zinc-200 dark:border-zinc-800 flex items-center px-4">
-              <Button variant="ghost" size="sm" onClick={() => setShowDetailOnMobile(false)} className="-ml-2">
+            <div className="md:hidden h-14 border-b border-border flex items-center px-4">
+              <Button variant="ghost" size="sm" onClick={() => setShowDetailOnMobile(false)} className="-ml-2" aria-label="Back to inbox">
                 <Menu className="w-4 h-4 mr-2" />
                 Back to Inbox
               </Button>

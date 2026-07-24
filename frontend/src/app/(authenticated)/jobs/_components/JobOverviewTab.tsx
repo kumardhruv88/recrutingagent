@@ -13,29 +13,29 @@ export function JobOverviewTab({ job }: JobOverviewTabProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2 space-y-6">
-        <Card className="shadow-sm border-zinc-200 dark:border-zinc-800">
+        <Card className="shadow-sm border-border">
           <CardHeader>
             <CardTitle className="text-lg">About the Role</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
               {job.description}
             </p>
           </CardContent>
         </Card>
 
-        <Card className="shadow-sm border-zinc-200 dark:border-zinc-800">
+        <Card className="shadow-sm border-border">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
-              <ListChecks className="h-5 w-5 text-indigo-500" />
+              <ListChecks className="h-5 w-5 text-primary" />
               Requirements
             </CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="space-y-3">
               {job.requirements.map((req, i) => (
-                <li key={i} className="flex gap-3 text-zinc-600 dark:text-zinc-400">
-                  <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-indigo-500 shrink-0" />
+                <li key={i} className="flex gap-3 text-muted-foreground">
+                  <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
                   <span>{req}</span>
                 </li>
               ))}
@@ -43,7 +43,7 @@ export function JobOverviewTab({ job }: JobOverviewTabProps) {
           </CardContent>
         </Card>
 
-        <Card className="shadow-sm border-zinc-200 dark:border-zinc-800">
+        <Card className="shadow-sm border-border">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <Zap className="h-5 w-5 text-amber-500" />
@@ -53,7 +53,7 @@ export function JobOverviewTab({ job }: JobOverviewTabProps) {
           <CardContent>
             <ul className="space-y-3">
               {job.responsibilities.map((res, i) => (
-                <li key={i} className="flex gap-3 text-zinc-600 dark:text-zinc-400">
+                <li key={i} className="flex gap-3 text-muted-foreground">
                   <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0" />
                   <span>{res}</span>
                 </li>
@@ -64,63 +64,63 @@ export function JobOverviewTab({ job }: JobOverviewTabProps) {
       </div>
 
       <div className="space-y-6">
-        <Card className="shadow-sm border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
+        <Card className="shadow-sm border-border bg-muted/30">
           <CardHeader>
-            <CardTitle className="text-sm uppercase tracking-wider text-zinc-500 font-semibold">
+            <CardTitle className="text-sm uppercase tracking-wider text-muted-foreground font-semibold">
               Key Details
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-md bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-500">
+              <div className="h-8 w-8 rounded-md bg-background border border-border flex items-center justify-center text-muted-foreground">
                 <Briefcase className="h-4 w-4" />
               </div>
               <div>
-                <p className="text-xs text-zinc-500 font-medium">Department</p>
-                <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">{job.department}</p>
+                <p className="text-xs text-muted-foreground font-medium">Department</p>
+                <p className="text-sm font-medium text-foreground">{job.department}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-md bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-500">
+              <div className="h-8 w-8 rounded-md bg-background border border-border flex items-center justify-center text-muted-foreground">
                 <MapPin className="h-4 w-4" />
               </div>
               <div>
-                <p className="text-xs text-zinc-500 font-medium">Location</p>
-                <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">{job.location}</p>
+                <p className="text-xs text-muted-foreground font-medium">Location</p>
+                <p className="text-sm font-medium text-foreground">{job.location}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-md bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-500">
+              <div className="h-8 w-8 rounded-md bg-background border border-border flex items-center justify-center text-muted-foreground">
                 <Clock className="h-4 w-4" />
               </div>
               <div>
-                <p className="text-xs text-zinc-500 font-medium">Employment Type</p>
-                <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">{job.type}</p>
+                <p className="text-xs text-muted-foreground font-medium">Employment Type</p>
+                <p className="text-sm font-medium text-foreground">{job.type}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-md bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-500">
+              <div className="h-8 w-8 rounded-md bg-background border border-border flex items-center justify-center text-muted-foreground">
                 <DollarSign className="h-4 w-4" />
               </div>
               <div>
-                <p className="text-xs text-zinc-500 font-medium">Salary Range</p>
-                <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">{job.salaryRange}</p>
+                <p className="text-xs text-muted-foreground font-medium">Salary Range</p>
+                <p className="text-sm font-medium text-foreground">{job.salaryRange}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="shadow-sm border-zinc-200 dark:border-zinc-800">
+        <Card className="shadow-sm border-border">
           <CardHeader>
-            <CardTitle className="text-sm uppercase tracking-wider text-zinc-500 font-semibold">
+            <CardTitle className="text-sm uppercase tracking-wider text-muted-foreground font-semibold">
               Benefits
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
               {job.benefits.map((benefit, i) => (
-                <Badge key={i} variant="secondary" className="bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-normal border-none">
-                  <CheckCircle2 className="mr-1 h-3 w-3 text-emerald-500" />
+                <Badge key={i} variant="secondary" className="bg-secondary/50 hover:bg-secondary text-secondary-foreground font-normal border-none">
+                  <CheckCircle2 className="mr-1 h-3 w-3 text-primary" />
                   {benefit}
                 </Badge>
               ))}

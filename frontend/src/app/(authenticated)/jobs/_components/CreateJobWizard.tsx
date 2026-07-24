@@ -32,21 +32,21 @@ export function CreateJobWizard() {
           Create Job
         </Button>
       } />
-      <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden bg-white dark:bg-zinc-950">
-        <div className="flex bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 p-4">
+      <DialogContent className="sm:max-w-[600px] w-[95vw] p-0 overflow-hidden bg-background">
+        <div className="flex bg-muted/50 border-b border-border p-4 overflow-x-auto no-scrollbar">
           {[1, 2, 3, 4].map((s) => (
-            <div key={s} className="flex items-center flex-1 last:flex-none">
-              <div className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium border ${
+            <div key={s} className="flex items-center flex-1 min-w-[60px] last:flex-none">
+              <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-medium border transition-colors ${
                 step > s 
-                  ? "bg-emerald-500 text-white border-emerald-500" 
+                  ? "bg-primary text-primary-foreground border-primary" 
                   : step === s 
-                    ? "bg-zinc-900 text-white border-zinc-900 dark:bg-white dark:text-zinc-950 dark:border-white" 
-                    : "bg-white text-zinc-500 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:border-zinc-700"
+                    ? "bg-foreground text-background border-foreground" 
+                    : "bg-background text-muted-foreground border-border"
               }`}>
                 {step > s ? <Check className="h-4 w-4" /> : s}
               </div>
               {s !== 4 && (
-                <div className="flex-1 h-px mx-2 bg-zinc-200 dark:bg-zinc-800"></div>
+                <div className="flex-1 h-px mx-2 bg-border min-w-[20px]"></div>
               )}
             </div>
           ))}
@@ -64,8 +64,8 @@ export function CreateJobWizard() {
               {step === 1 && (
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-lg font-medium text-zinc-900 dark:text-zinc-100">Basic Information</h3>
-                    <p className="text-sm text-zinc-500">Provide the fundamental details about the role.</p>
+                    <h3 className="text-lg font-medium text-foreground">Basic Information</h3>
+                    <p className="text-sm text-muted-foreground">Provide the fundamental details about the role.</p>
                   </div>
                   <div className="grid gap-4 py-4">
                     <div className="grid gap-2">
@@ -112,8 +112,8 @@ export function CreateJobWizard() {
               {step === 2 && (
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-lg font-medium text-zinc-900 dark:text-zinc-100">Description & Requirements</h3>
-                    <p className="text-sm text-zinc-500">Define what you are looking for in a candidate.</p>
+                    <h3 className="text-lg font-medium text-foreground">Description & Requirements</h3>
+                    <p className="text-sm text-muted-foreground">Define what you are looking for in a candidate.</p>
                   </div>
                   <div className="grid gap-4 py-4">
                     <div className="grid gap-2">
@@ -131,8 +131,8 @@ export function CreateJobWizard() {
               {step === 3 && (
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-lg font-medium text-zinc-900 dark:text-zinc-100">Responsibilities & Benefits</h3>
-                    <p className="text-sm text-zinc-500">What will the candidate do and what do you offer?</p>
+                    <h3 className="text-lg font-medium text-foreground">Responsibilities & Benefits</h3>
+                    <p className="text-sm text-muted-foreground">What will the candidate do and what do you offer?</p>
                   </div>
                   <div className="grid gap-4 py-4">
                     <div className="grid gap-2">
@@ -150,20 +150,20 @@ export function CreateJobWizard() {
               {step === 4 && (
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-lg font-medium text-zinc-900 dark:text-zinc-100">Review & Publish</h3>
-                    <p className="text-sm text-zinc-500">Review the details before publishing the job to your career site.</p>
+                    <h3 className="text-lg font-medium text-foreground">Review & Publish</h3>
+                    <p className="text-sm text-muted-foreground">Review the details before publishing the job to your career site.</p>
                   </div>
-                  <div className="bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-lg p-4 space-y-3">
+                  <div className="bg-muted/50 border border-border rounded-xl p-4 space-y-3">
                     <div>
-                      <h4 className="font-semibold text-zinc-900 dark:text-zinc-100">Senior Frontend Engineer</h4>
-                      <p className="text-sm text-zinc-500">Engineering • Full-time • San Francisco, CA (Hybrid)</p>
+                      <h4 className="font-semibold text-foreground">Senior Frontend Engineer</h4>
+                      <p className="text-sm text-muted-foreground">Engineering • Full-time • San Francisco, CA (Hybrid)</p>
                     </div>
-                    <div className="text-sm text-zinc-600 dark:text-zinc-400">
+                    <div className="text-sm text-muted-foreground">
                       <p className="mb-2">We are looking for a Senior Frontend Engineer to lead the development of our next-generation hiring platform.</p>
                     </div>
-                    <div className="flex items-center gap-2 pt-2 border-t border-zinc-200 dark:border-zinc-800">
-                      <Check className="h-4 w-4 text-emerald-500" />
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">All required fields completed</span>
+                    <div className="flex items-center gap-2 pt-2 border-t border-border">
+                      <Check className="h-4 w-4 text-primary" />
+                      <span className="text-sm text-muted-foreground">All required fields completed</span>
                     </div>
                   </div>
                 </div>
@@ -172,7 +172,7 @@ export function CreateJobWizard() {
           </AnimatePresence>
         </div>
 
-        <DialogFooter className="p-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900">
+        <DialogFooter className="p-4 border-t border-border bg-muted/30">
           <div className="flex justify-between w-full">
             <Button variant="outline" onClick={prevStep} disabled={step === 1}>
               Back
@@ -182,7 +182,7 @@ export function CreateJobWizard() {
                 Next Step <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             ) : (
-              <Button onClick={handleFinish} className="bg-emerald-600 hover:bg-emerald-700 text-white">
+              <Button onClick={handleFinish} className="bg-primary hover:bg-primary/90 text-primary-foreground">
                 Publish Job
               </Button>
             )}

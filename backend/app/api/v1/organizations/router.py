@@ -41,6 +41,8 @@ async def get_current_active_organization(
     org: Organization = Depends(get_current_organization),
 ) -> Any:
     """Retrieve the currently active organization from context"""
+    if not org:
+        raise HTTPException(status_code=401, detail="Unauthorized")
     return org
 
 

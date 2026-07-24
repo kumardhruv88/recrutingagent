@@ -12,18 +12,18 @@ import { Button } from "@/components/ui/button";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md">
       <div className="flex h-14 items-center justify-between px-4 lg:px-6">
         <div className="flex items-center gap-4 lg:gap-6">
           <MobileDrawer />
           
           {/* Organization Switcher Placeholder */}
           <div className="hidden lg:flex items-center gap-2 text-sm font-medium">
-            <Button variant="ghost" className="h-9 px-3 flex items-center gap-2 border border-transparent hover:border-zinc-200 dark:hover:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
-              <Building2 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+            <Button variant="ghost" className="h-9 px-3 flex items-center gap-2 border border-transparent hover:border-border bg-surface">
+              <Building2 className="h-4 w-4 text-primary" />
               <span>Acme Corp</span>
             </Button>
-            <div className="h-4 w-px bg-zinc-200 dark:bg-zinc-800" />
+            <div className="h-4 w-px bg-border" />
             <Breadcrumbs />
           </div>
         </div>

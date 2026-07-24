@@ -15,17 +15,18 @@ export function CandidateAITab({ candidate }: CandidateAITabProps) {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-100 dark:border-blue-900/50">
+        <Card className="bg-gradient-to-br from-indigo-50/50 to-blue-50/50 dark:from-indigo-950/20 dark:to-blue-950/20 border-indigo-100 dark:border-indigo-900/50 shadow-sm">
           <CardContent className="p-6 flex flex-col items-center justify-center text-center h-full">
-            <div className="w-20 h-20 rounded-full border-4 border-blue-500 flex items-center justify-center mb-4">
-              <span className="text-3xl font-bold text-blue-700 dark:text-blue-400">{candidate.aiScore}%</span>
+            <div className="w-20 h-20 rounded-full border-4 border-indigo-500 flex items-center justify-center mb-4 bg-background shadow-sm">
+              <span className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">{candidate.aiScore}%</span>
             </div>
-            <h3 className="font-semibold text-lg text-blue-900 dark:text-blue-300">Match Score</h3>
-            <p className="text-sm text-blue-700/80 dark:text-blue-400/80 mt-1">Based on role requirements</p>
+            <h3 className="font-semibold text-lg text-indigo-700 dark:text-indigo-300">Match Score</h3>
+            <p className="text-sm text-indigo-600/80 dark:text-indigo-400/80 mt-1">Based on role requirements</p>
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-2 bg-gradient-to-br from-slate-50 to-zinc-50 dark:from-zinc-900/50 dark:to-zinc-900/30">
+        <Card className="md:col-span-2 shadow-sm relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500" />
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <BrainCircuit className="h-5 w-5 text-indigo-500" />
@@ -33,10 +34,10 @@ export function CandidateAITab({ candidate }: CandidateAITabProps) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
               {aiData.executiveSummary}
             </p>
-            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-sm font-medium border border-emerald-200 dark:border-emerald-800">
+            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-sm font-medium border border-emerald-200 dark:border-emerald-800 shadow-sm">
               <Target className="h-4 w-4" />
               Recommendation: {aiData.hiringRecommendation}
             </div>
@@ -45,7 +46,7 @@ export function CandidateAITab({ candidate }: CandidateAITabProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card>
+        <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
               <CheckCircle2 className="h-5 w-5" />
@@ -55,16 +56,16 @@ export function CandidateAITab({ candidate }: CandidateAITabProps) {
           <CardContent>
             <ul className="space-y-3">
               {aiData.strengths.map((strength, i) => (
-                <li key={i} className="flex gap-3 text-zinc-700 dark:text-zinc-300">
+                <li key={i} className="flex gap-3 text-foreground">
                   <span className="h-2 w-2 rounded-full bg-emerald-500 mt-2 shrink-0"></span>
-                  <span>{strength}</span>
+                  <span className="text-muted-foreground">{strength}</span>
                 </li>
               ))}
             </ul>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2 text-orange-700 dark:text-orange-400">
               <AlertTriangle className="h-5 w-5" />
@@ -74,9 +75,9 @@ export function CandidateAITab({ candidate }: CandidateAITabProps) {
           <CardContent>
             <ul className="space-y-3">
               {aiData.weaknesses.map((weakness, i) => (
-                <li key={i} className="flex gap-3 text-zinc-700 dark:text-zinc-300">
+                <li key={i} className="flex gap-3 text-foreground">
                   <span className="h-2 w-2 rounded-full bg-orange-500 mt-2 shrink-0"></span>
-                  <span>{weakness}</span>
+                  <span className="text-muted-foreground">{weakness}</span>
                 </li>
               ))}
             </ul>
@@ -84,7 +85,7 @@ export function CandidateAITab({ candidate }: CandidateAITabProps) {
         </Card>
       </div>
 
-      <Card>
+      <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2 text-blue-700 dark:text-blue-400">
             <Lightbulb className="h-5 w-5" />
@@ -94,9 +95,9 @@ export function CandidateAITab({ candidate }: CandidateAITabProps) {
         <CardContent>
           <ul className="space-y-3">
             {aiData.recommendations.map((rec, i) => (
-              <li key={i} className="flex gap-3 text-zinc-700 dark:text-zinc-300 p-3 rounded-lg bg-zinc-50 dark:bg-zinc-900/50">
+              <li key={i} className="flex gap-3 text-foreground p-4 rounded-xl bg-muted border border-border shadow-sm">
                 <span className="text-blue-500 font-bold">{i + 1}.</span>
-                <span>{rec}</span>
+                <span className="text-muted-foreground">{rec}</span>
               </li>
             ))}
           </ul>

@@ -22,9 +22,9 @@ export function CalendarSidebar({ currentDate, onDateSelect, onManageAvailabilit
   const paddedDays = Array(startDayOffset).fill(null).concat(days);
 
   return (
-    <div className="w-64 shrink-0 border-r border-zinc-200 dark:border-zinc-800 bg-zinc-50/30 dark:bg-zinc-950/30 hidden lg:flex flex-col">
+    <div className="w-64 shrink-0 border-r border-border bg-zinc-50/30 dark:bg-zinc-950/30 hidden lg:flex flex-col">
       {/* Mini Calendar */}
-      <div className="p-5 border-b border-zinc-200 dark:border-zinc-800">
+      <div className="p-5 border-b border-border">
         <div className="flex items-center justify-between mb-4">
           <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
             {format(miniCalDate, "MMMM yyyy")}

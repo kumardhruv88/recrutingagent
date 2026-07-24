@@ -6,84 +6,120 @@ HireMind AI
 
 ---
 
-# Current Phase
+# Phase
 
-Phase 21 — Observability
+Production Integration & Validation
 
 ---
 
-# Current Module
+# Sprint
 
-Observability
+Sprint 01
+
+Authentication & User Lifecycle Validation
 
 ---
 
 # Goal
 
-Implement lightweight production observability using only free technologies.
+Transform the current authentication system from a development-ready implementation into a production-ready authentication workflow.
 
-Provide structured logging, request tracing, health endpoints, error handling, audit logging, and deployment diagnostics suitable for Hugging Face Spaces and Vercel.
+The authentication system already exists.
+
+Do NOT redesign it.
+
+Do NOT rewrite it.
+
+Validate every authentication flow using real backend integrations.
+
+Replace mock behavior with production behavior where required.
+
+Every authentication workflow must be tested from the perspective of a real user.
 
 ---
 
 # Scope
 
-Implement ONLY
+Validate ONLY
 
-- Structured Logging
-- Request Correlation IDs
-- Health Endpoints
-- Readiness Checks
-- Audit Logging
-- Global Exception Monitoring
-- Request Metrics
-- Observability APIs
-- Tests
+- Clerk Authentication
+- Sign Up
+- Login
+- Logout
+- Session Refresh
+- Forgot Password
+- Email Verification
+- Protected Routes
+- Middleware
+- Organization Creation
+- User Profile Creation
+- User Metadata
+- Session Persistence
+- RBAC
+- Unauthorized Access
+- Expired Sessions
+- Token Validation
 
 ---
 
-# Do NOT Implement
+# Do NOT
 
-- Prometheus
-- Grafana
-- OpenTelemetry Collector
-- Jaeger
-- Docker Monitoring
-- Kubernetes Monitoring
-- Cloud Vendor Monitoring
+Implement unrelated features.
+
+Do NOT redesign UI.
+
+Do NOT optimize styling.
+
+Do NOT change APIs unless required to fix production issues.
 
 ---
 
 # Deliverables
 
-- Logging Middleware
-- Correlation ID Middleware
-- Health APIs
-- Audit Logs
-- Metrics Middleware
-- Tests
-- Documentation
+Production-ready authentication.
+
+Verified user lifecycle.
+
+Verified RBAC.
+
+Verified middleware.
+
+Verified protected routes.
 
 ---
 
 # Acceptance Criteria
 
-✓ Structured logs
+✓ New user signup works
 
-✓ Correlation IDs
+✓ Existing login works
 
-✓ Health endpoint
+✓ Logout works
 
-✓ Readiness endpoint
+✓ Refresh survives browser refresh
 
-✓ Audit logs
+✓ Multiple tabs behave correctly
 
-✓ Request metrics
+✓ Unauthorized routes blocked
 
-✓ Tests pass
+✓ Organization creation works
+
+✓ RBAC enforced
+
+✓ Session persistence verified
+
+✓ Email verification works
+
+✓ Password reset works
+
+✓ TypeScript passes
+
+✓ ESLint passes
+
+✓ Production build succeeds
 
 ---
 
-# Next Module
+# Next Sprint
 
-22_TestingStrategy.md
+Real Backend Integration

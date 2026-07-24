@@ -25,7 +25,7 @@ export function ScheduleDialog({ open, onOpenChange, onSchedule }: ScheduleDialo
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800">
+      <DialogContent className="sm:max-w-[500px] bg-white dark:bg-zinc-950 border-border rounded-2xl shadow-lg">
         <DialogHeader>
           <DialogTitle className="text-xl">Schedule Interview</DialogTitle>
         </DialogHeader>
@@ -36,7 +36,7 @@ export function ScheduleDialog({ open, onOpenChange, onSchedule }: ScheduleDialo
                 placeholder="Interview Title (e.g. Technical Screen)" 
                 value={title}
                 onChange={e => setTitle(e.target.value)}
-                className="text-lg font-semibold h-12 border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50"
+                className="text-lg font-semibold h-12 border-border bg-zinc-50 dark:bg-zinc-900/50 rounded-md"
                 autoFocus
                 required
               />
@@ -79,11 +79,11 @@ export function ScheduleDialog({ open, onOpenChange, onSchedule }: ScheduleDialo
               <FileText className="w-5 h-5 text-zinc-400 shrink-0 mt-2" />
               <textarea 
                 placeholder="Notes for interviewers..." 
-                className="flex-1 min-h-[80px] bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-md p-3 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="flex-1 min-h-[80px] bg-zinc-50 dark:bg-zinc-900/50 border border-border rounded-md p-3 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
           </div>
-          <div className="flex justify-end gap-2 border-t border-zinc-100 dark:border-zinc-800 pt-4">
+          <div className="flex justify-end gap-2 border-t border-border pt-4">
             <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>Cancel</Button>
             <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">Save & Send Invites</Button>
           </div>

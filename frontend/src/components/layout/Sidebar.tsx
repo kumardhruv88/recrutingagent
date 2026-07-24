@@ -78,13 +78,13 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="hidden border-r border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/50 lg:block lg:w-64 lg:flex-shrink-0 h-screen sticky top-0 flex-col">
-      <div className="h-14 flex items-center px-6 border-b border-zinc-200 dark:border-zinc-800">
+    <div className="hidden border-r border-border bg-surface lg:block lg:w-64 lg:flex-shrink-0 h-screen sticky top-0 flex-col">
+      <div className="h-14 flex items-center px-6 border-b border-border">
         <Link href="/dashboard" className="flex items-center gap-2 font-bold text-lg tracking-tight">
-          <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
-            <Zap className="w-3.5 h-3.5 text-white" />
+          <div className="w-6 h-6 bg-primary rounded flex items-center justify-center">
+            <Zap className="w-3.5 h-3.5 text-primary-foreground" />
           </div>
-          HireMind <span className="text-blue-600">AI</span>
+          HireMind <span className="text-primary">AI</span>
         </Link>
       </div>
 
@@ -92,7 +92,7 @@ export function Sidebar() {
         <nav className="space-y-8">
           {navigation.map((group) => (
             <div key={group.title}>
-              <h4 className="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+              <h4 className="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 {group.title}
               </h4>
               <div className="space-y-1">
@@ -105,8 +105,8 @@ export function Sidebar() {
                       className={cn(
                         "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                         isActive
-                          ? "bg-zinc-200/50 dark:bg-zinc-800 text-blue-600 dark:text-blue-400"
-                          : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/50 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-50"
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
                       )}
                     >
                       <item.icon className="h-4 w-4" />

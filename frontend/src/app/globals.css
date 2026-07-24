@@ -1,25 +1,143 @@
 @import "tailwindcss";
 
+@plugin "tailwindcss-animate";
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Default Theme (Light) */
+  --background: #FFFFFF;
+  --foreground: #111827; /* Text Primary */
+  --surface: #F8FAFC;
+  --card: #FFFFFF;
+  --border: #E5E7EB;
+  --divider: #F1F5F9;
+
+  --text-secondary: #6B7280;
+  --muted-foreground: #9CA3AF;
+  --muted: #F8FAFC;
+
+  /* Brand Colors */
+  --primary: #2563EB;
+  --primary-hover: #1D4ED8;
+  --primary-light: #DBEAFE;
+  --primary-foreground: #FFFFFF;
+
+  /* Semantic Colors */
+  --success: #16A34A;
+  --success-foreground: #FFFFFF;
+  --warning: #F59E0B;
+  --warning-foreground: #FFFFFF;
+  --danger: #DC2626;
+  --danger-foreground: #FFFFFF;
+  --destructive: var(--danger);
+  --destructive-foreground: var(--danger-foreground);
+  --info: #0EA5E9;
+  --info-foreground: #FFFFFF;
+
+  --ring: var(--primary);
+  --input: var(--border);
+
+  /* Border Radii */
+  --radius-button: 8px;
+  --radius-input: 8px;
+  --radius-card: 12px;
+  --radius-dialog: 16px;
+  --radius-badge: 999px;
+  --radius: var(--radius-button); /* Default for shadcn if not specified */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Theme */
+    --background: #09090B;
+    --foreground: #FAFAFA; /* Primary Text */
+    --surface: #18181B;
+    --card: #18181B;
+    --border: #27272A;
+    --divider: #27272A;
+
+    --text-secondary: #A1A1AA; /* Secondary Text */
+    --muted-foreground: #A1A1AA;
+    --muted: #18181B;
+
+    --primary: #2563EB;
+    --primary-hover: #1D4ED8;
+    --primary-light: #DBEAFE;
+    --primary-foreground: #FFFFFF;
+
+    --success: #16A34A;
+    --warning: #F59E0B;
+    --danger: #DC2626;
+    --destructive: var(--danger);
+    --info: #0EA5E9;
+
+    --ring: var(--primary);
+    --input: var(--border);
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-}
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-card-foreground: var(--foreground);
+  --color-border: var(--border);
+  --color-divider: var(--divider);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+
+  --radius-button: var(--radius-button);
+  --radius-input: var(--radius-input);
+  --radius-card: var(--radius-card);
+  --radius-dialog: var(--radius-dialog);
+  --radius-badge: var(--radius-badge);
+  --radius: var(--radius);
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans);
 }

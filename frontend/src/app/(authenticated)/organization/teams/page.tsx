@@ -41,7 +41,7 @@ export default function TeamsPage() {
                   <UsersRound className="h-5 w-5 text-primary" />
                 </div>
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <DropdownMenuTrigger className="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity" aria-label="Team actions">
                     <MoreVertical className="h-4 w-4" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
@@ -70,6 +70,21 @@ export default function TeamsPage() {
             </CardFooter>
           </Card>
         ))}
+        {mockTeams.length === 0 && (
+          <div className="col-span-full py-12 flex flex-col items-center justify-center text-center bg-card border border-dashed rounded-xl shadow-sm">
+            <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center mb-4">
+              <UsersRound className="h-6 w-6 text-muted-foreground" />
+            </div>
+            <h4 className="text-sm font-medium mb-1">No teams found</h4>
+            <p className="text-sm text-muted-foreground max-w-sm mb-4">
+              You haven&apos;t created any teams yet. Create a team to group your organization members.
+            </p>
+            <Button variant="outline">
+              <Plus className="mr-2 h-4 w-4" />
+              Create your first team
+            </Button>
+          </div>
+        )}
       </div>
     </motion.div>
   );

@@ -2,34 +2,34 @@
 
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { mockDashboardData } from "@/data/dashboard";
+import { useDashboardData } from "@/data/dashboard";
 import { Filter } from "lucide-react";
 
 export function HiringFunnel() {
-  const { funnel } = mockDashboardData;
+  const { funnel } = useDashboardData();
   const maxCount = Math.max(...funnel.map((s) => s.count));
 
   return (
-    <Card className="col-span-full xl:col-span-1">
-      <CardHeader className="flex flex-row items-center justify-between">
+    <Card className="h-full flex flex-col">
+      <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="flex items-center gap-2">
-          <Filter className="h-5 w-5 text-blue-500" />
+          <Filter className="h-5 w-5 text-primary" />
           Hiring Funnel
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-5 flex-1 pt-4 pb-6">
         {funnel.map((stage, index) => {
           const width = Math.max((stage.count / maxCount) * 100, 5); // Ensure minimum width for visibility
 
           return (
-            <div key={stage.stage} className="space-y-1.5">
+            <div key={stage.stage} className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="font-medium text-zinc-700 dark:text-zinc-300">
+                <span className="font-medium text-foreground">
                   {stage.stage}
                 </span>
-                <span className="text-zinc-500 font-semibold">{stage.count}</span>
+                <span className="text-muted-foreground font-semibold">{stage.count}</span>
               </div>
-              <div className="h-3 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+              <div className="h-2.5 w-full bg-secondary rounded-full overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   whileInView={{ width: `${width}%` }}

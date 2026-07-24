@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { mockDashboardData } from "@/data/dashboard";
+import { useDashboardData } from "@/data/dashboard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, Video, MoreHorizontal } from "lucide-react";
@@ -12,13 +12,14 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
 
 export function UpcomingInterviews() {
-  const { upcomingInterviews } = mockDashboardData;
+  const { upcomingInterviews } = useDashboardData();
 
   return (
-    <Card className="col-span-full xl:col-span-2">
+    <Card className="h-full flex flex-col shadow-sm">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2">
           <Calendar className="h-5 w-5 text-orange-500" />
@@ -26,27 +27,27 @@ export function UpcomingInterviews() {
         </CardTitle>
         <Button variant="outline" size="sm">View Calendar</Button>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1 overflow-hidden p-0 sm:p-6 sm:pt-0">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Candidate</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Time</TableHead>
-                <TableHead>Interviewer</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+              <TableRow className="border-border">
+                <TableHead className="whitespace-nowrap">Candidate</TableHead>
+                <TableHead className="whitespace-nowrap">Role</TableHead>
+                <TableHead className="whitespace-nowrap">Time</TableHead>
+                <TableHead className="whitespace-nowrap">Interviewer</TableHead>
+                <TableHead className="whitespace-nowrap">Status</TableHead>
+                <TableHead className="text-right whitespace-nowrap">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {upcomingInterviews.map((interview) => (
-                <TableRow key={interview.id} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-800/50 transition-colors">
-                  <TableCell className="font-medium">{interview.candidate}</TableCell>
-                  <TableCell className="text-zinc-500 dark:text-zinc-400">{interview.role}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1.5 text-zinc-700 dark:text-zinc-300 font-medium">
-                      <ClockIcon className="h-3.5 w-3.5 text-zinc-400" />
+                <TableRow key={interview.id} className="hover:bg-muted/50 transition-colors border-border">
+                  <TableCell className="font-medium whitespace-nowrap">{interview.candidate}</TableCell>
+                  <TableCell className="text-muted-foreground whitespace-nowrap">{interview.role}</TableCell>
+                  <TableCell className="whitespace-nowrap">
+                    <div className="flex items-center gap-1.5 text-foreground font-medium">
+                      <ClockIcon className="h-3.5 w-3.5 text-muted-foreground" />
                       {interview.time}
                     </div>
                   </TableCell>
@@ -70,9 +71,11 @@ export function UpcomingInterviews() {
                           }
                         />
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem>View Candidate</DropdownMenuItem>
-                          <DropdownMenuItem>Reschedule</DropdownMenuItem>
-                          <DropdownMenuItem className="text-red-600">Cancel Interview</DropdownMenuItem>
+                          <DropdownMenuGroup>
+                            <DropdownMenuItem>View Candidate</DropdownMenuItem>
+                            <DropdownMenuItem>Reschedule</DropdownMenuItem>
+                            <DropdownMenuItem className="text-red-600">Cancel Interview</DropdownMenuItem>
+                          </DropdownMenuGroup>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>

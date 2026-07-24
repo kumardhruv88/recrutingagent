@@ -1,3 +1,5 @@
+import { useUser } from "@clerk/nextjs";
+
 export const mockDashboardData = {
   kpis: {
     openJobs: { value: 24, change: 12, trend: "up" },
@@ -49,3 +51,28 @@ export const mockDashboardData = {
     { id: 4, action: "Offer Accepted", details: "Tom Hardy accepted the Data Engineer offer", time: "1 day ago", type: "offer" }
   ]
 };
+
+export const emptyDashboardData = {
+  kpis: {
+    openJobs: { value: 0, change: 0, trend: "up" },
+    candidates: { value: 0, change: 0, trend: "up" },
+    applications: { value: 0, change: 0, trend: "up" },
+    interviewsToday: { value: 0, change: 0, trend: "up" },
+    offersSent: { value: 0, change: 0, trend: "up" },
+    avgHireTime: { value: "0 days", change: 0, trend: "up" }
+  },
+  funnel: [],
+  chartData: [],
+  upcomingInterviews: [],
+  recentApplications: [],
+  aiInsights: [],
+  recentActivity: []
+};
+
+export function useDashboardData() {
+  const { user, isLoaded } = useUser();
+  if (!isLoaded) return emptyDashboardData;
+  // Show empty data for real users, mock data only for demo/jane.doe
+  const isDemo = !user || user.emailAddresses[0]?.emailAddress === "jane.doe@example.com";
+  return isDemo ? mockDashboardData : emptyDashboardData;
+}

@@ -2,13 +2,15 @@
 
 import { Candidate, mockActivityTimeline } from "@/data/candidates";
 import { CheckCircle2, Clock, FileText, Calendar, MessageSquare, AlertCircle } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface CandidateActivityTabProps {
   candidate: Candidate;
 }
 
 export function CandidateActivityTab({}: CandidateActivityTabProps) {
-  const getIconForType = (type: string) => {
+  const getActivityIcon = (type: string) => {
     switch (type) {
       case "application": return <FileText className="h-4 w-4 text-blue-500" />;
       case "system": return <Clock className="h-4 w-4 text-zinc-500" />;
@@ -20,25 +22,37 @@ export function CandidateActivityTab({}: CandidateActivityTabProps) {
   };
 
   return (
-    <div className="max-w-3xl">
-      <div className="relative border-l border-zinc-200 dark:border-zinc-800 ml-3 md:ml-4 space-y-8 pb-4">
-        {mockActivityTimeline.map((item) => (
-          <div key={item.id} className="relative pl-8 md:pl-10">
-            <div className="absolute -left-[17px] md:-left-[17px] top-1 h-8 w-8 rounded-full bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center">
-              {getIconForType(item.type)}
-            </div>
-            
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 sm:gap-4 mb-2">
-              <h4 className="font-semibold text-zinc-900 dark:text-zinc-100">{item.action}</h4>
-              <span className="text-xs text-zinc-500 whitespace-nowrap">{item.time}</span>
-            </div>
-            
-            <p className="text-sm text-zinc-600 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-900/50 p-3 rounded-lg border border-zinc-100 dark:border-zinc-800/50 inline-block">
-              {item.details}
-            </p>
+    <div className="space-y-6">
+      <Card className="shadow-sm">
+        <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardTitle className="text-lg">Activity Timeline</CardTitle>
+          <Button variant="outline" size="sm" className="gap-2 bg-background">
+            <MessageSquare className="h-4 w-4" />
+            Add Note
+          </Button>
+        </CardHeader>
+        <CardContent>
+          <div className="relative pl-6 border-l border-border mt-4 pb-4 space-y-8">
+            {mockActivityTimeline.map((activity) => (
+              <div key={activity.id} className="relative">
+                <div className="absolute w-3 h-3 bg-border rounded-full -left-[30px] top-1.5 ring-4 ring-background"></div>
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-1 gap-1 sm:gap-4">
+                  <h4 className="font-semibold text-foreground flex items-center gap-2">
+                    {getActivityIcon(activity.type)}
+                    {activity.action}
+                  </h4>
+                  <span className="text-xs text-muted-foreground whitespace-nowrap">{activity.time}</span>
+                </div>
+                {activity.details && (
+                  <div className="text-sm text-muted-foreground bg-muted/50 p-4 rounded-md border border-border shadow-sm">
+                    {activity.details}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

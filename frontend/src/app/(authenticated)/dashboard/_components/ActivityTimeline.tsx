@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { mockDashboardData } from "@/data/dashboard";
+import { useDashboardData } from "@/data/dashboard";
 import { Activity, UserPlus, CheckCircle, Brain, Calendar } from "lucide-react";
 
 export function ActivityTimeline() {
-  const { recentActivity } = mockDashboardData;
+  const { recentActivity } = useDashboardData();
 
   const getIcon = (type: string) => {
     switch (type) {
@@ -29,15 +29,15 @@ export function ActivityTimeline() {
   };
 
   return (
-    <Card className="col-span-full lg:col-span-1 xl:col-span-1">
-      <CardHeader>
+    <Card className="h-full flex flex-col shadow-sm">
+      <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2">
-          <Activity className="h-5 w-5 text-zinc-500" />
+          <Activity className="h-5 w-5 text-muted-foreground" />
           Recent Activity
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-zinc-200 dark:before:via-zinc-800 before:to-transparent">
+      <CardContent className="flex-1 overflow-y-auto">
+        <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-border before:to-transparent">
           {recentActivity.map((activity, index) => (
             <motion.div
               key={activity.id}
@@ -48,17 +48,17 @@ export function ActivityTimeline() {
               className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active"
             >
               {/* Icon */}
-              <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-zinc-950 ${getIconBg(activity.type)} shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10`}>
+              <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-background ${getIconBg(activity.type)} shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10`}>
                 {getIcon(activity.type)}
               </div>
               
               {/* Content */}
-              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm transition-shadow hover:shadow-md">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="font-semibold text-zinc-900 dark:text-zinc-100 text-sm">{activity.action}</span>
-                  <span className="text-xs font-medium text-zinc-400">{activity.time}</span>
+              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-border bg-surface shadow-sm transition-shadow hover:shadow-sm">
+                <div className="flex items-center justify-between mb-1 gap-2">
+                  <span className="font-semibold text-foreground text-sm leading-tight">{activity.action}</span>
+                  <span className="text-xs font-medium text-muted-foreground shrink-0">{activity.time}</span>
                 </div>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-snug">
+                <p className="text-sm text-muted-foreground leading-snug">
                   {activity.details}
                 </p>
               </div>

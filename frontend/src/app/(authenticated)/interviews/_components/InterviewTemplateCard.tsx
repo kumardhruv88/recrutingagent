@@ -21,13 +21,13 @@ const getIcon = (iconName: string) => {
 export function InterviewTemplateCard({ template, onClick }: InterviewTemplateCardProps) {
   return (
     <Card 
-      className="group cursor-pointer hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition-all border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-hidden relative"
+      className="group cursor-pointer hover:border-blue-500 dark:hover:border-blue-400 hover:shadow-md transition-all duration-200 border-border bg-white dark:bg-zinc-950 overflow-hidden relative rounded-xl shadow-sm"
       onClick={() => onClick(template.id)}
     >
-      <div className="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-blue-500 transition-colors"></div>
-      <CardContent className="p-5 flex flex-col h-full justify-between gap-4">
+      <div className="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-blue-500 transition-colors duration-200"></div>
+      <CardContent className="p-6 flex flex-col h-full justify-between gap-4">
         <div>
-          <div className="h-10 w-10 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+          <div className="h-10 w-10 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-border flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-200">
             {getIcon(template.icon)}
           </div>
           <CardTitle className="text-base font-semibold text-zinc-900 dark:text-zinc-100">{template.title}</CardTitle>
@@ -36,7 +36,7 @@ export function InterviewTemplateCard({ template, onClick }: InterviewTemplateCa
           </CardDescription>
         </div>
         
-        <div className="flex items-center justify-between mt-2 pt-4 border-t border-zinc-100 dark:border-zinc-800/60">
+        <div className="flex items-center justify-between mt-2 pt-4 border-t border-border">
           <div className="text-xs font-medium text-zinc-500">
             {template.durationMins} mins • {template.questionCount} Qs
           </div>

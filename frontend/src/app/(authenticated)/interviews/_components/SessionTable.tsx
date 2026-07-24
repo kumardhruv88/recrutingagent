@@ -58,10 +58,10 @@ export function SessionTable({ sessions, onJoin, onReview }: SessionTableProps) 
   };
 
   return (
-    <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-white dark:bg-zinc-950 shadow-sm">
+    <div className="border border-border rounded-xl overflow-hidden bg-white dark:bg-zinc-950 shadow-sm transition-all duration-200">
       <Table>
         <TableHeader className="bg-zinc-50 dark:bg-zinc-900/50">
-          <TableRow className="hover:bg-transparent border-zinc-200 dark:border-zinc-800">
+          <TableRow className="hover:bg-transparent border-border">
             <TableHead className="font-medium text-zinc-500">Candidate</TableHead>
             <TableHead className="font-medium text-zinc-500">Schedule</TableHead>
             <TableHead className="font-medium text-zinc-500">Status</TableHead>
@@ -71,7 +71,7 @@ export function SessionTable({ sessions, onJoin, onReview }: SessionTableProps) 
         </TableHeader>
         <TableBody>
           {sessions.map((session) => (
-            <TableRow key={session.id} className="border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50/50 dark:hover:bg-zinc-900/20">
+            <TableRow key={session.id} className="border-border hover:bg-muted/50 transition-colors duration-200">
               <TableCell>
                 <div>
                   <div className="font-medium text-zinc-900 dark:text-zinc-100">{session.candidateName}</div>

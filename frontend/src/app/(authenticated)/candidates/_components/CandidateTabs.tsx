@@ -19,28 +19,28 @@ export function CandidateTabs({ candidate }: CandidateTabsProps) {
 
   // Placeholder components for tabs
   const TabPlaceholder = ({ title }: { title: string }) => (
-    <div className="py-12 text-center border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl">
-      <h3 className="text-lg font-medium text-zinc-900 dark:text-zinc-100 mb-2">{title}</h3>
-      <p className="text-zinc-500">This section is currently under development.</p>
+    <div className="py-12 text-center border-2 border-dashed border-border rounded-xl">
+      <h3 className="text-lg font-medium text-foreground mb-2">{title}</h3>
+      <p className="text-muted-foreground">This section is currently under development.</p>
     </div>
   );
 
   return (
     <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="w-full">
       <div className="overflow-x-auto pb-2 mb-6 scrollbar-none">
-        <TabsList className="h-10 inline-flex w-max bg-transparent space-x-2">
-          <TabsTrigger value="overview" className="data-[state=active]:bg-zinc-100 dark:data-[state=active]:bg-zinc-800 rounded-full px-4">Overview</TabsTrigger>
-          <TabsTrigger value="resume" className="data-[state=active]:bg-zinc-100 dark:data-[state=active]:bg-zinc-800 rounded-full px-4">Resume</TabsTrigger>
-          <TabsTrigger value="ai" className="data-[state=active]:bg-zinc-100 dark:data-[state=active]:bg-zinc-800 rounded-full px-4 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+        <TabsList className="h-11 inline-flex w-max bg-muted p-1 rounded-full space-x-1">
+          <TabsTrigger value="overview" className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-full px-4 text-muted-foreground hover:text-foreground transition-all">Overview</TabsTrigger>
+          <TabsTrigger value="resume" className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-full px-4 text-muted-foreground hover:text-foreground transition-all">Resume</TabsTrigger>
+          <TabsTrigger value="ai" className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-full px-4 flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-all">
+            <span className="w-2 h-2 rounded-full bg-primary"></span>
             AI Analysis
           </TabsTrigger>
-          <TabsTrigger value="applications" className="data-[state=active]:bg-zinc-100 dark:data-[state=active]:bg-zinc-800 rounded-full px-4">Applications</TabsTrigger>
-          <TabsTrigger value="interviews" className="data-[state=active]:bg-zinc-100 dark:data-[state=active]:bg-zinc-800 rounded-full px-4">Interviews</TabsTrigger>
-          <TabsTrigger value="assessments" className="data-[state=active]:bg-zinc-100 dark:data-[state=active]:bg-zinc-800 rounded-full px-4">Assessments</TabsTrigger>
-          <TabsTrigger value="github" className="data-[state=active]:bg-zinc-100 dark:data-[state=active]:bg-zinc-800 rounded-full px-4">GitHub</TabsTrigger>
-          <TabsTrigger value="activity" className="data-[state=active]:bg-zinc-100 dark:data-[state=active]:bg-zinc-800 rounded-full px-4">Activity</TabsTrigger>
-          <TabsTrigger value="notes" className="data-[state=active]:bg-zinc-100 dark:data-[state=active]:bg-zinc-800 rounded-full px-4">Notes</TabsTrigger>
+          <TabsTrigger value="applications" className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-full px-4 text-muted-foreground hover:text-foreground transition-all">Applications</TabsTrigger>
+          <TabsTrigger value="interviews" className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-full px-4 text-muted-foreground hover:text-foreground transition-all">Interviews</TabsTrigger>
+          <TabsTrigger value="assessments" className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-full px-4 text-muted-foreground hover:text-foreground transition-all">Assessments</TabsTrigger>
+          <TabsTrigger value="github" className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-full px-4 text-muted-foreground hover:text-foreground transition-all">GitHub</TabsTrigger>
+          <TabsTrigger value="activity" className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-full px-4 text-muted-foreground hover:text-foreground transition-all">Activity</TabsTrigger>
+          <TabsTrigger value="notes" className="data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-full px-4 text-muted-foreground hover:text-foreground transition-all">Notes</TabsTrigger>
         </TabsList>
       </div>
 

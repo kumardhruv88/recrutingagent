@@ -42,7 +42,7 @@ export function CandidateInfoSidebar({ session }: CandidateInfoSidebarProps) {
         </h4>
         
         <div className="space-y-4">
-          <Card className="bg-zinc-900/50 border-zinc-800">
+          <Card className="bg-zinc-900/50 border-zinc-800 rounded-xl shadow-sm">
             <CardContent className="p-4">
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
@@ -54,7 +54,7 @@ export function CandidateInfoSidebar({ session }: CandidateInfoSidebarProps) {
             </CardContent>
           </Card>
 
-          <Card className="bg-amber-950/20 border-amber-900/30">
+          <Card className="bg-amber-950/20 border-amber-900/30 rounded-xl shadow-sm">
             <CardContent className="p-4">
               <div className="flex items-start gap-2">
                 <AlertTriangle className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />

@@ -38,20 +38,22 @@ export function OrganizationTab({ onChange }: OrganizationTabProps) {
       <div className="h-px bg-border" />
 
       <div className="space-y-8">
-        <div className="flex items-center space-x-6">
-          <div className="h-24 w-24 border rounded-xl overflow-hidden flex items-center justify-center bg-white p-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+          <div className="h-24 w-24 border rounded-xl overflow-hidden flex items-center justify-center bg-card shadow-sm p-4 shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={org.logo} alt={org.name} className="max-w-full max-h-full object-contain" />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <h4 className="text-sm font-medium">Company Logo</h4>
-            <p className="text-xs text-muted-foreground max-w-xs">
+            <p className="text-xs text-muted-foreground max-w-sm">
               This logo will be displayed on candidate-facing portals. Transparent PNG recommended.
             </p>
-            <Button variant="outline" size="sm" onClick={onChange} className="mt-2">
-              <Upload className="h-4 w-4 mr-2" />
-              Upload Logo
-            </Button>
+            <div className="pt-2">
+              <Button variant="outline" size="sm" onClick={onChange}>
+                <Upload className="h-4 w-4 mr-2" />
+                Upload Logo
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -108,7 +110,7 @@ export function OrganizationTab({ onChange }: OrganizationTabProps) {
 
         <div className="space-y-4">
           <h4 className="text-sm font-medium">Default Hiring Preferences</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 border rounded-xl bg-muted/50">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-5 border rounded-xl bg-card shadow-sm">
             <div className="space-y-2">
               <Label>Default Currency (for Salary)</Label>
               <Select

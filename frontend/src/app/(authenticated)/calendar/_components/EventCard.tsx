@@ -18,7 +18,7 @@ export function EventCard({ event, onClick, style, className, isAgenda = false }
       <div 
         onClick={() => onClick(event)}
         className={cn(
-          "flex flex-col sm:flex-row sm:items-center gap-3 p-3 rounded-lg border cursor-pointer hover:shadow-md transition-shadow",
+          "flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-xl border border-border shadow-sm cursor-pointer hover:shadow-md transition-all duration-200",
           event.colorClass,
           isCanceled && "opacity-50 line-through grayscale",
           className
@@ -55,7 +55,7 @@ export function EventCard({ event, onClick, style, className, isAgenda = false }
         onClick(event);
       }}
       className={cn(
-        "absolute rounded-md p-2 overflow-hidden cursor-pointer hover:shadow-md transition-all shadow-sm border",
+        "absolute rounded-lg p-2 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-200 shadow-sm border border-border",
         event.colorClass,
         isCanceled && "opacity-50 grayscale",
         className

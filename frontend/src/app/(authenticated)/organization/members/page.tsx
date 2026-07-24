@@ -64,8 +64,8 @@ export default function MembersPage() {
         </div>
       </div>
 
-      <div className="rounded-md border">
-        <Table>
+      <div className="rounded-md border overflow-x-auto">
+        <Table className="min-w-[700px]">
           <TableHeader>
             <TableRow>
               <TableHead>User</TableHead>
@@ -99,7 +99,7 @@ export default function MembersPage() {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <div className={`h-2 w-2 rounded-full ${member.status === "Active" ? "bg-emerald-500" : "bg-muted-foreground"}`} />
+                    <div className={`h-2 w-2 rounded-full ${member.status === "Active" ? "bg-success" : "bg-muted-foreground"}`} />
                     <span className="text-sm text-muted-foreground">{member.status}</span>
                   </div>
                 </TableCell>
@@ -108,7 +108,7 @@ export default function MembersPage() {
                 </TableCell>
                 <TableCell className="text-right">
                   <DropdownMenu>
-                    <DropdownMenuTrigger className="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0">
+                    <DropdownMenuTrigger className="inline-flex items-center justify-center rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0" aria-label="Member actions">
                       <span className="sr-only">Open menu</span>
                       <MoreHorizontal className="h-4 w-4" />
                     </DropdownMenuTrigger>

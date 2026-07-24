@@ -22,7 +22,7 @@ export function JobTabs({ job }: JobTabsProps) {
   return (
     <div className="w-full">
       <Tabs defaultValue="overview" className="w-full" onValueChange={setActiveTab}>
-        <div className="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-4 sm:px-6 sticky top-14 z-10">
+        <div className="border-b border-border bg-background px-4 sm:px-6 sticky top-14 z-10">
           <div className="max-w-7xl mx-auto overflow-x-auto no-scrollbar">
             <TabsList className="h-14 w-full justify-start bg-transparent p-0 flex-nowrap min-w-max">
               {["Overview", "Applications", "Pipeline", "Interviews", "Analytics", "Activity"].map((tab) => {
@@ -31,11 +31,11 @@ export function JobTabs({ job }: JobTabsProps) {
                   <TabsTrigger
                     key={value}
                     value={value}
-                    className="relative h-14 rounded-none border-b-2 border-transparent bg-transparent px-4 pb-3 pt-4 font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 data-[state=active]:border-zinc-900 data-[state=active]:text-zinc-900 dark:data-[state=active]:border-white dark:data-[state=active]:text-white data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                    className="relative h-14 rounded-none border-b-2 border-transparent bg-transparent px-4 pb-3 pt-4 font-medium text-muted-foreground hover:text-foreground data-[state=active]:border-primary data-[state=active]:text-foreground data-[state=active]:bg-transparent data-[state=active]:shadow-none"
                   >
                     {tab}
                     {value === "applications" && (
-                      <span className="ml-2 inline-flex items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 text-xs text-zinc-900 dark:text-zinc-100 font-medium">
+                      <span className="ml-2 inline-flex items-center justify-center rounded-full bg-muted px-2 py-0.5 text-xs text-foreground font-medium">
                         {job.applicationsCount}
                       </span>
                     )}

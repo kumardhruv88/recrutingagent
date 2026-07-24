@@ -56,8 +56,8 @@ export function SecurityTab({ onChange }: SecurityTabProps) {
             <h4 className="text-sm font-medium">Two-Factor Authentication</h4>
             <Card className="p-4 bg-muted/50 border-dashed">
               <div className="flex items-center space-x-3 mb-2">
-                <ShieldCheck className="h-5 w-5 text-emerald-500" />
-                <span className="font-medium text-emerald-600 dark:text-emerald-400">
+                <ShieldCheck className="h-5 w-5 text-success" />
+                <span className="font-medium text-success">
                   {security.twoFactorEnabled ? "2FA is Enabled" : "2FA is Disabled"}
                 </span>
               </div>
@@ -101,12 +101,12 @@ export function SecurityTab({ onChange }: SecurityTabProps) {
                     <div className="flex items-center space-x-2">
                       <p className="font-medium text-sm">{session.device}</p>
                       {session.isCurrent && (
-                        <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-600 border-transparent text-[10px] h-5 px-1.5 py-0">
+                        <Badge variant="secondary" className="bg-success/10 text-success hover:bg-success/20 border-transparent text-[10px] h-5 px-1.5 py-0">
                           Current
                         </Badge>
                       )}
                     </div>
-                    <div className="flex items-center text-xs text-muted-foreground mt-1 space-x-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center text-xs text-muted-foreground mt-1 space-y-1 sm:space-y-0 sm:space-x-4">
                       <div className="flex items-center">
                         <Globe className="h-3 w-3 mr-1" />
                         {session.location} ({session.ip})
@@ -121,7 +121,7 @@ export function SecurityTab({ onChange }: SecurityTabProps) {
                 {!session.isCurrent && (
                   <DropdownMenu>
                     <DropdownMenuTrigger>
-                      <div className="h-8 w-8 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground">
+                      <div className="h-8 w-8 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground" aria-label="Session actions">
                         <MoreVertical className="h-4 w-4" />
                       </div>
                     </DropdownMenuTrigger>

@@ -60,7 +60,7 @@ export function CalendarDashboard() {
   };
 
   return (
-    <div className="h-[calc(100vh-theme(spacing.14)-theme(spacing.8))] flex flex-col -mx-4 sm:-mx-8 -mb-8 overflow-hidden bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800">
+    <div className="h-[calc(100vh-theme(spacing.14)-theme(spacing.8))] flex flex-col -mx-4 sm:-mx-8 -mb-8 overflow-hidden bg-white dark:bg-zinc-950 border-t border-border">
       
       <CalendarHeader 
         currentDate={currentDate}

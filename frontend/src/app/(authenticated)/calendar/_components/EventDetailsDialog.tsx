@@ -20,7 +20,7 @@ export function EventDetailsDialog({ event, open, onOpenChange }: EventDetailsDi
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[450px] p-0 overflow-hidden bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800">
+      <DialogContent className="sm:max-w-[450px] p-0 overflow-hidden bg-white dark:bg-zinc-950 border-border rounded-2xl shadow-lg">
         <div className={`h-2 w-full ${event.colorClass.split(" ")[0]} opacity-80`} />
         
         <DialogHeader className="px-6 pt-6 pb-2">
@@ -57,7 +57,7 @@ export function EventDetailsDialog({ event, open, onOpenChange }: EventDetailsDi
               <h4 className="text-sm font-medium mb-3 flex items-center gap-2">
                 <Users className="w-4 h-4 text-zinc-400" /> Candidate
               </h4>
-              <div className="flex items-center gap-3 p-3 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/30">
+              <div className="flex items-center gap-3 p-4 rounded-xl border border-border bg-zinc-50/50 dark:bg-zinc-900/30">
                 <Avatar className="h-10 w-10">
                   <AvatarFallback className="bg-zinc-200 dark:bg-zinc-800">{event.candidate.name.substring(0, 2)}</AvatarFallback>
                 </Avatar>
@@ -92,14 +92,14 @@ export function EventDetailsDialog({ event, open, onOpenChange }: EventDetailsDi
               <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
                 <FileText className="w-4 h-4 text-zinc-400" /> Notes
               </h4>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-900/50 p-3 rounded-md border border-zinc-100 dark:border-zinc-800">
+              <p className="text-sm text-zinc-600 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-900/50 p-4 rounded-xl border border-border">
                 {event.description}
               </p>
             </div>
           )}
         </div>
 
-        <div className="px-6 py-4 bg-zinc-50 dark:bg-zinc-900/50 border-t border-zinc-200 dark:border-zinc-800 flex justify-end gap-2">
+        <div className="px-6 py-4 bg-zinc-50 dark:bg-zinc-900/50 border-t border-border flex justify-end gap-2">
           <Button variant="outline" onClick={() => onOpenChange(false)}>Close</Button>
           <Button className="bg-blue-600 hover:bg-blue-700 text-white">Edit Event</Button>
         </div>

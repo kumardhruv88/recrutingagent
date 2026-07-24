@@ -33,8 +33,8 @@ export function VoiceInterviewDashboard({ onJoinSession, onReviewSession }: Voic
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border-zinc-200 dark:border-zinc-800 shadow-sm">
-          <CardContent className="p-5 flex items-center gap-4">
+        <Card className="border-border rounded-xl shadow-sm">
+          <CardContent className="p-6 flex items-center gap-4">
             <div className="h-10 w-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center shrink-0 border border-emerald-200 dark:border-emerald-800">
               <Activity className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
             </div>
@@ -44,8 +44,8 @@ export function VoiceInterviewDashboard({ onJoinSession, onReviewSession }: Voic
             </div>
           </CardContent>
         </Card>
-        <Card className="border-zinc-200 dark:border-zinc-800 shadow-sm">
-          <CardContent className="p-5 flex items-center gap-4">
+        <Card className="border-border rounded-xl shadow-sm">
+          <CardContent className="p-6 flex items-center gap-4">
             <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0 border border-blue-200 dark:border-blue-800">
               <Clock className="h-5 w-5 text-blue-600 dark:text-blue-400" />
             </div>
@@ -55,8 +55,8 @@ export function VoiceInterviewDashboard({ onJoinSession, onReviewSession }: Voic
             </div>
           </CardContent>
         </Card>
-        <Card className="border-zinc-200 dark:border-zinc-800 shadow-sm">
-          <CardContent className="p-5 flex items-center gap-4">
+        <Card className="border-border rounded-xl shadow-sm">
+          <CardContent className="p-6 flex items-center gap-4">
             <div className="h-10 w-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center shrink-0 border border-purple-200 dark:border-purple-800">
               <Users className="h-5 w-5 text-purple-600 dark:text-purple-400" />
             </div>
@@ -66,8 +66,8 @@ export function VoiceInterviewDashboard({ onJoinSession, onReviewSession }: Voic
             </div>
           </CardContent>
         </Card>
-        <Card className="border-zinc-200 dark:border-zinc-800 shadow-sm bg-zinc-900 dark:bg-white flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity">
-          <CardContent className="p-5 flex items-center justify-between w-full">
+        <Card className="border-border rounded-xl shadow-sm bg-zinc-900 dark:bg-white flex items-center justify-center cursor-pointer hover:opacity-90 transition-all duration-200">
+          <CardContent className="p-6 flex items-center justify-between w-full">
             <span className="font-semibold text-white dark:text-zinc-950">Analytics Hub</span>
             <div className="h-8 w-8 rounded-full bg-zinc-800 dark:bg-zinc-100 flex items-center justify-center text-white dark:text-zinc-900">
               <ChevronRight className="h-4 w-4" />

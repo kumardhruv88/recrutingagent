@@ -101,8 +101,8 @@ export function BillingTab({}: BillingTabProps) {
           <Receipt className="h-4 w-4 mr-2 text-muted-foreground" />
           Invoice History
         </h4>
-        <div className="border rounded-xl overflow-hidden">
-          <Table>
+        <div className="border rounded-xl overflow-x-auto">
+          <Table className="min-w-[600px]">
             <TableHeader className="bg-muted/50">
               <TableRow>
                 <TableHead>Invoice ID</TableHead>
@@ -119,7 +119,7 @@ export function BillingTab({}: BillingTabProps) {
                   <TableCell>{new Date(inv.date).toLocaleDateString()}</TableCell>
                   <TableCell>${inv.amount.toFixed(2)}</TableCell>
                   <TableCell>
-                    <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-600 border-transparent">
+                    <Badge variant="secondary" className="bg-success/10 text-success hover:bg-success/20 border-transparent">
                       {inv.status}
                     </Badge>
                   </TableCell>

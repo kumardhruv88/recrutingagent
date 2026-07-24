@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Briefcase, Users, FileText, Calendar, Send, Clock } from "lucide-react";
+import { Briefcase, Users, FileText, Calendar, Send, Clock, TrendingUp, TrendingDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { mockDashboardData } from "@/data/dashboard";
+import { useDashboardData } from "@/data/dashboard";
 
 const kpiConfig = [
   { key: "openJobs", title: "Open Jobs", icon: Briefcase, color: "text-blue-600 dark:text-blue-400" },
@@ -15,7 +15,7 @@ const kpiConfig = [
 ];
 
 export function KPICards() {
-  const { kpis } = mockDashboardData;
+  const { kpis } = useDashboardData();
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -29,23 +29,26 @@ export function KPICards() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: index * 0.05 }}
+            className="flex"
           >
-            <Card>
+            <Card className="w-full flex flex-col justify-between transition-all hover:shadow-sm bg-surface border-border">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">{config.title}</CardTitle>
-                <Icon className={`h-4 w-4 ${config.color}`} />
+                <CardTitle className="text-sm font-medium text-muted-foreground">{config.title}</CardTitle>
+                <div className={`p-2 rounded-full bg-background ${config.color} bg-opacity-10 dark:bg-opacity-20`}>
+                  <Icon className={`h-4 w-4 ${config.color}`} />
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{data.value}</div>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 flex items-center">
+                <div className="text-3xl font-bold tracking-tight text-foreground">{data.value}</div>
+                <p className="text-xs text-muted-foreground mt-2 flex items-center">
                   <span
-                    className={`font-medium mr-1 ${
+                    className={`font-semibold mr-1.5 flex items-center gap-0.5 ${
                       data.trend === "up"
-                        ? "text-green-600 dark:text-green-400"
-                        : "text-red-600 dark:text-red-400"
+                        ? "text-success"
+                        : "text-danger"
                     }`}
                   >
-                    {data.trend === "up" ? "+" : ""}
+                    {data.trend === "up" ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
                     {data.change}%
                   </span>
                   from last month

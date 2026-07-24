@@ -12,8 +12,8 @@ import { ActivityTimeline } from "./_components/ActivityTimeline";
 export default function DashboardPage() {
   return (
     <PageContainer>
-      <div className="flex flex-col space-y-6 w-full pb-10">
-        <section>
+      <div className="flex flex-col gap-6 lg:gap-8 w-full pb-10">
+        <section className="flex flex-col gap-4">
           <WelcomeCard />
           <QuickActions />
         </section>
@@ -22,19 +22,31 @@ export default function DashboardPage() {
           <KPICards />
         </section>
 
-        <section className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          <AnalyticsCharts />
-          <HiringFunnel />
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="lg:col-span-2">
+            <AnalyticsCharts />
+          </div>
+          <div className="lg:col-span-1">
+            <HiringFunnel />
+          </div>
         </section>
 
-        <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-          <RecentApplications />
-          <AIInsights />
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="lg:col-span-2">
+            <RecentApplications />
+          </div>
+          <div className="lg:col-span-1">
+            <AIInsights />
+          </div>
         </section>
 
-        <section className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-          <UpcomingInterviews />
-          <ActivityTimeline />
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="lg:col-span-2">
+            <UpcomingInterviews />
+          </div>
+          <div className="lg:col-span-1">
+            <ActivityTimeline />
+          </div>
         </section>
       </div>
     </PageContainer>

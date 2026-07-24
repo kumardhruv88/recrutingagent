@@ -45,7 +45,7 @@ export function InterviewReviewWorkspace({ session, onBack }: InterviewReviewWor
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Video & Transcript */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="aspect-video bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800 relative overflow-hidden group">
+          <div className="aspect-video bg-zinc-950 rounded-xl border border-border relative overflow-hidden group">
             <img 
               src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=1200&h=675" 
               alt="Interview Recording Placeholder" 
@@ -67,8 +67,8 @@ export function InterviewReviewWorkspace({ session, onBack }: InterviewReviewWor
             </div>
           </div>
 
-          <Card className="border-zinc-200 dark:border-zinc-800 shadow-sm">
-            <CardHeader className="pb-3 border-b border-zinc-100 dark:border-zinc-800">
+          <Card className="border-border rounded-xl shadow-sm transition-all duration-200">
+            <CardHeader className="pb-3 border-b border-border">
               <CardTitle className="text-base flex items-center gap-2">
                 <FileText className="h-4 w-4 text-zinc-500" />
                 Executive Summary
@@ -82,7 +82,7 @@ export function InterviewReviewWorkspace({ session, onBack }: InterviewReviewWor
           </Card>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/50 dark:bg-emerald-900/10 shadow-sm">
+            <Card className="border-emerald-100 rounded-xl dark:border-emerald-900/30 bg-emerald-50/50 dark:bg-emerald-900/10 shadow-sm transition-all duration-200">
               <CardHeader className="pb-3 border-b border-emerald-100 dark:border-emerald-900/30">
                 <CardTitle className="text-base flex items-center gap-2 text-emerald-900 dark:text-emerald-100">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500" />
@@ -101,7 +101,7 @@ export function InterviewReviewWorkspace({ session, onBack }: InterviewReviewWor
               </CardContent>
             </Card>
 
-            <Card className="border-amber-100 dark:border-amber-900/30 bg-amber-50/50 dark:bg-amber-900/10 shadow-sm">
+            <Card className="border-amber-100 rounded-xl dark:border-amber-900/30 bg-amber-50/50 dark:bg-amber-900/10 shadow-sm transition-all duration-200">
               <CardHeader className="pb-3 border-b border-amber-100 dark:border-amber-900/30">
                 <CardTitle className="text-base flex items-center gap-2 text-amber-900 dark:text-amber-100">
                   <AlertTriangle className="h-4 w-4 text-amber-500" />
@@ -124,7 +124,7 @@ export function InterviewReviewWorkspace({ session, onBack }: InterviewReviewWor
 
         {/* Right Column - Scores */}
         <div className="space-y-6">
-          <Card className="border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden">
+          <Card className="border-border rounded-xl shadow-sm overflow-hidden transition-all duration-200">
             <div className={`h-2 w-full ${review.recommendation === 'Strong Hire' ? 'bg-emerald-500' : review.recommendation === 'Hire' ? 'bg-blue-500' : review.recommendation === 'Consider' ? 'bg-amber-500' : 'bg-red-500'}`}></div>
             <CardContent className="p-6 text-center">
               <p className="text-sm font-medium text-zinc-500 mb-2 uppercase tracking-widest">AI Recommendation</p>

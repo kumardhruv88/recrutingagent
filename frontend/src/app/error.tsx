@@ -2,6 +2,9 @@
 
 import { useEffect } from "react";
 import { logger } from "@/lib/logger";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { AlertCircle } from "lucide-react";
 
 export default function ErrorBoundary({
   error,
@@ -15,17 +18,25 @@ export default function ErrorBoundary({
   }, [error]);
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center text-center p-4">
-      <h2 className="text-2xl font-bold">Something went wrong!</h2>
-      <p className="text-muted-foreground mt-2 max-w-md">
-        An unexpected error occurred. Our team has been notified.
-      </p>
-      <button
-        onClick={() => reset()}
-        className="mt-6 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
-      >
-        Try again
-      </button>
+    <div className="flex h-screen w-full flex-col items-center justify-center bg-background p-4">
+      <Card className="w-full max-w-md text-center shadow-md">
+        <CardHeader className="flex flex-col items-center gap-2 pt-8">
+          <div className="rounded-full bg-destructive/10 p-4">
+            <AlertCircle className="h-8 w-8 text-destructive" />
+          </div>
+          <CardTitle className="text-2xl mt-4">Something went wrong</CardTitle>
+          <CardDescription>
+            An unexpected error occurred. Our team has been notified.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+        </CardContent>
+        <CardFooter className="flex justify-center pb-8">
+          <Button onClick={() => reset()} variant="default">
+            Try again
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

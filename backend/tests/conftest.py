@@ -3,6 +3,11 @@ import pytest
 from httpx import AsyncClient, ASGITransport
 from app.main import app
 
+pytest_plugins = [
+    "tests.fixtures.shared_fixtures",
+    "tests.mocks.external_mocks",
+]
+
 
 @pytest.fixture
 async def client() -> AsyncGenerator[AsyncClient, None]:

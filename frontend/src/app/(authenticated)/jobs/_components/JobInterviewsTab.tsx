@@ -40,45 +40,45 @@ export function JobInterviewsTab({}: JobInterviewsTabProps) {
   return (
     <div className="space-y-8">
       <div>
-        <h3 className="text-lg font-medium text-zinc-900 dark:text-zinc-100 mb-4">Upcoming Interviews</h3>
+        <h3 className="text-lg font-medium text-foreground mb-4">Upcoming Interviews</h3>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {upcomingInterviews.map((interview) => (
-            <Card key={interview.id} className="overflow-hidden border-zinc-200 dark:border-zinc-800 shadow-sm">
-              <div className="h-2 bg-blue-500"></div>
-              <CardContent className="p-5">
+            <Card key={interview.id} className="overflow-hidden border-border shadow-sm">
+              <div className="h-2 bg-primary"></div>
+              <CardContent className="p-6">
                 <div className="flex justify-between items-start mb-4">
-                  <Badge variant={interview.status === "Confirmed" ? "default" : "secondary"} className={interview.status === "Confirmed" ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-100" : ""}>
+                  <Badge variant={interview.status === "Confirmed" ? "default" : "secondary"} className={interview.status === "Confirmed" ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400" : ""}>
                     {interview.status}
                   </Badge>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 -mt-2 -mr-2 text-zinc-400">
+                  <Button variant="ghost" size="icon" className="h-8 w-8 -mt-2 -mr-2 text-muted-foreground hover:text-foreground">
                     <MoreIcon />
                   </Button>
                 </div>
                 
-                <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 text-lg mb-1">{interview.type}</h4>
-                <p className="text-zinc-500 text-sm mb-4">with <span className="font-medium text-zinc-700 dark:text-zinc-300">{interview.candidate}</span></p>
+                <h4 className="font-semibold text-foreground text-lg mb-1">{interview.type}</h4>
+                <p className="text-muted-foreground text-sm mb-4">with <span className="font-medium text-foreground">{interview.candidate}</span></p>
                 
                 <div className="space-y-2 mb-6">
-                  <div className="flex items-center text-sm text-zinc-600 dark:text-zinc-400">
-                    <CalendarIcon className="mr-2 h-4 w-4 text-zinc-400" />
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
                     {interview.date}
                   </div>
-                  <div className="flex items-center text-sm text-zinc-600 dark:text-zinc-400">
-                    <Clock className="mr-2 h-4 w-4 text-zinc-400" />
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <Clock className="mr-2 h-4 w-4 text-muted-foreground" />
                     {interview.time}
                   </div>
-                  <div className="flex items-center text-sm text-zinc-600 dark:text-zinc-400">
-                    <Video className="mr-2 h-4 w-4 text-zinc-400" />
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <Video className="mr-2 h-4 w-4 text-muted-foreground" />
                     {interview.location}
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between pt-4 border-t border-zinc-100 dark:border-zinc-800">
+                <div className="flex items-center justify-between pt-4 border-t border-border">
                   <div className="flex items-center gap-2">
                     <Avatar className="h-6 w-6">
-                      <AvatarFallback className="text-[10px]">{interview.interviewer.split(" ").map(n => n[0]).join("")}</AvatarFallback>
+                      <AvatarFallback className="text-[10px] bg-muted text-muted-foreground">{interview.interviewer.split(" ").map(n => n[0]).join("")}</AvatarFallback>
                     </Avatar>
-                    <span className="text-xs text-zinc-500">{interview.interviewer}</span>
+                    <span className="text-xs text-muted-foreground">{interview.interviewer}</span>
                   </div>
                   <Button size="sm" variant="outline" className="h-8 text-xs">Join Call</Button>
                 </div>
@@ -86,53 +86,53 @@ export function JobInterviewsTab({}: JobInterviewsTabProps) {
             </Card>
           ))}
           
-          <Card className="border-dashed border-2 border-zinc-200 dark:border-zinc-800 shadow-none hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors flex items-center justify-center cursor-pointer min-h-[280px]">
+          <Card className="border-dashed border-2 border-border shadow-none hover:bg-muted/50 transition-colors flex items-center justify-center cursor-pointer min-h-[280px]">
             <CardContent className="flex flex-col items-center justify-center p-6 text-center h-full">
-              <div className="h-12 w-12 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mb-4">
-                <CalendarIcon className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <CalendarIcon className="h-5 w-5 text-primary" />
               </div>
-              <h4 className="font-medium text-zinc-900 dark:text-zinc-100">Schedule Interview</h4>
-              <p className="text-sm text-zinc-500 mt-1">Set up a new screening or technical round.</p>
+              <h4 className="font-medium text-foreground">Schedule Interview</h4>
+              <p className="text-sm text-muted-foreground mt-1">Set up a new screening or technical round.</p>
             </CardContent>
           </Card>
         </div>
       </div>
       
       <div>
-        <h3 className="text-lg font-medium text-zinc-900 dark:text-zinc-100 mb-4">Completed Interviews</h3>
-        <Card className="border-zinc-200 dark:border-zinc-800 shadow-sm">
-          <div className="p-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors cursor-pointer">
+        <h3 className="text-lg font-medium text-foreground mb-4">Completed Interviews</h3>
+        <Card className="border-border shadow-sm">
+          <div className="p-4 border-b border-border flex items-center justify-between hover:bg-muted/50 transition-colors cursor-pointer">
             <div className="flex items-center gap-4">
               <div className="h-10 w-10 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0">
                 <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div>
-                <h4 className="font-medium text-zinc-900 dark:text-zinc-100">David Chen</h4>
-                <p className="text-sm text-zinc-500">Culture Fit • Oct 22, 2023</p>
+                <h4 className="font-medium text-foreground">David Chen</h4>
+                <p className="text-sm text-muted-foreground">Culture Fit • Oct 22, 2023</p>
               </div>
             </div>
             <div className="text-right">
-              <div className="inline-flex items-center px-2 py-1 rounded bg-zinc-100 dark:bg-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
+              <div className="inline-flex items-center px-2 py-1 rounded bg-muted text-xs font-medium text-foreground mb-1">
                 Score: 4.5/5
               </div>
-              <p className="text-xs text-zinc-500">Jane Doe</p>
+              <p className="text-xs text-muted-foreground">Jane Doe</p>
             </div>
           </div>
-          <div className="p-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors cursor-pointer">
+          <div className="p-4 border-b border-border flex items-center justify-between hover:bg-muted/50 transition-colors cursor-pointer">
             <div className="flex items-center gap-4">
               <div className="h-10 w-10 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0">
                 <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div>
-                <h4 className="font-medium text-zinc-900 dark:text-zinc-100">Emily Rodriguez</h4>
-                <p className="text-sm text-zinc-500">Technical Screening • Oct 20, 2023</p>
+                <h4 className="font-medium text-foreground">Emily Rodriguez</h4>
+                <p className="text-sm text-muted-foreground">Technical Screening • Oct 20, 2023</p>
               </div>
             </div>
             <div className="text-right">
-              <div className="inline-flex items-center px-2 py-1 rounded bg-zinc-100 dark:bg-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
+              <div className="inline-flex items-center px-2 py-1 rounded bg-muted text-xs font-medium text-foreground mb-1">
                 Score: 4.8/5
               </div>
-              <p className="text-xs text-zinc-500">Jane Doe</p>
+              <p className="text-xs text-muted-foreground">Jane Doe</p>
             </div>
           </div>
         </Card>
